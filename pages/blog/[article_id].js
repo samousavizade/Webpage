@@ -38,7 +38,7 @@ export function getStaticPaths() {
         paths: articles.map((item) => {
             return {params: {article_id: `${item.article_id}`}}
         }),
-        fallback: false
+        fallback: true
     }
 
     // return {

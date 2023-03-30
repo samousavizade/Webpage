@@ -12,18 +12,18 @@ import dynamic from 'next/dynamic'
 // import DangersOfBacktesting from "./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"
 // import Denoising from "./mdx_sources/Denoising/denoising.mdx"
 
-const CrossValidation = dynamic(() => import("./mdx_sources/CrossValidation/cross_validation.mdx"), {ssr: false});
-const DangersOfBacktesting = dynamic(() => import("./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"), {ssr: false});
-const Denoising = dynamic(() => import("./mdx_sources/Denoising/denoising.mdx"), {ssr: false});
-const Ensemble = dynamic(() => import("./mdx_sources/Ensemble/ensemble_learning.mdx"), {ssr: false});
-const EntropyFeatures = dynamic(() => import("./mdx_sources/EntropyFeatures/entropy_features.mdx"), {ssr: false});
-const FeatureImportance = dynamic(() => import("./mdx_sources/FeatureImportance/feature_importance.mdx"), {ssr: false});
-const FinancialBars = dynamic(() => import("./mdx_sources/FinancialBars/financial_bars.mdx"), {ssr: false});
-const MicrostructuralBreaks = dynamic(() => import("./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx"), {ssr: false});
-const PortfolioConstruction = dynamic(() => import("./mdx_sources/PortfolioConstruction/portfolio_construction.mdx"), {ssr: false});
-const SampleWeights = dynamic(() => import("./mdx_sources/SampleWeights/sample_weights.mdx"), {ssr: false});
-const StructuralBreaks = dynamic(() => import("./mdx_sources/StructuralBreaks/structural_breaks.mdx"), {ssr: false});
-const Labeling = dynamic(() => import("./mdx_sources/Labeling/labeling.mdx"), {ssr: false});
+const CrossValidation = dynamic(() => import("./mdx_sources/CrossValidation/cross_validation.mdx"), );
+const DangersOfBacktesting = dynamic(() => import("./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"), );
+const Denoising = dynamic(() => import("./mdx_sources/Denoising/denoising.mdx"), );
+const Ensemble = dynamic(() => import("./mdx_sources/Ensemble/ensemble_learning.mdx"), );
+const EntropyFeatures = dynamic(() => import("./mdx_sources/EntropyFeatures/entropy_features.mdx"), );
+const FeatureImportance = dynamic(() => import("./mdx_sources/FeatureImportance/feature_importance.mdx"), );
+const FinancialBars = dynamic(() => import("./mdx_sources/FinancialBars/financial_bars.mdx"), );
+const MicrostructuralBreaks = dynamic(() => import("./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx"), );
+const PortfolioConstruction = dynamic(() => import("./mdx_sources/PortfolioConstruction/portfolio_construction.mdx"), );
+const SampleWeights = dynamic(() => import("./mdx_sources/SampleWeights/sample_weights.mdx"), );
+const StructuralBreaks = dynamic(() => import("./mdx_sources/StructuralBreaks/structural_breaks.mdx"), );
+const Labeling = dynamic(() => import("./mdx_sources/Labeling/labeling.mdx"), );
 
 const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
 
