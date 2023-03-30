@@ -7,6 +7,7 @@ import {alpha, Grid, Typography, useTheme,} from '@mui/material';
 import {DefaultSettingsT} from "@/components/slide_show/Settings";
 import PrincipleComponent from "@/components/principle_component";
 import {grey} from "@mui/material/colors";
+import useBreakpoint from "@/components/use_breakpoint";
 
 
 const SlideShow = ({navBarHeight, myPrinciples}) => {
@@ -14,6 +15,10 @@ const SlideShow = ({navBarHeight, myPrinciples}) => {
     const theme = useTheme();
 
     const [settings, setSettings] = useState(DefaultSettingsT);
+
+    const currentBreakpoint = useBreakpoint();
+    const isMobileSizeScreen = ["xs", "sm"].includes(currentBreakpoint);
+    console.log("isMobileSizeScreen", isMobileSizeScreen)
 
     return (
         <Carousel
@@ -36,9 +41,24 @@ const SlideShow = ({navBarHeight, myPrinciples}) => {
             // NextIcon='next'
         >
             {
-                myPrinciples.map((item, index) => {
-                    return <Banner materials={item.materials} key={index} contentPosition={item.contentPosition}/>
-                })
+                isMobileSizeScreen ?
+                    myPrinciples.map((item) => {
+                        return item.materials.principles.map((principle) => {
+                            return (<MobileBanner
+                                principle={principle}
+                                subject={item.materials.subject}
+                                key={principle.id}
+                            />)
+                        })
+                    }).flat() :
+                    myPrinciples.map((item, index) => {
+                        return <DesktopBanner
+                            principles={item.materials.principles}
+                            subject={item.materials.subject}
+                            key={index}
+                            contentPosition={item.contentPosition}
+                        />
+                    })
             }
         </Carousel>
     );
@@ -47,35 +67,46 @@ const SlideShow = ({navBarHeight, myPrinciples}) => {
 {/*<Settings settings={settings} setSettings={setSettings}/>*/
 }
 
+const MobileBanner = ({principle, subject, key}) => {
 
-const Banner = (props) => {
+    return (
+        <PrincipleComponent
+            principleTitle={principle.principleTitle}
+            imageLink={principle.imageLink}
+            text={principle.text}
+            author={principle.author}
+        />
+    )
+}
+
+const DesktopBanner = ({principles, subject, contentPosition, key}) => {
 
     const theme = useTheme();
-    const {materials, contentPosition, key} = props;
-
     let items = [];
 
     const block = (
         <Grid
             item
             style={{
-
                 backgroundColor: alpha(theme.palette.background.paper, 0.6),
                 borderColor: alpha(theme.palette.background.paper, 0.75),
                 borderStyle: "solid",
                 borderWidth: 10,
             }}
+            xs={4}
+            sm={4}
             md={3}
-            lg={3}>
+            lg={3}
+
+        >
             <Typography variant={"h5"} textAlign={"center"} padding={2.5}>
-                {materials.subject}
+                {subject}
             </Typography>
         </Grid>
     )
 
-
-    for (let i = 0; i < materials.principles.length; i++) {
-        const item = materials.principles[i];
+    for (let i = 0; i < principles.length; i++) {
+        const item = principles[i];
 
         const media = (
             <Grid item md={4.5} lg={4.5} key={item.id}>
@@ -98,7 +129,6 @@ const Banner = (props) => {
     } else if (contentPosition === "middle") {
         items.splice(items.length / 2, 0, block);
     }
-
 
     return (
         <Grid container spacing={0}>

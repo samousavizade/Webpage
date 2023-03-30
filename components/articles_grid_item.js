@@ -7,7 +7,7 @@ import {
     Badge,
     Button,
     Card,
-    CardActions,
+    CardActions, CardContent,
     CardHeader,
     CardMedia,
     Divider,
@@ -62,13 +62,24 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
                 />
             </Link>
 
-            <Typography
-                paddingLeft={2}
-                marginTop={1}
-                variant="h4"
-            >
-                <b>{article.title}</b>
-            </Typography>
+            <CardContent>
+                <Typography
+                    // marginTop={1}
+                    variant="h4"
+                >
+                    {article.title}
+                </Typography>
+
+                <Typography
+                    marginTop={1}
+                    textAlign={"justify"}
+                    variant="body1"
+                >
+                    {article.subTitle}
+                </Typography>
+
+            </CardContent>
+
             <CardHeader
                 avatar={
                     <Avatar

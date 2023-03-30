@@ -60,7 +60,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
 
     } else if (greaterThanLarge) {
         nFeaturedArticles = 4;
-        headerHeight = 400;
+        headerHeight = 325;
         blogArticleImageHeight = headerHeight
 
     }
@@ -185,7 +185,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                             color={theme.palette.text.primary}
                             variant="h3"
                         >
-                            <b>{intendedArticle.title + " " + useBreakpoint()} </b>
+                            <b>{intendedArticle.title}</b>
                         </Typography>
 
 

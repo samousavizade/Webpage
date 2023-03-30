@@ -41,7 +41,10 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
             >
                 <Typography
                     variant={"body1"} component={"h4"}
-                    padding={5}
+                    paddingRight={8}
+                    paddingLeft={8}
+                    paddingTop={8}
+
                     sx={{
                         flexGrow: 1,
                         alignItems: "center",
@@ -61,7 +64,9 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
                     sx={{display: ""}}
                     // color={"white"}
                     variant={"h6"} component={"h6"}
-                    padding={5}
+                    paddingRight={8}
+                    paddingLeft={8}
+                    paddingBottom={8}
                     style={{
                         alignContent: "center",
                     }}

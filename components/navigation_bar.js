@@ -303,6 +303,16 @@ function NavBarDrawerComponent(props) {
                     >
                         {activeItem.title}
                     </Typography>
+                    <Typography
+                        component="h1"
+                        variant="subtitle1"
+                        color={"text.primary"}
+                        noWrap
+                    >
+                        {useBreakpoint()}
+                    </Typography>
+
+
                     <IconButton
                         onClick={toggleTheme}
                         color="inherit"
