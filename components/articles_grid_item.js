@@ -58,6 +58,7 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
                     component={Image}
                     height={350}
                     image={article.image_link}
+
                 />
             </Link>
 

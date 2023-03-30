@@ -197,6 +197,7 @@ function NavBarDrawerComponent(props) {
                     })}
                 </List>
             </LargeScreenDrawer>
+
         ) : (
             <Drawer
                 container={container}
