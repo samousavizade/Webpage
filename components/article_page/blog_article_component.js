@@ -5,6 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Tag from "@mui/icons-material/Tag";
 import dynamic from 'next/dynamic'
+import useBreakpoint from "@/components/use_breakpoint";
 // import Ensemble from "./mdx_sources/Ensemble/ensemble_learning.mdx"
 // import FinancialBars from "./mdx_sources/FinancialBars/financial_bars.mdx"
 // import SampleWeights from "./mdx_sources/SampleWeights/sample_weights.mdx"
@@ -12,18 +13,18 @@ import dynamic from 'next/dynamic'
 // import DangersOfBacktesting from "./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"
 // import Denoising from "./mdx_sources/Denoising/denoising.mdx"
 
-const CrossValidation = dynamic(() => import("./mdx_sources/CrossValidation/cross_validation.mdx"), );
-const DangersOfBacktesting = dynamic(() => import("./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"), );
-const Denoising = dynamic(() => import("./mdx_sources/Denoising/denoising.mdx"), );
-const Ensemble = dynamic(() => import("./mdx_sources/Ensemble/ensemble_learning.mdx"), );
-const EntropyFeatures = dynamic(() => import("./mdx_sources/EntropyFeatures/entropy_features.mdx"), );
-const FeatureImportance = dynamic(() => import("./mdx_sources/FeatureImportance/feature_importance.mdx"), );
-const FinancialBars = dynamic(() => import("./mdx_sources/FinancialBars/financial_bars.mdx"), );
-const MicrostructuralBreaks = dynamic(() => import("./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx"), );
-const PortfolioConstruction = dynamic(() => import("./mdx_sources/PortfolioConstruction/portfolio_construction.mdx"), );
-const SampleWeights = dynamic(() => import("./mdx_sources/SampleWeights/sample_weights.mdx"), );
-const StructuralBreaks = dynamic(() => import("./mdx_sources/StructuralBreaks/structural_breaks.mdx"), );
-const Labeling = dynamic(() => import("./mdx_sources/Labeling/labeling.mdx"), );
+const CrossValidation = dynamic(() => import("./mdx_sources/CrossValidation/cross_validation.mdx"),);
+const DangersOfBacktesting = dynamic(() => import("./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"),);
+const Denoising = dynamic(() => import("./mdx_sources/Denoising/denoising.mdx"),);
+const Ensemble = dynamic(() => import("./mdx_sources/Ensemble/ensemble_learning.mdx"),);
+const EntropyFeatures = dynamic(() => import("./mdx_sources/EntropyFeatures/entropy_features.mdx"),);
+const FeatureImportance = dynamic(() => import("./mdx_sources/FeatureImportance/feature_importance.mdx"),);
+const FinancialBars = dynamic(() => import("./mdx_sources/FinancialBars/financial_bars.mdx"),);
+const MicrostructuralBreaks = dynamic(() => import("./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx"),);
+const PortfolioConstruction = dynamic(() => import("./mdx_sources/PortfolioConstruction/portfolio_construction.mdx"),);
+const SampleWeights = dynamic(() => import("./mdx_sources/SampleWeights/sample_weights.mdx"),);
+const StructuralBreaks = dynamic(() => import("./mdx_sources/StructuralBreaks/structural_breaks.mdx"),);
+const Labeling = dynamic(() => import("./mdx_sources/Labeling/labeling.mdx"),);
 
 const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
 
@@ -34,22 +35,37 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
     const greaterThanLarge = useMediaQuery(theme.breakpoints.up("lg"));
     const midToLarge = useMediaQuery(theme.breakpoints.between("md", "lg"));
     const smallToMid = useMediaQuery(theme.breakpoints.between("sm", "md"));
-    const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const xSmallToSmall = useMediaQuery(theme.breakpoints.between("xs", "sm"));
 
     let nFeaturedArticles = 0
-    if (lessThanSmall) {
-        nFeaturedArticles = 0
+    let headerHeight = 0;
+    let headerHeightWhileScreenGreaterThanMD = 0;
+    let blogArticleImageHeight = 0
+    if (xSmallToSmall) {
+        nFeaturedArticles = 1;
+        headerHeight = 450;
+        blogArticleImageHeight = 250
+
+
     } else if (smallToMid) {
         nFeaturedArticles = 2;
+        headerHeight = 350;
+        blogArticleImageHeight = 400
+
+
     } else if (midToLarge) {
         nFeaturedArticles = 3;
+        headerHeight = 400;
+        blogArticleImageHeight = headerHeight
+
     } else if (greaterThanLarge) {
         nFeaturedArticles = 4;
+        headerHeight = 400;
+        blogArticleImageHeight = headerHeight
+
     }
 
-    let headerHeightWhileScreenGreaterThanMD = 450;
     console.log("intendedArticle.content_md_file", intendedArticle.title)
-
 
     let MDXComponent = undefined;
     switch (intendedArticle.content_md_file) {
@@ -92,6 +108,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
 
     }
 
+
     return (
         <>
             <Head>
@@ -121,7 +138,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                             borderRadius: borderRadius,
                         }}
                         sx={{
-                            height: headerHeightWhileScreenGreaterThanMD,
+                            height: blogArticleImageHeight,
                         }}
                     >
                         <Avatar
@@ -142,8 +159,9 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                 </Grid>
                 <Grid item xs={12} sm={12} md={6} lg={6}>
                     <Box
+
                         sx={{
-                            height: smallToMid || lessThanSmall ? 275 : headerHeightWhileScreenGreaterThanMD,
+                            height: (xSmallToSmall || smallToMid) ? "100%" : headerHeight,
                             display: "flex",
                             marginTop: 0,
                             flexDirection: "column",
@@ -168,11 +186,15 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                             color={theme.palette.text.primary}
                             variant="h3"
                         >
-                            <b>{intendedArticle.title}</b>
+                            <b>{intendedArticle.title + " " + useBreakpoint()} </b>
                         </Typography>
 
 
-                        <Typography color={theme.palette.text.secondary} sx={{flexGrow: 1}} variant="h6">
+                        <Typography
+                            color={theme.palette.text.secondary}
+                            sx={(xSmallToSmall || smallToMid) ? {} : {flexGrow: 1}}
+                            variant="subtitle1"
+                        >
                             {intendedArticle.subTitle}
                         </Typography>
 
@@ -185,7 +207,8 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                                     }}
                                     variant="outlined"
                                     key={item}
-                                    label={<Typography variant={"subtitle2"}>{item}</Typography>}
+                                    size={"small"}
+                                    label={<Typography variant={"caption"}>{item}</Typography>}
                                     icon={<Tag/>}
                                     // size={}
                                     color={"primary"}
@@ -257,6 +280,13 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                         />
                     </Grid>
                 ))}
+
+                {nFeaturedArticles === 0 && <Box bgcolor={"gold"} sx={{
+                    minHeight: 100,
+                    minWidth: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                }}> </Box>}
 
                 <Grid item key={"left-column"} xs={12} sm={12} md={12} lg={12}>
                     <Grid

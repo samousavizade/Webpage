@@ -270,7 +270,6 @@ function NavBarDrawerComponent(props) {
     return (
         <Box sx={{display: "flex"}}>
             <LargeScreenAppBar
-                // className={styles.glassMorph}
                 style={{
                     background: theme.palette.primary.main,
                 }}
