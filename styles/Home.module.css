@@ -8,28 +8,28 @@
     /*min-height: 100vh;*/
 }
 
-.backgroundImage {
-    background: url("/static/me.png") no-repeat;
-    background-position: center;
-    background-size: cover;
-    /*width: 1000px;*/
-    /*height: 500px;*/
+/*.backgroundImage {*/
+/*    background: url("/static/me.png") no-repeat;*/
+/*    background-position: center;*/
+/*    background-size: cover;*/
+/*    !*width: 1000px;*!*/
+/*    !*height: 500px;*!*/
 }
 
-.leftSideImage {
-    background: url("/static/soc_wallpaper.jpg") no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 10px;
+/*.leftSideImage {*/
+/*    background: url("/static/soc_wallpaper.jpg") no-repeat;*/
+/*    background-position: center;*/
+/*    background-size: cover;*/
+/*    border-radius: 10px;*/
 
-}
+/*}*/
 
-.myImage {
-    background: url("/static/me.png") no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 25px;
-}
+/*.myImage {*/
+/*    background: url("/static/me.png") no-repeat;*/
+/*    background-position: center;*/
+/*    background-size: cover;*/
+/*    border-radius: 25px;*/
+/*}*/
 
 .glassMorph {
     background: rgba(229, 243, 255, 0.15);

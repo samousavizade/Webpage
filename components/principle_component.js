@@ -1,14 +1,20 @@
 import {alpha, Box, Paper, Typography, useTheme} from "@mui/material";
 import * as React from "react";
 import {navBarHeight} from "@/pages/_app";
+import Hegel from "../public/static/philosephors/hegel.jpg"
+import SocrateImage from "@/public/static/soc_wallpaper.jpg";
+import * as url from "url";
 
 const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
     const theme = useTheme();
+
+    // const imglink = "../public/static/philosephors/hegel.jpg";
+
     return (
         <Box
             container
             style={{
-                background: imageLink,
+                backgroundImage: `url(${imageLink})`,
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
                 backgroundSize: "cover",

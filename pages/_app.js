@@ -7,6 +7,8 @@ import Head from "next/head";
 import {LazyPlot} from "@/components/article_page/plotly_figure";
 import "@code-hike/mdx/dist/index.css"
 import useBreakpoint, {responsiveIconSize} from "@/components/use_breakpoint";
+import lightThemeBackground from "../public/static/bg_light.png"
+import darkThemeBackground from "../public/static/bg_dark.png"
 
 export const navBarHeight = "12vh";
 export const padding = "2vw";
@@ -83,7 +85,7 @@ export default function App({Component, pageProps}) {
     pageProps.padding = padding;
 
 
-    const themeBackground = activeThemeName === "dark" ? "/static/bg_dark.png" : "/static/bg_light.png"
+    const themeBackground = activeThemeName === "dark" ? darkThemeBackground : lightThemeBackground;
     const components = {
         table: props => <table
             className={`table table-borderless table-sm table-striped table-${activeThemeName} table-hover`}
@@ -121,7 +123,7 @@ export default function App({Component, pageProps}) {
                 <CssBaseline/>
                 <style jsx global>{`
                   body {
-                    background: url(${themeBackground});
+                    background: url(${themeBackground.src});
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: cover;

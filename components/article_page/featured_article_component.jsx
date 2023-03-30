@@ -1,5 +1,6 @@
 import * as React from "react";
 import {Avatar, Box, CardHeader, Chip, Paper, Typography, useTheme,} from "@mui/material";
+import Image from "next/image";
 
 function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
     const theme = useTheme();
@@ -25,6 +26,19 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                     height: 0.5,
                 }}
             >
+                {/*<Avatar*/}
+                {/*    style={{*/}
+                {/*        borderTopLeftRadius: borderRadius,*/}
+                {/*        borderTopRightRadius: borderRadius,*/}
+                {/*    }}*/}
+                {/*    key={"avatar"}*/}
+                {/*    variant="square"*/}
+                {/*    sx={{minHeight: 1, minWidth: 1}}*/}
+                {/*    alt="Example Alt"*/}
+                {/*    src={article.image_link}*/}
+                {/*/>*/}
+
+
                 <Avatar
                     style={{
                         borderTopLeftRadius: borderRadius,
@@ -33,10 +47,15 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                     key={"avatar"}
                     variant="square"
                     sx={{minHeight: 1, minWidth: 1}}
-                    alt="Example Alt"
-                    src={article.image_link}
-                />
+                >
+                    <Image
+                        src={article.image_link}
+                        alt={article.title}
+                        fill
+                    />
+                </Avatar>
             </Paper>
+
 
             <Box
                 component="div"
@@ -76,11 +95,22 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                     marginTop: 1,
                 }}
                 avatar={
+                    // <Avatar
+                    //     variant="rounded"
+                    //     alt={article.author.firstName}
+                    //     src="https://i.im.ge/2023/03/14/DdsAA9.me2.jpg"
+                    // />
+
                     <Avatar
                         variant="rounded"
-                        alt={article.author.firstName}
-                        src="https://i.im.ge/2023/03/14/DdsAA9.me2.jpg"
-                    />
+                        sx={{minHeight: 1, minWidth: 1}}
+                    >
+                        <Image
+                            src={"/static/me.png"}
+                            alt={article.title}
+                            fill
+                        />
+                    </Avatar>
                 }
                 title={
                     <Typography
@@ -92,11 +122,11 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
 
                 }
                 subheader={
-                <Typography
-                    color={theme.palette.text.secondary}
-                    variant="subtitle2">
-                    {article.date}
-                </Typography>}
+                    <Typography
+                        color={theme.palette.text.secondary}
+                        variant="subtitle2">
+                        {article.date}
+                    </Typography>}
             />
         </Box>
     );

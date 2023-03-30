@@ -7,7 +7,7 @@ const myPrinciples = [
         principles: [
             new Principle(
                 0,
-                "url(/static/philosephors/hegel.jpg)",
+                "/static/philosephors/hegel.jpg",
                 "Freedom",
                 `
                      Man is free, this is certainly the substantial nature of man; 
@@ -20,7 +20,7 @@ const myPrinciples = [
             ),
             new Principle(
                 1,
-                "url(/static/philosephors/david_hume.jpg)",
+                "/static/philosephors/david_hume.jpg",
                 "Freedom",
                 `
                     It is seldom, that liberty of any kind is lost all at once. Slavery has so frightful an aspect to men accustomed to freedom, that it must steal upon them by degrees, and must disguise itself in a thousand shapes, in order to be received.
@@ -34,7 +34,7 @@ const myPrinciples = [
         principles: [
             new Principle(
                 2,
-                "url(/static/philosephors/john_rawls.jpg)",
+                "/static/philosephors/john_rawls.jpg",
                 "Justice & Equality",
                 `
                     Justice is the first virtue of social institutions, 
@@ -49,7 +49,7 @@ const myPrinciples = [
             ),
             new Principle(
                 3,
-                "url(/static/philosephors/kant.jpg)",
+                "/static/philosephors/kant.jpg",
                 "Justice & Equality",
                 `
                      Even if a civil society were to be dissolved by the consent of all its members
@@ -68,7 +68,7 @@ const myPrinciples = [
         principles: [
             new Principle(
                 4,
-                "url(/static/philosephors/kant.jpg)",
+                "/static/philosephors/kant.jpg",
                 "Knowledge",
                 `
                      Experience without theory is blind, but theory without experience is mere intellectual play. \n\n
@@ -78,7 +78,7 @@ const myPrinciples = [
             ),
             new Principle(
                 5,
-                "url(/static/philosephors/david_hume.jpg)",
+                "/static/philosephors/david_hume.jpg",
                 "Knowledge",
                 `By this means all knowledge degenerates into probability; and this probability is greater or less,
                      according to our experience of the veracity or deceitfulness of our understanding, and according to
@@ -93,7 +93,7 @@ const myPrinciples = [
         principles: [
             new Principle(
                 6,
-                "url(/static/philosephors/karl_marx.png)",
+                "/static/philosephors/karl_marx.png",
                 "Internationalism",
                 `
                      If emancipation of the working classes requires their fraternal concurrence,
@@ -105,7 +105,7 @@ const myPrinciples = [
             ),
             new Principle(
                 7,
-                "url(/static/philosephors/socrate.jpg)",
+                "/static/philosephors/socrate.jpg",
                 "Internationalism",
                 `
                 I am not an Athenian or a Greek, but a citizen of the world.

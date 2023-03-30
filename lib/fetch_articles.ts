@@ -113,7 +113,7 @@ const articlesList = [
     new Article(
         7,
         "/static/articles_images/dangers_of_backtesting.jpg",
-        "Dangers Of Backtesting",
+        "Backtesting Dangers",
         "A common misunderstanding is to think of backtesting as a research tool. Researching and backtesting is like drinking and driving.",
         authorsList[0],
         "November 15, 2022",

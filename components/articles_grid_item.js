@@ -55,13 +55,10 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
         >
             <Link href={`/blog/${article.id}`}>
                 <CardMedia
-                    component="img"
-                    height="350"
+                    component={Image}
+                    height={350}
                     image={article.image_link}
-                    alt="Paella "
-
                 />
-
             </Link>
 
             <Typography
