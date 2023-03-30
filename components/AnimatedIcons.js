@@ -26,7 +26,7 @@ export function AnimatedHomeIcon() {
     const theme = useTheme()
 
     return <>
-        <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+        <script src="https://cdn.lordicon.com/ritcuqlt.js" defer></script>
         <lord-icon
             src="https://cdn.lordicon.com/gmzxduhd.json"
             trigger="loop"
