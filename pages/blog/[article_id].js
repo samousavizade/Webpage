@@ -15,7 +15,12 @@ export async function getStaticProps(staticProps) {
         return item.id === intendedArticleId // dynamic page id
     });
 
-    console.log("currentArticle: ", article.title)
+    if (article === undefined) {
+        console.log("article is undefined ...")
+        return {
+            notFound: true, //redirects to 404 page
+        };
+    }
 
     const featuredArticles = articles.filter((item) => {
         let n = (Math.abs(item.id - intendedArticleId) % articles.length)
@@ -40,15 +45,6 @@ export function getStaticPaths() {
         }),
         fallback: true
     }
-
-    // return {
-    //     paths: [
-    //         {params: {article_id: "0"}},
-    //         {params: {article_id: "1"}},
-    //         {params: {article_id: "2"}},
-    //     ],
-    //     fallback: true
-    // }
 }
 
 const ArticleComponent = ({intendedArticle, featuredArticles}) => {
