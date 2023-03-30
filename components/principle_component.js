@@ -1,0 +1,72 @@
+import {alpha, Box, Paper, Typography, useTheme} from "@mui/material";
+import * as React from "react";
+import {navBarHeight} from "@/pages/_app";
+
+const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
+    const theme = useTheme();
+    return (
+        <Box
+            container
+            style={{
+                background: imageLink,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "center",
+                backgroundSize: "cover",
+
+            }}
+            margin={0}
+            padding={0}
+        >
+            <Paper
+                sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    borderRadius: 0,
+                    height: `calc( 100vh -  ${navBarHeight} - 6vh )`
+                }}
+                style={{
+                    backgroundColor: alpha(theme.palette.background.paper, 0.1),
+                    backdropFilter: "blur(7px)",
+                    borderColor: alpha(theme.palette.background.paper, 0.15),
+                    borderStyle: "solid",
+                    borderWidth: 20,
+                }}
+                variant={"outlined"}
+            >
+                <Typography
+                    variant={"body1"} component={"h4"}
+                    padding={5}
+                    sx={{
+                        flexGrow: 1,
+                        alignItems: "center",
+                    }}
+                    style={{
+                        alignContent: "center",
+                        fontFamily: "Fondamento",
+                        // textAlignLast: "center",
+                    }}
+                    textAlign={"justify"}
+
+                >
+                    <i>{"❝ " + text + " ❞"}</i>
+                </Typography>
+
+                <Typography
+                    sx={{display: ""}}
+                    // color={"white"}
+                    variant={"h6"} component={"h6"}
+                    padding={5}
+                    style={{
+                        alignContent: "center",
+                    }}
+                    textAlign={"right"}
+                    fontFamily={"Parisienne "}
+                >
+                    {author}
+                </Typography>
+            </Paper>
+        </Box>
+    )
+}
+
+export default PrincipleComponent;

@@ -1,0 +1,8 @@
+.liveIcon {
+
+}
+
+.liveIcon:hover {
+    transform: scale3d(1.2, 1.2, 1);
+    transition: transform 0.2s ease-out;
+}

@@ -1,0 +1,30 @@
+import {Grid, Typography, Box} from "@mui/material";
+
+export const PythonJuliaCodeTable = ({juliaCode, juliaGithubLink, pythonCode, pythonGithubLink}) => {
+
+    return (
+        <Grid container columnSpacing={2}>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+                <Typography variant={"h5"}>
+                    Julia
+                </Typography>
+                <Box>
+                    {juliaCode}
+                </Box>
+            </Grid>
+            <Grid item lg={6} md={6} sm={12} xs={12}>
+                <Typography variant={"h5"}>
+                    Python
+                </Typography>
+                <Box>
+                    {pythonCode}
+                </Box>
+            </Grid>
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+                <Typography variant={"p"} textAlign={"center"}>
+                    View More: <a href={juliaGithubLink}>Julia</a> | <a href={pythonGithubLink}>Python</a>
+                </Typography>
+            </Grid>
+        </Grid>
+    )
+}

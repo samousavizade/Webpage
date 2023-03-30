@@ -1,0 +1,189 @@
+import {LazyPlot} from "@/components/article_page/plotly_figure";
+import {Typography} from "@mui/material";
+import {useTheme} from "@mui/material"; import {grey} from "@mui/material/colors";
+
+export const CyanSpan = ({children}) => {
+    const theme = useTheme();
+    return <span style={{color: theme.palette.secondary.main}}>
+        {children}
+    </span>
+}
+
+export const ImageFigure = ({src, figureCaption}) => {
+    const theme = useTheme();
+
+    return (
+        <figure>
+            <img
+                style={{
+                    display: "block",
+                    width: "50vw",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    backgroundColor: theme.palette.mode === "light" ? grey["400"] : grey["900"],
+                }}
+                src={src}
+            />
+            <figcaption
+                style={{
+                    display: "flex",
+                }}
+            >
+            <span
+                style={{
+                    textAlign: "center",
+                    width: "100%",
+                }}
+            >
+                {figureCaption}
+            </span>
+            </figcaption>
+        </figure>
+    )
+}
+
+
+# The Dangers of Backtesting
+
+## How backtesting may fail?
+
+Most backtest reported in journals are faulty due to selection bias on numerous tests. Here is a list of some of the most typical mistakes that even experienced experts make.
+
+## Siren of finance, <CyanSpan>backtesting!</CyanSpan>
+
+In its most basic form, a backtest is a historical simulation of how a strategy would have fared if it had been executed in the past. As such, it is hypothetical, not an experiment. A backtest ensures nothing, even if we could travel back in time in our refitted DeLorean DMC-12 (Bailey and López de Prado [2012]). The results of random drawings would have been different. The past would not be repeated.
+
+So, what is the aim of a backtest? It serves as a sanity check on various variables, including bet size, turnover, cost resiliency, and behavior in a particular circumstance. A decent backtest can be very useful, but backtesting successfully is quite tricky. A team of quants at Deutsche Bank led by Yin Luo presented a report titled "Seven Sins of Quantitative Investing" in 2014. (Luo et al. [2014]). This group mentions the typical suspects:
+
+1. Survivorship bias: Using the present investment universe as the investment universe, ignoring that some firms went bankrupt and securities were delisted along the way.
+
+2. Look-ahead bias: Using the knowledge that was not available at the time the simulated choice was made. Ensure that the timestamp for each data point is correct. Consider release dates, distribution delays, and backfill fixes.
+
+3. Ex-post storytelling: Making a tale to rationalize a random trend.
+
+4. Data mining and data snooping: Using the testing set to train the model.
+
+5. Transaction costs: Simulating transaction costs is difficult since the only way to know for sure is to interact with the trading book (i.e., to make the actual trade).
+
+6. Outliers: Basing a strategy on a few extreme results that may never occur again.
+
+7. Shorting: Taking a short position on cash goods necessitates lender identification. The cost of the loan and the quantity available are typically unknown and are affected by relationships, inventories, relative demand, and so on.
+
+These are only a few common mistakes that most journal articles commit regularly. Other common errors include computing performance using a non-standard method (Chapter 14); ignoring hidden risks; focusing solely on returns while ignoring other metrics; confusing correlation with causation; selecting an unrepresentative period; failing to expect the unexpected; ignoring stop-out limits or margin calls; ignoring funding costs; and failing to consider practical aspects (Sarfati [2015]). There are many more; however, describing them would be pointless due to the next section's title.
+
+## My <CyanSpan>backtest</CyanSpan>  is perfect. Therefore it works?
+
+
+
+Congratulations! Your backtest is faultless because anybody can replicate your results, and your assumptions are so conservative that not even your boss can complain to them. You have paid more than twice what anyone could ask for each exchange. You performed hours after half of the world was aware of the material, with a low volume participation percentage. Despite all of these excessive charges, your backtest is still profitable. However, this immaculate backtest is most likely incorrect. Why? Because only an expert can create an error-free backtest. To become an expert, you must have performed tens of thousands of backtests. Finally, because this is not your first backtest, we must consider the potential that this is a false finding. This statistical anomaly invariably arises after running numerous tests on the same dataset.
+
+The frustrating thing about backtesting is that the better you get at it, the more probable false discoveries are to appear. Beginners fall victim to Luo et al[2014] .'s seven sins (there are more, but who's counting?). Even if professionals perform perfect backtests, they will fall victim to multiple testing, selection bias, or backtest overfitting (Bailey and López de Prado [2014b]).
+
+
+## So what we can do?
+
+Backtest overfitting is characterized as a bias in a selection over numerous backtests. Backtest overfitting occurs when a technique is created to outperform random historical patterns on a backtest. Because those random patterns are unlikely to reoccur, the devised approach will fail. As a result of "selection bias" every backtested strategy is overfit to some extent: the only backtests that most people share are those that depict apparently profitable investing techniques.
+
+The fundamental question in quantitative finance is how to deal with backtesting overfitting. Why? Since if there were a simple solution to this issue, investment firms would attain high performance with confidence because they would only invest in winning backtests. Journals could confidently determine if an approach was a false positive. Finance has the potential to develop into a real science in the Popperian and Lakatosian senses (López de Prado [2017]). Backtest overfitting is challenging to evaluate since false positives' chances fluctuate with each subsequent test run on the same dataset. This information is either unknown to the researcher or not communicated with investors or reviewers. While there is no straightforward method to prevent overfitting, a few actions can help lessen its prevalence.
+
+1. Create models for whole asset classes or investing universes rather than individual equities (Chapter 8). Investors diversify so they do not make the same error twice on the same security $Y$. If you uncover a problem $X$ solely on security $Y$, no matter how profitable it appears, it is most likely a false finding.
+
+2. Use bagging (Chapter 6) to minimize overfitting while reducing the forecasting error variation. If bagging degrades a strategy's performance, it was most likely overfit to a limited number of data or outliers.
+
+3. Wait to perform backtesting until your study is completed (Chapters 1-10).
+
+4. Record every backtest performed on a dataset so that the probability of backtest overfitting on the final selected result can be estimated (see Bailey, Borwein, López de Prado, and Zhu [2017a] and Chapter 14). The Sharpe ratio can be appropriately deflated by the number of trials performed (Bailey and López de Prado [2014b]).
+
+5. Play with possibilities rather than history (Chapter 12). A typical backtest is a historical simulation that is readily overfitting. History is a random course that may have been very different. Not merely the anecdotal historical approach, but your technique should be lucrative under various circumstances. Overfitting the result of thousands of "what if" situations are more complicated.
+
+6. If the backtest fails to uncover a lucrative approach, begin again. Resist the urge to reuse those findings. Adhere to the Second Law of Backtesting.
+
+SNIPPET 11.1 MARCOS' SECOND LAW OF BACKTESTING
+
+"Backtesting while studying is the equivalent of drinking and driving.
+
+Do not do research while under the influence of a backtest."
+
+López de Prado, Marcos
+
+Financial Machine Learning Advances (2018)
+
+## How to choice <CyanSpan>Strategy </CyanSpan>?
+
+A walk-forward time folds algorithm has been implemented in Scikit-learn. ${ }^{2}$ This method of testing travels ahead (in time) to prevent leaks.
+The walk-forward approach has the problem of being readily overfitting. This is because, without random sampling, there is just one line of testing that may be repeated until false positive arises. As in normal cross-validation, some randomization is required to avoid this type of performance targeting or backtest optimization while avoiding the leakage of samples connected to the training set into the testing set. Following that, we will provide a cross-validation technique for strategy selection based on estimating the chance of backtest overfitting (PBO). A description of cross-validation methods for backtesting is left until Chapter 12.
+
+Bailey et al. [2017a] use the combinatorially symmetric cross-validation (CSCV) approach to evaluate the likelihood of backtest overfitting. The following is a diagram of how this technique works.
+
+To begin, we create a $M$ matrix by collecting the performance series from the $N$ trials. Each column $n=1, \dots, N$, in particular, represents a vector of $\mathrm{PnL}$ (mark-to-market profits and losses) across $t=1, \dots, T$ observations associated with a specific model configuration attempted by the researcher. As a result, $M$ is a real-valued matrix of order $(T x N)$. The sole requirements are that (1) $M$ is a true matrix, with the same number of rows for each column and observations that are synchronous throughout the $N$ trials, and (2) the performance assessment measure used to choose the "optimal" method can be calculated on subsamples of each column. For instance, if the measure is the Sharpe ratio, the IID Normal distribution assumption may be applied to different slices of the reported performance. If data from various model configurations trade at different frequencies, they are aggregated (downsampled) to fit a standard index $t=1, \dots, T$.
+
+Second, we divide $M$ across rows into an even number $S$ of disjoint equal-dimension submatrices. Each of these submatrices $M s$ has the order $\left( \frac{T}{S} \times N \right)$, with $s=1, \dots, S$.
+
+Third, we generate all combinations $C_S$ of $M_s$ in groups of size $\frac{S}{2}$. This results in a total number of combinations.
+
+$$
+\left(\begin{array}{c}
+S \\
+S / 2
+\end{array}\right)=\left(\begin{array}{c}
+S-1 \\
+S / 2-1
+\end{array}\right) \frac{S}{S / 2}=\ldots=\prod_{i=0}^{S / 2^{-1}} \frac{S-i}{S / 2-i}
+$$
+
+For example, if $S=16$, we will get 12,780 different combinations. Each $c in C S$ variety comprises $S / 2$ submatrices $M s$.
+
+Fourth, for each $c \in C_S$ combination, we:
+
+1. Create the training set $J$ by connecting the $S / 2$ submatrices $M_s$ that make up $c$, where $J$ is a matrix of order $\left(\frac{T}{S} \frac{S}{2} \times N\right)=\left(\frac{T}{2} \times N\right)$.
+
+2. Create the testing set $\bar{J}$, which is the complement of $J$ in $M$. In other words, $barJ$ is the $\left(\frac{T}{2} x N\right)$matrix created by all $M$ rows that are not part of $J$.
+
+3. Create a $R$ vector of performance statistics of order $N$, with the $n$-th item of $R$ reporting the performance associated with the $n$-th column of $J$. (the training set).
+
+4. Find the element $n*$ such that $R_{n} \leq R_{n^{*}}, \forall n=1, \ldots, N$. To put it another way, $n^{*}=\arg \max _{n}\left\{R_{n}\right\} .$
+
+5. Create a vector $\bar{R}$ of order $N$ performance statistics, where the $n$-th item of $barR$ reflects the performance associated with the $n$-th column of $\bar{J}$. (the testing set).
+
+6. Determine the relative position of $\overline{R_{n^{*}}}$ within $\bar{R}$. This relative rank is denoted as  $\bar{\omega}_{c}$, where $\bar{\omega}_{c} \in(0,1)$. This is the rank of the out-of-sample (OOS) performance linked with the in-sample experiment (IS). If the strategy optimization technique does not overfit, $\overline{R_{n^{*}}}$ should consistently outperform $\bar{R}$  (OOS), just as $R_{n^{*}}$ outperformed $R$. (IS).
+
+7. Define the logit $\lambda_{c}=\log \left[\frac{\bar{\omega}_{c}}{1-\bar{\omega}_{c}}\right]$. This demonstrates the condition  $\lambda_{c}=0$ when $\overline{R_{n^{*}}}$ corresponds with the median of $\bar{R}$. High logit values show that IS, and OOS performance are consistent, indicating minimal backtest overfitting.
+
+Fifth, construct the rank distribution OOS by collecting all $\lambda_{c}$, for $c \in C_S$. The probability distribution function $f(\lambda)$ is then approximated as the relative frequency of occurrence of $\lambda$ across all $C_S$, with $\int_{-\infty}^{\infty} f(\lambda) d \lambda=1$. Finally, the PBO is calculated as  $P B O=\int_{-\infty}^{0} f(\lambda) d \lambda$, representing the likelihood of IS optimum strategies underperforming OOS.
+
+The `probabilityOfBacktestOverfitting` function in the RiskLabAI Julia package determines the probability of backtest overfitting for strategies. This function accepts five parameters:
+* `matrixData` (result of strategies in multiple trails)
+* `nPartions` (number of partitions $S$ ).
+* `metric` (function that give performance of strategy)
+* `decisionBoundary`(boundary, its default value is 0.5 ($\lambda_c = 0$))
+* `riskFreeReturn`(risk free return for metric function)
+
+Similarly, in RiskLabAI's python library, the function TBD does the job.
+
+<CH.Code>
+
+    ```julia Julia
+    function probabilityOfBacktestOverfitting(
+        matrixData::Matrix,
+        nPartions::Integer,
+        metric::Function;
+        decisionBoundary= 0.5::Float64 ,
+        riskFreeReturn  = 0 ::Float64
+    )::Tuple{Float64,Array}
+    ```
+
+    ```python Python
+    def mpSampleWeight(
+    timestamp :pd.DataFrame,
+    concurrencyEvents :pd.DataFrame,
+    molecule :pd.Series
+    ) -> pd.DataFrame
+    ```
+
+</CH.Code>
+
+<Typography variant={"h7"} textAlign={"center"}>
+    View More: <a style={{color: "purple", fontWeight: "bold"}}
+                  href="https://www.github.com/risklabai/RiskLabAI.jl">Julia</a> | <a
+    style={{color: "blue", fontWeight: "bold"}} href="https://www.github.com/risklabai/RiskLabAI.jl">Python</a>
+</Typography>

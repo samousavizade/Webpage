@@ -1,0 +1,483 @@
+import {LazyPlot} from "@/components/article_page/plotly_figure";
+import {Typography} from "@mui/material";
+import {useTheme} from "@mui/material"; import {grey} from "@mui/material/colors";
+import VisualizationOfTheMP from "./Visualization of The Marcenko–Pastur Theorem.json"
+import AComparisonOfEigenValue from "./A comparison of eigenvalues before and after applying the residual eigenvalue method.json"
+
+export const CyanSpan = ({children}) => {
+    const theme = useTheme();
+    return <span style={{color: theme.palette.secondary.main}}>
+        {children}
+    </span>
+}
+
+export const ImageFigure = ({src, figureCaption}) => {
+    const theme = useTheme();
+
+    return (
+        <figure>
+            <img
+                style={{
+                    display: "block",
+                    width: "50vw",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    backgroundColor: theme.palette.mode === "light" ? grey["400"] : grey["900"],
+                }}
+                src={src}
+            />
+            <figcaption
+                style={{
+                    display: "flex",
+                }}
+            >
+            <span
+                style={{
+                    textAlign: "center",
+                    width: "100%",
+                }}
+            >
+                {figureCaption}
+            </span>
+            </figcaption>
+        </figure>
+    )
+}
+
+
+# Detonation & Denoising
+
+## Inspiration
+
+Covariance matrices are commonly used in finance. We utilize them to conduct regressions, evaluate risks, optimize portfolios, run Monte Carlo simulations, discover clusters, reduce the dimensionality of a vector space, and so on. Empirical covariance matrices are calculated using a sequence of observations from a random vector to estimate the linear comovement between the random variables that comprise the random vector. Because these observations are limited and nondeterministic, the estimated covariance matrix contains some noise. Empirical covariance matrices constructed from estimated factors are similarly numerically ill-conditioned, as the estimated factors are also based on incorrect data. Unless we address this noise, it will influence the covariance matrix computations, perhaps rendering the study meaningless.
+
+Here, we attempt to describe a method for minimizing noise and boosting signals in an empirical covariance matrix. We will presume that empirical covariance and correlation matrices have been treated to this approach throughout this Element.
+
+## The Marcenko-Pastur Theorem is a mathematical theorem.
+
+
+Consider a matrix $X$ of independent and identically distributed random observations with a size of $T x N$ and an underlying process with a mean of zero and a variance of $\sigma^{2}$. The matrix $C=T^{-1} X^{\prime} X$ has eigenvalues $\lambda$ that asymptotically converge (as $N \rightarrow+\infty$ and $T \rightarrow+\infty$ with $1<T_{N}<+\infty$ ) to the Marcenko-Pastur probability density function (PDF),
+
+$$
+f[\lambda]= \begin{cases}\frac{T}{N} \frac{\sqrt{\left(\lambda_{+}-\lambda\right)\left(\lambda-\lambda_{-}\right)}}{2 \pi \lambda \sigma^{2}} & \text { if } \lambda \in\left[\lambda_{-}, \lambda_{+}\right] \\ 0 & \text { if } \lambda \notin\left[\lambda_{-}, \lambda_{+}\right]\end{cases}
+$$
+
+where $\lambda_{+}=\sigma^{2}(1+\sqrt{N / T})^{2}$ is the greatest predicted eigenvalue and $\lambda_{-}=\sigma^{2}(1-\sqrt{N / T})^{2}$ is the least expected eigenvalue. When $\sigma^{2}=1$, the correlation matrix associated with $X$ is $C$. The Marcenko-Pastur PDF is implemented in Python by Code Snippet $2.1$.
+
+Eigenvalues $\lambda \in\left[\lambda_{-}, \lambda_{+}\right]$are consistent with random behavior, and eigenvalues $\lambda \notin\left[\lambda_{-}, \lambda_{+}\right]$are consistent with nonrandom behavior. Specifically, we associate eigenvalues $\lambda \in\left[0, \lambda_{+}\right]$with noise. Figure $2.1$ and Code Snippet $2.2$ demonstrate how closely the Marcenko-Pastur distribution explains the eigenvalues of a random matrix $X$.
+
+### SNIPPET $1$ MARCENKO-PASTUR THEOREM TESTING
+
+<CH.Code>
+
+```julia Julia
+function pdfMarcenkoPastur(
+    var, # variance of observations
+    ratio, # T/N
+    points # points for lambda
+)
+    λmin = var*(1 - sqrt(1/ratio))^2 # minimum expected eigenvalue
+    λmax = var*(1 + sqrt(1/ratio))^2 # maximum expected eigenvalue
+    eigenValues = range(λmin, stop = λmax, length = points) # range for eigen values
+    diffλ = ((λmax .- eigenValues).*(eigenValues .- λmin)) # numerical error
+    diffλ[diffλ .< -1E-3] .= 0. # numerical error
+    pdf = ratio./(2*pi*var*eigenValues).*diffλ # probability density function
+    # pdf = ratio./(2*pi*var*eigenValues).*sqrt.(((λmax .- eigenValues).*(eigenValues .- λmin))) # probability density function
+    return DataFrames.DataFrame(index = eigenValues, values = pdf)
+end
+
+function PCA(matrix) # Hermitian matrix
+    eigenValues, eigenVectors = LinearAlgebra.eigen(matrix) # compute eigenValues, eigenVectors from matrix
+    indices = sortperm(eigenValues, rev = true) # arguments for sorting eigenValues desc
+    eigenValues, eigenVectors = eigenValues[indices], eigenVectors[:, indices] # sort eigenValues, eigenVectors
+    eigenValues = Diagonal(eigenValues) # diagonal matrix with eigenValues
+    return eigenValues, eigenVectors
+end
+
+function KDE(
+    observations; # Series of observations
+    bandWidth = 0.25,
+    kernel = Distributions.Normal, # type of kernel
+    valuesForEvaluating = nothing # array of values on which the fit KDE will be evaluated
+)
+    density = kde(observations, kernel = kernel, bandwidth = bandWidth) # kernel density
+    if valuesForEvaluating == nothing
+        valuesForEvaluating = reshape(reverse(unique(observations)), :, 1) # reshape valuesForEvaluating to vector
+    end
+    density = KernelDensity.pdf(density, valuesForEvaluating[:]) # probability density function
+    return DataFrames.DataFrame(index = vec(valuesForEvaluating), values = density)
+end
+
+# Random Matrix
+X = rand(Normal(0, 1), 10000, 1000)
+# Get the eigenvalues and vectors of the correlation matrix of X
+eVal0, eVec0 = PCA(cor(X))
+# Marcenko-Pastur pdf
+pdf0 = pdfMarcenkoPastur(1., size(X)[1]/size(X)[2], 1000)
+# Fits a Kernel Density Estimate to the eigenvalues of the correlation matrix
+pdf1 = KDE(diag(eVal0), bandWidth = 0.01, kernel = Distributions.Normal, valuesForEvaluating = nothing);
+```
+
+```python Python
+def marcenkoPasturPDF(
+    var, # variance of observations
+    q, # T/N
+    pts
+):
+    # Marcenko-Pastur pdf
+    emin, emax = var*(1 - (1./q)**.5)**2, var*(1 + (1./q)**.5)**2
+    eval = np.linspace(emin, emax, pts).flatten()
+    pdf = q/(2*np.pi*var*eval)*((emax - eval)*(eval - emin))**.5
+    pdf = pd.Series(pdf, index = eval)
+    return pdf
+
+def PCA(matrix): # Get eval,evec from a Hermitian matrix
+    import numpy as np, pandas as pd
+    eval, evec = np.linalg.eigh(matrix)
+    indices = eval.argsort()[::-1] # arguments for sorting eval desc
+    eval, evec = eval[indices], evec[:,indices]
+    eval = np.diagflat(eval)
+    return eval, evec
+
+def fitKDE(
+    obs, # Series of observations
+    bwidth = .25, #
+    kernel = 'gaussian', #
+    x = None #
+):
+    # Fit kernel to a series of obs, and derive the prob of obs
+    # x is the array of values on which the fit KDE will be evaluated
+    if len(obs.shape) == 1:obs=obs.reshape(-1,1)
+    kde = KernelDensity(kernel = kernel, bandwidth = bwidth).fit(obs)
+    if x is None: x = np.unique(obs).reshape(-1,1)
+    if len(x.shape) == 1:x = x.reshape(-1,1)
+    logprob = kde.score_samples(x) # log(density)
+    pdf = pd.Series(np.exp(logprob), index=x.flatten())
+    return pdf
+
+x = np.random.normal(size = (10000, 1000))
+eval0, evec0 = PCA(np.corrcoef(x ,rowvar = 0))
+pdf0 = marcenkoPasturPDF(1., q = x.shape[0]/float(x.shape[1]), pts=1000)
+pdf1 = fitKDE(np.diag(eval0), bwidth=.01) # empirical pdf
+```
+
+</CH.Code>
+
+Figure 1 depicts the Marcenko-Pastur theorem.
+
+<LazyPlot {...VisualizationOfTheMP} plotType={"Line"} />
+
+## Signal Random Matrix
+
+Not all eigenvectors in an empirical correlation matrix are necessarily random. Because Code Snippet $2$ generates a covariance matrix that is not totally random, its eigenvalues will only approximate the Marcenko-Pastur PDF. Only numberFactors have some signal among the numberColumns random variables that comprise the covariance matrix formed by randomCov. To further dilute the signal, we combine it with a random matrix with an alpha weight.
+
+## Marcenko-Pastur Distribution Fitting
+
+In this case, we use the technique proposed by Laloux et al (2000). Because random eigenvectors only account for a portion of the variance, we may alter $\sigma^{2}$ in the previous equations accordingly. For example, if we assume that the eigenvector associated with the greatest eigenvalue is not random, we should substitute $\sigma^{2}$ in the earlier equations with $\sigma^{2}\left(1-\lambda_{+} / N\right)$. In reality, we may get the implied $\sigma^{2}$ by fitting the function $f[\lambda]$ to the empirical distribution of eigenvalues. This yields the variance explained by the random eigenvectors in the correlation matrix, as well as the cutoff level $\lambda_{+}$, adjusted for nonrandom eigenvectors.
+
+Snippet 3 applies the Marcenko-Pastur PDF on a random covariance matrix with the signal. The fit aims to identify the $\sigma^{2}$ value that minimizes the sum of squared discrepancies between the analytical PDF and the kernel density estimate (KDE) of the observed eigenvalues (for references on KDE, see Rosenblatt 1956; Parzen 1962). The value $\lambda_{+}$ is reported as eMax0, $\sigma^{2}$ is saved as var0, and the number of factors is retrieved as $numberFactors0$.
+
+
+### SNIPPET $2$ TO A RANDOM COVARIANCE MATRIX ADD SIGNAL
+
+<CH.Code>
+
+```julia
+function randomCov(
+    numberColumns, # number of columns
+    numberFactors # number of factors
+)
+    data = rand(Normal(), numberColumns, numberFactors) # random data
+    covData = data*data' # covariance of data
+    covData += Diagonal(rand(Uniform(), numberColumns)) # add noise to the matrix
+    return covData
+end
+
+function covToCorr(cov) # covariance matrix
+    std = sqrt.((diag(cov))) # standard deviations
+    corr = cov./(std.*std') # create correlation matrix
+    corr[corr .< -1] .= -1 # numerical error
+    corr[corr .> 1] .= 1 # numerical error
+    return corr
+end
+
+alpha, numberColumns, numberFactors, ratio = .995, 1000, 100, 10
+covv = cov(rand(Normal(0,1),numberColumns*ratio,numberColumns))
+covv = alpha*covv + (1 - alpha)*randomCov(numberColumns, numberFactors) # noise+signal
+corr0 = covToCorr(covv)
+eval0, evec0 = PCA(corr0);
+```
+
+```python
+def randomCov(
+    ncols, #
+    nfacts, #
+):
+    w = np.random.normal(size = (ncols, nfacts))
+    cov = np.dot(w, w.T) # random cov matrix, however not full rank
+    cov += np.diag(np.random.uniform(size = ncols)) # full rank cov
+    return cov
+
+def cov2Corr(cov): #
+    # Derive the correlation matrix from a covariance matrix
+    std = np.sqrt(np.diag(cov))
+    corr = cov/np.outer(std, std)
+    corr[corr < -1], corr[corr > 1] = -1, 1 # numerical error
+    return corr
+
+alpha, ncols, nfact, q=.995, 1000, 100, 10
+cov = np.cov(np.random.normal(size = (ncols*q, ncols)), rowvar = 0)
+cov = alpha*cov + (1 - alpha)*randomCov(ncols, nfact) # noise+signal
+corr0 = cov2Corr(cov)
+eval0, evec0 = PCA(corr0)
+```
+
+</CH.Code>
+
+<Typography variant={"h7"} textAlign={"center"}>
+    View More: <a style={{color: "purple", fontWeight: "bold"}}
+                  href="https://www.github.com/risklabai/RiskLabAI.jl">Julia</a> | <a
+    style={{color: "blue", fontWeight: "bold"}} href="https://www.github.com/risklabai/RiskLabAI.jl">Python</a>
+</Typography>
+
+### SNIPPET 3 FItTING THE MARCENKO–PASTUR PDF
+
+<CH.Code>
+
+```julia
+function errorPDFs(
+    var, # variance
+    eigenValues, # eigenvalues
+    ratio, # T/N
+    bandWidth; # band width for kernel
+    points = 1000 # points for pdfMarcenkoPastur
+)
+    pdf0 = pdfMarcenkoPastur(var, ratio, points) # theoretical pdf
+    pdf1 = KDE(eigenValues, bandWidth = bandWidth, kernel = Distributions.Normal, valuesForEvaluating = pdf0.index) # empirical pdf
+    sse = sum((pdf1.values .- pdf0.values).^2) # sum of squares of errors
+    return sse
+end
+
+function findMaxEval(
+    eigenValues, # eigenvalues
+    ratio, # T/N
+    bandWidth # band width for kernel
+)
+    out = optimize(var->errorPDFs(var, eigenValues, ratio, bandWidth), 1E-5, 1-1E-5) # minimize pdferrors
+    if Optim.converged(out) == true
+        var = Optim.minimizer(out) # variance that minimizes pdferrors
+    else
+        var = 1
+    end
+    λmax = var*(1 + (1/ratio)^.5)^2 # max random eigenvalue
+    return λmax, var
+end
+
+emax0, var0 = findMaxEval(diag(eval0), ratio, .01)
+numberFactors0 = size(eval0)[1] - searchsortedfirst(reverse(diag(eval0)), emax0) + 1
+```
+
+```python
+def errorPDFs(
+    var,
+    eval,
+    q,
+    bwidth,
+    pts = 1000
+):
+    # Fit error
+    pdf0 = marcenkoPasturPDF(var, q, pts) # theoretical pdf
+    pdf1 = fitKDE(eval, bwidth, x = pdf0.index.values) # empirical pdf
+    sse = np.sum((pdf1 - pdf0)**2)
+    return sse
+
+def findMaxEval(
+    eval,
+    q,
+    bwidth
+):
+    # Find max random eval by fitting Marcenko’s dist
+    out = minimize(lambda *x:errorPDFs(*x), .5, args = (eval, q, bwidth), bounds = ((1E-5 , 1-1E-5), ))
+    if out['success']:var = out['x'][0]
+    else:var = 1
+    emax = var*(1 + (1./q)**.5)**2
+    return emax, var
+
+emax0, var0 = findMaxEval(np.diag(eval0), q, bwidth = .01)
+nfacts0 = eval0.shape[0] - np.diag(eval0)[::-1].searchsorted(emax0)
+```
+
+</CH.Code>
+
+<figure>
+    <img
+        style={{
+            display: "block",
+            width: "50vw",
+            marginLeft: "auto",
+            marginRight: "auto",
+        }}
+        src="https://cdn.mathpix.com/cropped/2022_03_27_d078ac273c275b353eb5g-005.jpg?height=458&width=610&top_left_y=115&top_left_x=131"
+    />
+
+
+    <figcaption>
+        <span
+            style={{
+                textAlign: "center",
+            }}
+        >
+            Basic categories of financial data
+        </span>
+    </figcaption>
+</figure>
+
+Fitting the Marcenko-Pastur PDF to a noisy covariance matrix (Figure 2).
+
+
+Figure $2$ depicts the eigenvalue histogram and PDF of the fitted Marcenko-Pastur distribution. Eigenvalues to the right of the fitted Marcenko-Pastur distribution cannot be linked with noise. Hence they must be connected to the signal. The code returns 100 for $numberFactors0$, the same number of factors we injected into the covariance matrix. Despite a weak signal in the covariance matrix, the technique was able to distinguish the eigenvalues associated with noise from the eigenvalues associated with the signal. The fitted distribution predicts $\sigma^{2} \approx .6768$, implying that the signal accounts for just approximately $32.32 \%$ of the variance. This is one method of calculating the signal-to-noise ratio in financial data sets, which is well known to be poor due to arbitrage effects.
+
+## Denoise
+
+Shrinking a numerically ill-conditioned covariance matrix is popular in financial applications (Ledoit and Wolf 2004). Shrinkage minimizes the condition number of the covariance matrix by bringing it closer to a diagonal. Shrinkage, however, does this without distinguishing between noise and signal. As a result, shrinkage might amplify an already weak signal. In the previous section, we learned how to differentiate between eigenvalues associated with noise components and eigenvalues related to signal components. This section will look at how to use this information to denoise the correlation matrix.
+
+### Method of Constant Residual Eigenvalues
+
+This approach consists in setting a constant eigenvalue for all random eigenvectors. Let $\left\{\lambda_{n}\right\}_{n=1, \ldots, N}$ be the set of all eigenvalues, ordered descending, and $i$ be the position of the eigenvalue such that $\lambda_{i}>\lambda_{+}$and $\lambda_{i+1} \leq \lambda_{+}$. Then we set $\lambda_{j}=1 /(N-i) \sum_{k=i+1}^{N} \lambda_{k}, j=i+1, \ldots, N$, hence preserving the trace of the correlation matrix. Given the eigenvector decomposition $V W=W \Lambda$, we form the denoised correlation matrix $C_{1}$ as
+
+$$
+\begin{aligned}
+\widetilde{C}_{1} &=W \widetilde{\Lambda} W^{\prime} \\
+C_{1} &=\widetilde{C}_{1}\left[\left(\operatorname{diag}\left[\widetilde{C}_{1}\right]\right)^{\frac{1}{2}}\left(\operatorname{diag}\left[\widetilde{C}_{1}\right]\right)^{\frac{1^{\prime}}{2}}\right]^{-1},
+\end{aligned}
+$$
+
+The apostrophe (') transposes a matrix, and diag[.] zeroes all non-diagonal elements of a squared matrix. The second transformation is used to rescale the matrix $\widetilde{C}_{1}$ so that the major diagonal of $C_{1}$ is an array of $1 \mathrm{~s}$. This technique is implemented by Code Snippet $4$. Figure $3$ compares the logarithms of the eigenvalues before and after this denoising approach.
+
+### DENOISING SNIPPET 4 BY CONSTANT RESIDUAL EIGENVALUE
+
+
+<CH.Code>
+
+```julia Julia
+function denoisedCorr(eigenValues, # eigenvalues
+                      eigenVectors,  # eigenvectors
+                      numberFactors) # number of factors
+    λ = copy(diag(eigenValues)) # copy eigenvalues
+    λ[numberFactors:end] .= sum(λ[numberFactors:end])/(size(λ)[1] - numberFactors)
+    λdiag = Diagonal(λ) # diagonal matrix with λ
+    cov = eigenVectors * λdiag * eigenVectors' # covariance matrix
+    corr2 = covToCorr(cov) # correlation matrix
+    return corr2
+end
+
+corr1 = denoisedCorr(eval0, evec0, numberFactors0)
+eval1 , evec1 = PCA(corr1);
+```
+
+```python Python
+def denoisedCorr(eval, #
+                evec, #
+                nfacts): #
+    # Remove noise from corr by fixing random eigenvalues
+    eval_ = np.diag(eval).copy()
+    eval_[nfacts:] = eval_[nfacts:].sum()/float(eval_.shape[0] - nfacts)
+    eval_= np.diag(eval_)
+    corr1 = np.dot(evec,eval_).dot(evec.T)
+    corr1 = cov2Corr(corr1)
+    return corr1
+
+corr1 = denoisedCorr(eval0, evec0, nfacts0)
+eval1 , evec1 = PCA(corr1)
+```
+
+</CH.Code>
+
+<LazyPlot {...AComparisonOfEigenValue} plotType={"Line"} />
+
+Figure 3 compares eigenvalues before and after the residual eigenvalue approach was applied.
+
+
+### Shrinkage on Demand
+
+Because it reduces noise while keeping the signal, the numerical technique described previously is better for shrinkage. Alternatively, we might limit the shrinkage application to random eigenvectors. Take a look at the correlation matrix. $C_{1}$
+
+$$
+C_{1}=W_{L} \Lambda_{L} W_{L}^{\prime}+\alpha W_{R} \Lambda_{R} W_{R}^{\prime}+(1-\alpha) \operatorname{diag}\left[W_{R} \Lambda_{R} W_{R}^{\prime}\right]
+$$
+
+where $W_{R}$ and $\Lambda_{R}$ are the eigenvectors and eigenvalues associated with $\left\{n \mid \lambda_{n} \leq \lambda_{+}\right\}, W_{L}$ and $\Lambda_{L}$ are the eigenvectors and eigenvalues associated with $\left\{n \mid \lambda_{n}>\lambda_{+}\right\}$, and $\alpha$ regulates the amount of shrinkage among the eigenvectors and eigenvalues associated with noise ( $\alpha \rightarrow 0$ for total shrinkage). This technique is implemented by Code Snippet $5$. Figure $4$ compares the logarithms of the eigenvalues before and after this denoising approach.
+
+
+<figure>
+    <img
+        style={{
+            display: "block",
+            width: "50vw",
+            marginLeft: "auto",
+            marginRight: "auto",
+        }}
+        src="https://cdn.mathpix.com/cropped/2022_03_27_d078ac273c275b353eb5g-008.jpg?height=462&width=609&top_left_y=122&top_left_x=152"
+    />
+
+    <figcaption>
+        <span
+            style={{
+                textAlign: "center",
+            }}
+        >
+            Basic categories of financial data
+        </span>
+    </figcaption>
+</figure>
+
+Figure 4 compares eigenvalues before and after the targeted shrinking strategy was used.
+
+### DENOISING SNIPPET 5 BY TARGETED SHRINKAGE
+
+<CH.Code>
+
+```julia
+function denoisedCorrShrinkage(
+    eigenValues, # eigen values
+    eigenVectors, # eigen vectors
+    numberFactors; # number of factors
+    α = 0 # parameter for shrinkage
+)
+    eigenValuesL = eigenValues[1:numberFactors, 1:numberFactors] # divide eigenValues
+    eigenVectorsL = eigenVectors[:, 1:numberFactors] # divide eigenVectors
+    eigenValuesR = eigenValues[numberFactors:end, numberFactors:end] # divide eigenValues
+    eigenVectorsR = eigenVectors[:, numberFactors:end] # divide eigenVectors
+    corr0 = eigenVectorsL * eigenValuesL * transpose(eigenVectorsL) # correlation matrix 1
+    corr1 = eigenVectorsR * eigenValuesR * transpose(eigenVectorsR) # correlation matrix 2
+    corr2 = corr0 + α*corr1 + (1 - α)*diagm(diag(corr1)) # correlation matrix
+    return corr2
+end
+
+corr1 = denoisedCorrShrinkage(eval0, evec0, numberFactors0, α = .5)
+eval1 , evec1 = PCA(corr1);
+```
+
+```python
+def denoisedCorr2(
+    eval, #
+    evec, #
+    nfacts, #
+    alpha = 0
+): #
+    # Remove noise from corr through targeted shrinkage
+    evalL, evecL = eval[:nfacts, :nfacts], evec[:, :nfacts]
+    evalR, evecR = eval[nfacts:, nfacts:], evec[:, nfacts:]
+    corr0 = np.dot(evecL,evalL).dot(evecL.T)
+    corr1 = np.dot(evecR,evalR).dot(evecR.T)
+    corr2 = corr0 + alpha*corr1 + (1 -  alpha)*np.diag(np.diag(corr1))
+    return corr2
+
+corr1 = denoisedCorr2(eval0, evec0, nfacts0, alpha = .5)
+eval1 , evec1 = PCA(corr1)
+```
+</CH.Code>
+
+# <span style={{color: "red"}}> Until Here </span>
+
+## Detoning

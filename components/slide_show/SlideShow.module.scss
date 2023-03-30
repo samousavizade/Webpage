@@ -1,0 +1,108 @@
+
+.Banner {
+  height: 400px;
+  position: relative;
+
+  .Media {
+    background-color: white;
+    height: 100%;
+    overflow: hidden;
+
+    position: relative;
+
+    .MediaCaption {
+      text-overflow: ellipsis;
+
+      position: absolute;
+      bottom: 0;
+
+      padding: 15px;
+
+      background-color: black;
+      color: white;
+      opacity: 0.6;
+
+      width: 100%;
+      height: 10%;
+
+      font: {
+        size: large;
+        //size: $bigger-font-size;
+        weight: 200;
+      }
+
+      transition: 300ms;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+    }
+
+    transition: 300ms;
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(115%);
+    }
+  }
+
+  .BannerGrid {
+    height: 100%;
+    position: relative;
+  }
+
+  .Content {
+    color: white;
+    background-color: darkred;
+    //background-color: $dark-red;
+    height: 100%;
+
+    position: relative;
+
+    cursor: pointer;
+
+    padding: 30px;
+
+    transition: 300ms;
+
+    &:hover, &:active {
+      background-color: red;
+      //background-color: $dark-red-active;
+
+      .ViewButton {
+        background-color: white;
+        //background-color: $almost-white;
+        color: darkred;
+        //color: $dark-red
+      }
+    }
+
+    .Title {
+      font-size: large;
+      //font-size: $big-header-font-size;
+      font-weight: 500;
+      color: white;
+    }
+
+    .Caption {
+      margin-top: 10px;
+      font-size: x-small;
+      //font-size: $normal-font-size;
+      color: white;
+    }
+
+    .ViewButton {
+      margin-top: 40px;
+      color: white;
+
+      font-size: large;
+      //font-size: $header-font-size;
+      border: 3px solid white;
+      text-transform: capitalize;
+
+      transition: 200ms;
+    }
+  }
+}

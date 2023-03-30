@@ -1,0 +1,540 @@
+import {LazyPlot} from "@/components/article_page/plotly_figure";
+import {Typography} from "@mui/material";
+import StandardBarsFrequency from "./Standard Bars Frequency.json";
+import {useTheme} from "@mui/material";
+
+export const CyanSpan = ({children}) => {
+    const theme = useTheme();
+    return <span style={{color: theme.palette.secondary.main}}>
+        {children}
+    </span>
+}
+
+# Financial Bars
+
+## Financial Data Structures and Standard Financial Bars
+
+## What's the difference between <CyanSpan>structured and unstructured data</CyanSpan>?
+
+Most of the raw data present in the financial markets is unstructured: they do not follow a specific form and are not suitable to be used in models. On the other hand, structured data are organized into a predetermined form and are processed for consistency.
+Because the value of market inefficiencies is hidden in the unstructured form of data, we need to know how to work with them and transform them into a structured dataset that can be used by algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyze to generate relevant characteristics.
+
+## What are the most important <CyanSpan>types</CyanSpan> of financial data?
+
+This figure shows the four basic categories of financial data in increasing order of diversity from left to right.
+
+<figure>
+    <img
+        style={{
+            display: "block",
+            width: "50vw",
+            marginLeft: "auto",
+            marginRight: "auto",
+        }}
+        src="/static/articles_images/FinancialBars/typesOfData.png"
+    />
+
+
+    <figcaption>
+        <span
+            style={{
+                textAlign: "center",
+            }}
+        >
+            Basic categories of financial data
+        </span>
+    </figcaption>
+</figure>
+
+### Let us start with the most basic type: <CyanSpan>Fundamental data</CyanSpan>
+
+Fundamental data includes information found in balance sheet filings, business analytics, and accounting data that are reported quarterly. One major disadvantage of this data type is that it is reported with a delay. It would help if you validated if the data associated with a time stamp was available at that specific time: it is not always the case! After all, when your job is to compete with other intelligent humans, using this data set will not get you too far!
+
+You would be surprised that even Bloomberg, the most popular data provider in the financial industry, provides balance sheet data containing information unavailable at its associated time stamp. As a result, in factor-based investment research, many current findings cannot be replicated after the data is appropriately aligned.
+
+The second characteristic of fundamental data is that it is frequently backfilled or restored by assigning a value to missing data. Long after the initial publication, a corporation may release many corrections for a previous quarter's results, and data vendors may override the initial figures with their adjustments. The issue is that the data vendors do not warn their clients that sometimes they provide revised data after publication dates which are unknown at that time.
+
+Fundamental data is highly regularized and has a low frequency. Worst than than, given how easily accessible the fundamental data is, there is unlikely much value remaining to be exploited. Nonetheless, this data type may be valuable when combined with other types.
+
+
+###  After Fundamental Data, what is <CyanSpan>the second most widely used</CyanSpan> data type?
+
+We categorize any trading activity on an exchange or trading venue as Market Data: the second most common financial data. Every market player leaves a distinct imprint in their trade records, and with enough perseverance, you can predict a competitor's future actions and adversarial attacks. One valuable example of market data is Financial Information eXchange or FIX data: It is not straightforward to handle, but a considerable amount is created daily, which can be used to exploit information from the market. Compared to Fundamental Data, Market Data are more frequently reported, and the information they provide is usually more valuable.
+
+### How about processed data?
+
+We call them Analytics or Analytical Data which are data derived from an initial source that could be the fundamental, market, alternative, or even a collection of other analytics. What distinguishes analytics is not the content of the information but the fact that it is not readily available from an original source and has been processed for you in a particular manner. Investment banks and research organizations sell essential information from in-depth examinations of companies' businesses, operations, forecasts, and other internal and external investigations. With the advance of text mining techniques, some data vendors provide sentiments gathered from news articles and social media.
+
+The fact that the signal has been retrieved for you from a raw source is a benefit of analytics. The disadvantages are those analytics may be expensive, the methods used to create them might be biased or opaque, and you will not be the lone consumer. Therefore, you will be sharing the alpha with a number of your competitors if there is any value left.
+
+### We talked about Fundamental, Market, and Analytical data -  now let's talk about <CyanSpan>Alternative Data</CyanSpan>!
+
+Any data not classified as the three mentioned types we discussed is labeled Alternative Data, generated by humans, businesses, or sensors.
+There are numerous examples in this catch-all category: Social media & related sentiment data, news, online searches, online transactions, weather, CCTV, traffic activities, Twitter, satellite imagery, email receipt, app usage, and geo-location.
+
+Alternative data is distinguished by the fact that it is entirely raw and has not made it to other sources. Alternative Data information occurs months before the other data kinds are available. Like any other valuable resource, there is a catch here as well: The expense and the privacy concerns of the Alternative Data.
+
+Remember that unique, difficult-to-process, modify, and store datasets are always the most promising. Therefore, many hedge funds and banks invest heavily in their data infrastructure teams. It is like a marathon: a successful fund should continue using unstructured data until it makes sure it is clean and full of signals to create genuine positive value.
+
+## What are bars, and how do we get them?
+
+We need to parse your unstructured data, extract meaningful information from it, and store those extractions regularly before applying ML algorithms. Table rows are frequently referred to as "bars." by finance professionals. We may divide bar techniques into two categories: (1) basic bar methods found in the literature and (2) more advanced, information-driven approaches used by skilled practitioners but not found (yet) in journal publications.
+
+### What are the numerous sorts of standard bars and how do they differ?
+
+Some bar creation methods are so widespread in the financial business that most data suppliers' APIs include a variety of them. These approaches aim to convert an irregularly spaced series of observations (commonly referred to as a "inhomogeneous series") into a homogeneous series produced from regular sampling.
+
+#### What is the most commonly used Bars?
+
+We can create Time Bars by collecting data at regular intervals, such as once per minute. Typically, the information gathered includes:
+
+- Timestamp
+
+- Volume-weighted average price (VWAP)
+
+- Open (i.e., first) price
+
+- Close (i.e., last) price
+
+- High price
+
+- Low price
+
+- Volume traded, etc.
+
+Time bars are likely the most commonly used by practitioners and academics; however, we should avoid using them for two reasons. First, markets do not process information at a steady rate. The hour after the opening is significantly busier than the hour around noon (or the hour around midnight in the case of futures). Humans should plan their days following the solar cycle. However, today's markets are run by algorithms that trade with little human oversight, making CPU processing cycles far more critical than chronological intervals (Easley, López de Prado, and O'Hara [2011]). It means that time bars oversample information during periods of low activity and undersample information during periods of high activity. Second, time-sampled series frequently have poor statistical features such as serial correlation, heteroscedasticity, and return non-normality (Easley, López de Prado, and O'Hara [2012]). As we shall see later, generating bars as a subordinated process of trading activity overcomes this issue entirely. In Snippet 1, the function timeBar takes two arguments: the raw dataframe of tick data to be structured (tickData) and the frequency. This method returns a dataframe containing data organized throughout the same time period.
+
+
+<CH.Code>
+
+    ```julia Julia
+    function timeBar(
+        tickData,
+        frequency = 5
+    )::DataFrame
+    ```
+
+    ```python Python
+    def timeBar(
+        tickData:,
+        frequency: = "5Min"
+    ) -> : dataframe
+    ```
+
+</CH.Code>
+
+<Typography variant={"h7"} textAlign={"center"}>
+    View More: <a style={{color: "purple", fontWeight: "bold"}}
+                  href="https://www.github.com/risklabai/RiskLabAI.jl">Julia</a> | <a
+    style={{color: "blue", fontWeight: "bold"}} href="https://www.github.com/risklabai/RiskLabAI.jl">Python</a>
+</Typography>
+
+#### Tick Bars
+
+We can create tick barsThe previously mentioned sample variables (timestamp, VWAP, open price, etc.) will be retrieved each time a predefined number of transactions, e.g., 1,000 ticks, occur. This way, we can synchronize sampling with a proxy for information arrival (the speed at which ticks originated).
+
+Mandelbrot and Taylor [1967] were among the first to recognize that sampling as a function of the number of transactions had good statistical properties: "Price fluctuations over a fixed number of transactions may have a Gaussian distribution. Price fluctuations over a defined time period may follow a stable Paretian distribution with infinite variance. Because the amount of transactions in any given time period is random, the assertions above are not necessarily contradictory."'
+
+Multiple research has proven that sampling as a function of trading activity helps us to attain returns closer to IID Normal (Ané and Geman [2000]). This fact is significant because many statistical methods rely on the assumption that observations are derived from an IID Gaussian process. Intuitively, we can only draw inferences from an invariant random variable, and tick bars allow for more significant inferences than time bars.
+
+Many exchanges have an auction at the start and an auction at the end of the day. This indicates that the order book collects bids and offers for a length of time without matching them. When the auction closes, a significant deal is announced at the clearing price for a substantial sum. Even though it is recorded as one tick, this auction deal might be worth hundreds of ticks. So outliers must be avoided while creating tick bars. The function tickBar in Snippet 2 takes three arguments: the raw dataframe of tick data to be structured (tickData), the number of ticks in each bar (tickPerBar), and the number of bars to be structured (numberBars). This method returns a dataframe with data formatted with the same number of ticks in each bar.
+
+## Snippet 2 Create a Tick Bar
+
+
+<CH.Code>
+
+    ```julia Julia
+    function tickBar(
+        tickData, # dataframe of tick data
+        tickPerBar = 10, # number of ticks in each bar
+        numberBars = nothing # number of bars
+    )
+        # if tickPerBar is not mentioned, then calculate it with number of all ticks divided by number of bars
+        if tickPerBar == nothing
+            tickPerBar = floor(size(tickData)[1]/numberBars)
+        end
+        tickData[!, :groupingID] = [x÷tickPerBar for x in 0:size(tickData)[1] - 1] # generate groupingID column for division based on ticks
+        tickGrouped = copy(tickData)
+        dates = combine(DataFrames.groupby(tickGrouped, :groupingID), :dates => first => :dates) # combine dates
+        tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID) # group date times based on groupingID
+        ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on tickPerBar ticks
+        insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first
+        colDrop = [:groupingID]
+        ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID column
+        return ohlcvDataframe
+    end
+    ```
+
+    ```python Python
+    def tickBar(
+        tickData, # dataframe of tick data
+        tickPerBar = 10, # number of ticks in each bar
+        numberBars = None # number of bars
+    ):
+        # if tickPerBar is not mentioned, then calculate it with number of all ticks divided by number of bars
+        if not tickPerBar:
+            tickPerBar = int(tickData.shape[0]/numberBars)
+
+        tickGrouped = tickData.reset_index().assign(groupingID = lambda x: x.index//tickPerBar)
+        dates = tickGrouped.groupby('groupingID', as_index = False).first()['dates'] # group data sets based on ticks per
+        bar
+        tickDataGrouped = tickGrouped.groupby('groupingID')
+        ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on tick bars
+        ohlcvDataframe.set_index(dates, drop = True, inplace = True) # set dates column as index
+        return ohlcvDataframe
+    ```
+
+</CH.Code>
+
+#### Volume Bars
+
+
+One of the problems with tick bars is that order fragmentation introduces an arbitrary tick count. Assume there is just one order for a size 10 on the offer. If we purchase ten lots, our order will be recorded as one tick. If there are ten orders of size 1 on the offer, our one purchase will be recorded as ten different transactions. Also, for operational simplicity, matching engine procedures can break a single fill into many fake partial fills.
+
+We can avoid such an issue by creating Volume Bars, sampling each time a certain quantity of the security's units (shares, futures contracts, etc.) are traded. For example, regardless of the number of ticks involved, we could sample prices every time a futures contract trades 1,000 units.
+
+Back in the 1960s, suppliers rarely released volume statistics since buyers were more interested in tick pricing. Clark [1973] discovered that sampling returns by volume had superior statistical qualities (i.e., were closer to an IID Gaussian distribution) than sampling returns by tick bars. Another reason why volume bars are preferred over the two previously mentioned bars is that various market microstructure theories investigate the interplay between prices and volume. In Snippet 3, the function volumeBar takes three arguments: the raw dataframe of tick data to be strucurted (tickData), the volumes in each bar (volumePerBar), and the number of bars (numberBars). This method returns a dataframe containing data formatted with the same volumes per bar.
+
+## Snippet 3 Create a Volume Bar
+
+
+<CH.Code>
+
+    ```julia Julia
+    function volumeBar(
+        tickData, # dataframe of tick data
+        volumePerBar = 10000, # volumes in each bar
+        numberBars = nothing # number of bars
+    )
+        tickData[!, :volumecumulated] = cumsum(tickData.size) # cumulative sum of size(volume)
+        # if volumePerBar is not mentioned, then calculate it with all volumes divided by number of bars
+        if volumePerBar == nothing
+            totalVolume = tickData.volumecumulated[end]
+            volumePerBar = totalVolume/numberBars
+            volumePerBar = round(volumePerBar; sigdigits = 2) # round to the nearest hundred
+        end
+        tickData[!,:groupingID] = [x÷volumePerBar for x in tickData[!, :volumecumulated]] # generate groupingID column for
+        division based on volums
+        tickGrouped = copy(tickData)
+        dates = combine(DataFrames.groupby(tickGrouped, :groupingID),:dates => first => :dates) # combine dates based on Id
+        tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID) # group date times based on groupingID
+        ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on volumePerBar bars
+        insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first
+        colDrop = [:groupingID]
+        ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID column
+        return ohlcvDataframe
+    end
+    ```
+
+    ```python Python
+    def volumeBar(
+        tickData, # dataframe of tick data
+        volumePerBar = 10000, # volumes in each bar
+        numberBars = None # number of bars
+    ):
+
+        tickData['volumecumulated'] = tickData['size'].cumsum() # cumulative sum of size
+        # if volumePerBar is not mentioned, then calculate it with all volumes divided by number of bars
+        if not volumePerBar:
+            volumeTotal = tickData['volumecumulated'].values[-1]
+            volumePerBar = volumeTotal/numberBars
+            volumePerBar = round(volumePerBar, -2) # round to the nearest hundred
+
+        tickGrouped = tickData.reset_index().assign(groupingID = lambda x: x.volumecumulated//volumePerBar)
+        dates = tickGrouped.groupby('groupingID', as_index = False).first()['dates'] # groupe date times based on volume
+        tickDataGrouped = tickGrouped.groupby('groupingID')
+        ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on tick bars
+        ohlcvDataframe.set_index(dates, drop = True, inplace = True) # set dates column as index
+        return ohlcvDataframe
+    ```
+
+</CH.Code>
+
+#### Dollar Bars
+
+We can create Dollar bars by sampling an observation each time a predetermined market value is traded. Of course, the reference to dollars relates to the currency in which the security is denominated; however, no one speaks to euro bars, pound bars, or yen bars.
+
+To begin, imagine we want to examine a stock that has increased by 100% during a specific time period. Selling 1,000\$ worth of that stock at the conclusion of the term necessitates exchanging half the number of shares required to purchase 1,000\$ worth of that stock at the start. In other words, the number of shares traded is proportional to the amount of money transferred. As a result, when analyzing substantial price swings, it becomes helpful to sample bars in terms of dollar value traded rather than ticks or volume. When you compute tick and volume bars on E-mini S\&P 500 futures for a specific bar size, the number of bars each day varies dramatically over time. The range and speed of change will be minimized when you compute the number of dollar bars each day throughout the years with a consistent bar size. Figure $1$ depicts the exponentially weighted average number of bars per day when tick, volume, and dollar sampling techniques are used with fixed bar size.
+
+
+
+<LazyPlot {...StandardBarsFrequency} plotType={"Line"}/>
+
+FIGURE 1 Daily frequency of tick, volume, and dollar bars on average
+
+In Snippet 4, the function dollarBar takes three arguments: the raw dataframe of tick data to be structured (tickData), the amount of money in each bar (dollarPerBar), and the number of bars to construct structured data (numberBars). This method returns a dataframe with data formatted with the same dollars per bar.
+## Snippet 4: Create a Dollar Bar
+
+<CH.Code>
+
+    ```julia Julia
+    function dollarBar(
+        tickData, # dataframe of tick data
+        dollarPerBar = 100000, # dollars in each bar
+        numberBars = nothing # number of bars
+    )
+        tickData[!, :dollar] = tickData.price.*tickData.size # generate dollar column by multiplying price and size
+        tickData[!, :CumulativeDollars] = cumsum(tickData.dollar) # cumulative sum of dollars
+        # if dollarPerBar is not mentioned, then calculate it with dollars divided by number of bars
+        if dollarPerBar == nothing
+            dollarsTotal = tickData.CumulativeDollars[end]
+            dollarPerBar = dollarsTotal/numberBars
+            dollarPerBar = round(dollarPerBar; sigdigits = 2) # round to the nearest hundred
+        end
+        tickData[!, :groupingID] = [x÷dollarPerBar for x in tickData[!, :CumulativeDollars]] # generate groupingID column
+        for division based on dollars
+        tickGrouped = copy(tickData)
+        dates = combine(DataFrames.groupby(tickGrouped, :groupingID),:dates => first => :dates) # combine dates based on Id
+        tickDataGrouped = DataFrames.groupby(tickGrouped, :groupingID) # group date times based on groupingID
+        ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on volume_per_bar bars
+        insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first
+        colDrop = [:groupingID]
+        ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID column
+        return ohlcvDataframe
+    end
+    ```
+
+    ```python Python
+    def dollarBar(
+        tickData, # dataframe of tick data
+        dollarPerBar = 100000, # dollars in each bar
+        numberBars = None # number of bars
+    ):
+        tickData['dollar'] = tickData['price']*tickData['size'] # generate dollar column by multiplying price and size
+        tickData['DollarsCumulated'] = tickData['dollar'].cumsum() # cumulative sum of dollars
+        # if volume_per_bar is not mentioned, then calculate it with dollars divided by number of bars
+        if not dollarPerBar:
+            dollarsTotal = tickData['DollarsCumulated'].values[-1]
+            dollarPerBar = dollarsTotal/numberBars
+            dollarPerBar = round(dollarPerBar, -2) # round to the nearest hundred
+        tickGrouped = tickData.reset_index().assign(groupingID=lambda x: x.DollarsCumulated//dollarPerBar)
+        dates = tickGrouped.groupby('groupingID', as_index = False).first()['dates'] # group date times based on dollars
+        tickDataGrouped = tickGrouped.groupby('groupingID')
+        ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on tick bars
+        ohlcvDataframe.set_index(dates, drop = True, inplace = True) # set dates column as index
+        return ohlcvDataframe
+    ```
+
+</CH.Code>
+
+---
+
+## Information-Driven Bars
+
+### What are the benefits of Information-Driven bars?
+
+Information-driven bars aim to sample more frequently when new market information becomes available. The term "information" is used in this context in a market microstructural meaning. We may be able to make judgments before prices reach a new equilibrium level by synchronizing sampling with the arrival of educated traders. In this section, we will look at how to sample bars using various indices of information arrival.
+
+#### Tick Imbalance Bars
+
+Consider the following tick sequence $\left\{\left(p_{t}, v_{t}\right)\right\}_{t=1, \ldots, T}$, where $p_{t}$ is the price associated with tick $t$ and $v_{t}$ is the volume associated with tick $t$. The tick rule is defined as a sequence $\left\{b_{t}\right\}_{t=1, \ldots, T}$ where
+
+$$
+b_{t}= \begin{cases}b_{t-1} & \text { if } \Delta p_{t}=0 \\ \frac{\left|\Delta p_{t}\right|}{\Delta p_{t}} & \text { if } \Delta p_{t} \neq 0\end{cases}
+$$
+
+Using $b_{t} \in\{-1,1\}$, and the boundary condition $b_{0}$  is set to match the terminal value $b_{T}$ from the previous bar. Tick imbalance bars (TIBs) are designed to sample bars whenever tick imbalances surpass our expectations. We want to find the tick index, $T$, so that the total number of signed ticks (signed according to the tick rule) reaches a certain threshold. Let us now go through the technique for determining $T$.
+
+First, the tick imbalance at time $T$ is defined as
+
+$$
+\theta_{T}=\sum_{t=1}^{T} b_{t}
+$$
+
+Second, we calculate the predicted value of $\theta_{T}$ at the start of the bar.
+
+$$
+\mathrm{E}_{0}\left[\theta_{T}\right]= \mathrm{E}_{0}[T]\left(\mathrm{P}\left[b_{t}=1\right]-\mathrm{P}\left[b_{t}=-1\right]\right)
+$$
+
+, where $\mathrm{E}_{0}[T]$ is the expected size of the tick bar, $\mathrm{P}\left[b_{t}=1\right]$ is the unconditional probability that a tick is classified as a buy, and $\mathrm{P}\left[b_{t}=-1\right]$ is the unconditional probability that a tick is classified as a sell. Since $\mathrm{P}\left[b_{t}=1\right]+\mathrm{P}\left[b_{t}=-1\right]=1$, then $\mathrm{E}_{0}\left[\theta_{T}\right]=\mathrm{E}_{0}[T]\left(2 \mathrm{P}\left[b_{t}=1\right]-1\right)$. In practice, we may calculate $\mathrm{E}_{0}[T]$ as an exponentially weighted moving average of $T$ values from previous bars, and $\left(2 \mathrm{P}\left[b_{t}=1\right]-1\right)$ as an exponentially weighted moving average of $b_{t}$ values from previous bars.
+
+
+
+Third, a tick imbalance bar (TIB) is defined as a $T^{*}$-contiguous subset of ticks that satisfy the following condition:
+
+$$
+T^{*}=\underset{T}{\arg \min }\left\{\left|\theta_{T}\right| \geq \mathrm{E}_{0}[T]\left|2 \mathrm{P}\left[b_{t}=1\right]-1\right|\right\}
+$$
+
+
+where $\left|2 \mathrm{P}\left[b_{t}=1\right]-1\right|$ indicates the magnitude of the predicted imbalance. A low $T$ will meet these requirements when $\theta_{T}$ is more unbalanced than predicted. As a result, in the presence of informed trade, TIBs are created more frequently (asymmetric information that triggers one-side trading). In fact, we may think of TIBs as buckets of deals with equal quantities of information (regardless of the volumes, prices, or ticks traded).
+
+
+#### Volume/Dollar Imbalance Bars
+
+Volume imbalance bars (VIBs) and dollar imbalance bars (DIBs) are designed to expand on the notion of tick imbalance bars (TIBs). We'd want to sample bars when volume or dollar imbalances differ from what we predict. We will develop a process to find the index of the next sample, $T$, based on the same tick rule and boundary condition $b_{0}$ concepts as we described for TIBs.
+
+First, we define the time $T$ imbalance as
+
+$$
+\theta_{T}=\sum_{t=1}^{T} b_{t} v_{t}
+$$
+
+where $v_{t}$ might be either the number of securities traded (VIB) or the dollar amount transacted (DIB).
+
+Second, we calculate the predicted value of $\theta_{T}$ at the start of the bar.
+
+$$
+\begin{aligned}
+\mathrm{E}_{0}\left[\theta_{T}\right]=& \mathrm{E}_{0}\left[\sum_{t \mid b_{t}=1}^{T} v_{t}\right]-\mathrm{E}_{0}\left[\sum_{t \mid b_{t}=-1}^{T} v_{t}\right] \\
+=& \mathrm{E}_{0}[T]\left(\mathrm{P}\left[b_{t}=1\right] \mathrm{E}_{0}\left[v_{t} \mid b_{t}=1\right]\right. \left.-\mathrm{P}\left[b_{t}=-1\right] \mathrm{E}_{0}\left[v_{t} \mid b_{t}=-1\right]\right)
+\end{aligned}
+$$
+
+Let us define
+
+$$
+v^{+}=\mathrm{P}\left[b_{t}=1\right] \mathrm{E}_{0}\left[v_{t} \mid b_{t}=1\right]
+$$
+
+$$
+v^{-}=\mathrm{P}\left[b_{t}=-1\right] \mathrm{E}_{0}\left[v_{t} \mid b_{t}=-1\right]
+$$
+
+, so that
+
+$$
+\mathrm{E}_{0}[T]^{-1} E_{0}\left[\sum_{t} v_{t}\right]=\mathrm{E}_{0}\left[v_{t}\right]=v^{+}+v^{-}
+$$
+
+$v^{+}$ and $v^{-}$ can be thought as dissecting the original expectation of $v_{t}$ into the component supplied by buys and the component contributed by sells. Then
+
+$$
+\mathrm{E}_{0}\left[\theta_{T}\right]=\mathrm{E}_{0}[T]\left(v^{+}-v^{-}\right)=\mathrm{E}_{0}[T]\left(2 v^{+}-\mathrm{E}_{0}\left[v_{t}\right]\right)
+$$
+
+In practice, $\mathrm{E}_{0}[T]$ may be estimated as an exponentially weighted moving average of $T$ values from past bars, and $\left(2 v^{+}-\mathrm{E}_{0}\left[v_{t}\right]\right)$ as an exponentially weighted moving average of $b_{t} v_{t}$ values from prior bars.
+
+Finally, we define VIB or DIB as a $T^{*}$-contiguous subset of ticks that satisfy the following condition:
+
+$$
+T^{*}=\underset{T}{\arg \min }\left\{\left|\theta_{T}\right| \geq \mathrm{E}_{0}[T]\left|2 v^{+}-\mathrm{E}_{0}\left[v_{t}\right]\right|\right\}
+$$
+
+where $\left|2 v^{+}-\mathrm{E}_{0}\left[v_{t}\right]\right|$ indicates the magnitude of the predicted imbalance. A low $T$ will meet these requirements when $\theta_{T}$ is more unbalanced than predicted. This is the information-based equivalent of volume and dollar bars, and it tackles the same problems with tick fragmentation and outliers as its predecessors. Furthermore, because the preceding technique does not rely on a fixed bar size and the bar size is dynamically modified, it solves the issue of corporate actions.
+
+In Snippet 5, the function tickBar takes three arguments: the raw dataframe of tick data to be structured (tickData), the kind of structure, such as tick, volume, or dollar, and the starting anticipated value of number of ticks. This function's result is a dataframe with data constructed depending on information.
+
+## Snippet 5 Create an Info Bar
+
+<CH.Code>
+
+```julia Julia
+function infoBar(tickData, # dataframe of tick data
+                 type::String = "volume", # choose "tick", "volume" or "dollar" types
+                 tickExpectedInit = 2000 # The value of the expected tick
+)
+    if type == "volume"
+        inputData = tickData.volumelabeled # use volume column with sign of log return in same day
+    elseif type == "tick"
+        inputData = tickData.label # use sign of log return column
+    elseif type == "dollar"
+        inputData = tickData.dollars # use the value of price * volume with sign of log return
+    else
+        println("Error: unknown type")
+    end
+    barExpectedValue = abs(mean(inputData)) # expected value of inputData
+    Δtimes, θabsolute, thresholds, times, θs, groupingID = grouping(inputData, tickExpectedInit, barExpectedValue) # calculate thresholds
+    tickData[!,:groupingID] = groupingID # generate groupingID column
+    dates = combine(DataFrames.groupby(tickData, :groupingID),:dates => first => :dates) # combine dates by grouping based on Id
+    tickDataGrouped = DataFrames.groupby(tickData, :groupingID) # groupe date times based on groupingID
+    ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on bars
+    insertcols!(ohlcvDataframe, 1, :dates => dates.dates) # set date column first
+    colDrop = [:groupingID]
+    ohlcvDataframe = select!(ohlcvDataframe, Not(colDrop)) # drop groupingID
+    return ohlcvDataframe, θabsolute, thresholds
+end
+```
+
+```python Python
+def infoBar(tickData, # dataframe of tick data
+            type = "volume", # User can choose between "tick", "volume" or "dollar" imbalanced bars
+            tickExpectedInit = 2000 # The value of tickExpectedInit
+):
+    if type == "volume":
+        inputData = tickData['volumelabeled'] # use volume column with sign of log return in same day
+    elif type == "tick":
+        inputData = tickData['label'] # use sign of log return column
+    elif type == "dollar":
+        inputData = tickData['dollarslabeled'] # use the value of price*volume with sign of log return
+    else:
+        print("Error")
+    barExpectedValue = np.abs(inputData.mean()) # expected value of b
+    timesDelta, thetasAbsolute, thresholds, times, thetas, groupingID = grouping(inputData, tickExpectedInit, barExpectedValue) # calculate thresholds
+    tickGrouped = tickData.reset_index().assign(groupingID = groupingID) # group based on groupingID
+    dates = tickGrouped.groupby('groupingID', as_index = False).first()['dates']
+    tickDataGrouped = tickGrouped.groupby('groupingID')
+    ohlcvDataframe = ohlcv(tickDataGrouped) # create a dataframe based on bars
+    ohlcvDataframe.set_index(dates, drop = True, inplace = True)  # set index
+    return ohlcvDataframe, thetasAbsolute, thresholds
+```
+
+</CH.Code>
+
+### Tick Runs Bars
+
+Order flow imbalance, as measured by ticks, volumes, and dollar values transferred, is monitored by TIBs, VIBs, and DIBs. Large traders will sweep the order book, employ iceberg orders, or split a parent order into several children, leaving a trail of runs in the $\left\{b_{t}\right\}_{t=1, \ldots, T}$ sequence. As a result, monitoring the sequence of buys in the total volume and taking samples when that sequence deviates from our expectations might be beneficial.
+
+
+First, we define the current run's length as
+
+$$
+\theta_{T}=\max \left\{\sum_{t \mid b_{t}=1}^{T} b_{t},-\sum_{t \mid b_{t}=-1}^{T} b_{t}\right\}
+$$
+
+Second, we calculate the predicted value of $\theta_{T}$ at the start of the bar.
+
+$$
+\mathrm{E}_{0}\left[\theta_{T}\right]=\mathrm{E}_{0}[T] \max \left\{\mathrm{P}\left[b_{t}=1\right], 1-\mathrm{P}\left[b_{t}=1\right]\right\}
+$$
+
+In practice, $\mathrm{E}_{0}[T]$ may be estimated as an exponentially weighted moving average of $T$ values from past bars, and $\mathrm{P}\left[b_{t}=1\right]$ as an exponentially weighted moving average of the proportion of buy ticks from earlier bars.
+
+Third, a tick runs bar (TRB) is defined as a $T^{*}$-contiguous subset of ticks that satisfy the following condition:
+
+$$
+T^{*}=\underset{T}{\arg \min }\left\{\theta_{T} \geq \mathrm{E}_{0}[T] \max \left\{\mathrm{P}\left[b_{t}=1\right], 1-\mathrm{P}\left[b_{t}=1\right]\right\}\right\}
+$$
+
+where $\max \left\{\mathrm{P}\left[b_{t}=1\right]\right.$, $\left.1-\mathrm{P}\left[b_{t}=-1\right]\right\}$ indicates the anticipated number of ticks from runs. A low $T$ will meet these requirements when $\theta_{T}$ displays more runs than predicted. It is worth noting that we allow for sequence breaks in our definition of runs. That is, rather of counting the number of ticks on each side, we count the number of ticks on each side without offsetting them (no imbalance). This term is more relevant in the context of constructing bars than measuring sequence lengths.
+
+#### Volume/Dollar Runs Bars
+
+Volume runs bars (VRBs) and dollar runs bars (DRBs) apply the notion mentioned above of runs to the volumes and dollars traded, respectively. We should sample bars if one side's volumes or dollars traded surpass our estimate for a bar. Using our standard tick rule terminology, we must find the index $T$ of the final observation in the bar. First, the quantities or money connected with a run are defined as
+
+$$
+\theta_{T}=\max \left\{\sum_{t \mid b_{t}=1}^{T} b_{t} v_{t},-\sum_{t \mid b_{t}=-1}^{T} b_{t} v_{t}\right\}
+$$
+
+where $v_{t}$ denotes either the number of securities traded (VRB) or the dollar amount exchanged (DRB). Your selection of $v_{t}$ decides whether you sample according to the former or the latter.
+
+Second, we calculate the predicted value of $\theta_{T}$ at the start of the bar.
+
+$$
+\mathrm{E}_{0}\left[\theta_{T}\right]=\mathrm{E}_{0}[T] \max \left\{\mathrm{P}\left[b_{t}=1\right] \mathrm{E}_{0}\left[v_{t} \mid b_{t}=1\right],\left(1-\mathrm{P}\left[b_{t}=1\right]\right) \mathrm{E}_{0}\left[v_{t} \mid b_{t}=-1\right]\right\}
+$$
+
+In reality, we can calculate $\mathrm{E}_{0}[T]$ as an exponentially weighted moving average of previous bars' $T$ values, $\mathrm{P}\left[b_{t}=1\right]$ as an exponentially weighted moving average of the proportion of buy ticks from prior bars, $\mathrm{E}_{0}\left[v_{t} \mid b_{t}=1\right]$ as an exponentially weighted moving average of past bar buy volumes, and $\mathrm{E}_{0}\left[v_{t} \mid b_{t}=-1\right]$ as an exponentially weighted moving average of previous bar sale volumes.
+
+Third, a volume runs bar (VRB) is defined as a $T^{*}$-contiguous subset of ticks that satisfy the following condition:
+
+$$
+\begin{aligned}
+T^{*}=\underset{T}{\arg \min }\left\{\theta_{T} \geq \mathrm{E}_{0}[T] \max \left\{\mathrm{P}\left[b_{t}=1\right] \mathrm{E}_{0}\left[v_{t} \mid b_{t}=1\right],\right.\right.
+\left.\left.\left(1-\mathrm{P}\left[b_{t}=1\right]\right) \mathrm{E}_{0}\left[v_{t} \mid b_{t}=-1\right]\right\}\right\}
+\end{aligned}
+$$
+
+where the expected volume from runs is implied by
+
+$$
+\max \left\{\mathrm{P}\left[b_{t}=1\right] \mathrm{E}_{0}\left[v_{t} \mid b_{t}=1\right]\right., \left.\left(1-\mathrm{P}\left[b_{t}=1\right]\right) \mathrm{E}_{0}\left[v_{t} \mid b_{t}=-1\right]\right\}
+$$
+
+A low $T$ will meet these requirements when $\theta_{T}$ displays more runs than expected or the volume of runs is bigger than predicted.
+
+---
+
+## Multi-product Series

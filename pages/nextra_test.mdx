@@ -1,0 +1,54 @@
+
+| left   | center | right |
+| :----- | :----: | ----: |
+| foo    |  bar   |   baz |
+| banana | apple  |  kiwi |
+
+- [x] Write the press release
+- [ ] Update the website
+- [ ] Contact the media
+
+```python hello.py
+print("Rendered with Code Hike")
+```
+# Just testing out [Code Hike](https://codehike.org/)
+
+Some normal `markdown`
+
+## Annotation Example
+```js index.js box=1[25:39]
+console.log("Some code. I am annotated!")
+```
+
+## Focus Example
+```js next.config.js focus=1:2,7
+const { remarkCodeHike } = require("@code-hike/mdx");
+const theme = require("shiki/themes/monokai.json");
+
+const withMDX = require("@next/mdx")({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [[remarkCodeHike, { theme }]],
+    rehypePlugins: [],
+  },
+});
+
+module.exports = withMDX({
+  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+});
+```
+
+<CH.Section>
+
+    ## Code Links Example
+
+    We are looking at the [console.log](focus://console.js#2) function today
+
+    <CH.Code>
+        ```js console.js
+        console.table(["Hello", "World"])
+        console.log("Hello World")
+        ```
+    </CH.Code>
+
+</CH.Section>
