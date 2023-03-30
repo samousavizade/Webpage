@@ -15,6 +15,8 @@ export async function getStaticProps(staticProps) {
         return item.id === intendedArticleId // dynamic page id
     });
 
+    console.log("currentArticle: ", article.title)
+
     const featuredArticles = articles.filter((item) => {
         let n = (Math.abs(item.id - intendedArticleId) % articles.length)
         return n >= 1 && n <= 3;
@@ -29,14 +31,24 @@ export async function getStaticProps(staticProps) {
 }
 
 export function getStaticPaths() {
+
+    const articles = fetchArticles();
+
     return {
-        paths: [
-            {params: {article_id: "0"}},
-            {params: {article_id: "1"}},
-            {params: {article_id: "2"}},
-        ],
+        paths: articles.map((item) => {
+            return {params: {article_id: `${item.article_id}`}}
+        }),
         fallback: true
     }
+
+    // return {
+    //     paths: [
+    //         {params: {article_id: "0"}},
+    //         {params: {article_id: "1"}},
+    //         {params: {article_id: "2"}},
+    //     ],
+    //     fallback: true
+    // }
 }
 
 const ArticleComponent = ({intendedArticle, featuredArticles}) => {
@@ -53,6 +65,8 @@ const ArticleComponent = ({intendedArticle, featuredArticles}) => {
         return <Loading />
 
     }
+
+    console.log("currentArticle In Client", intendedArticle.title)
 
     return (
         // <>

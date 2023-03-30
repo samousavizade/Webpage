@@ -86,8 +86,6 @@ export default function ArticlesGridComponent({articlesList, authorsList, onClic
     }
 
 
-    console.log("nColumns", nColumns)
-    console.log("columnsItems", columnsItems)
 
     return (
         <Box
@@ -102,11 +100,12 @@ export default function ArticlesGridComponent({articlesList, authorsList, onClic
                 {
                     columnsItems.map( (items, columnIndex) => {
                         return (
-                            <Stack direction={"column"} spacing={2} width={1/3} key={columnIndex}>
+                            <Stack direction={"column"} spacing={2} width={1/nColumns} key={columnIndex}>
                                 {
                                     items.map( (item, rowIndex) => {
                                         return (
                                             <ArticlesGridItemComponent
+                                                key={item.article_ida}
                                                 article={item}
                                                 onClickLike={handleClickLike}
                                             />

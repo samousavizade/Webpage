@@ -1,15 +1,29 @@
 import * as React from "react";
 import {Avatar, Box, CardHeader, Chip, Divider, Grid, Paper, Typography, useMediaQuery, useTheme,} from "@mui/material";
 import FeaturedArticleComponent from "./featured_article_component";
-import Ensemble from "./mdx_sources/Ensemble/ensemble_learning.mdx"
-import FinancialBars from "./mdx_sources/FinancialBars/financial_bars.mdx"
-import SampleWeights from "./mdx_sources/SampleWeights/sample_weights.mdx"
-import FeatureImportance from "./mdx_sources/FeatureImportance/feature_importance.mdx"
-import DangersOfBacktesting from "./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"
-import Denoising from "./mdx_sources/Denoising/denoising.mdx"
 import Head from "next/head";
 import Image from "next/image";
 import Tag from "@mui/icons-material/Tag";
+import dynamic from 'next/dynamic'
+// import Ensemble from "./mdx_sources/Ensemble/ensemble_learning.mdx"
+// import FinancialBars from "./mdx_sources/FinancialBars/financial_bars.mdx"
+// import SampleWeights from "./mdx_sources/SampleWeights/sample_weights.mdx"
+// import FeatureImportance from "./mdx_sources/FeatureImportance/feature_importance.mdx"
+// import DangersOfBacktesting from "./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"
+// import Denoising from "./mdx_sources/Denoising/denoising.mdx"
+
+const CrossValidation = dynamic(() => import("./mdx_sources/CrossValidation/cross_validation.mdx"), {ssr: false});
+const DangersOfBacktesting = dynamic(() => import("./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx"), {ssr: false});
+const Denoising = dynamic(() => import("./mdx_sources/Denoising/denoising.mdx"), {ssr: false});
+const Ensemble = dynamic(() => import("./mdx_sources/Ensemble/ensemble_learning.mdx"), {ssr: false});
+const EntropyFeatures = dynamic(() => import("./mdx_sources/EntropyFeatures/entropy_features.mdx"), {ssr: false});
+const FeatureImportance = dynamic(() => import("./mdx_sources/FeatureImportance/feature_importance.mdx"), {ssr: false});
+const FinancialBars = dynamic(() => import("./mdx_sources/FinancialBars/financial_bars.mdx"), {ssr: false});
+const MicrostructuralBreaks = dynamic(() => import("./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx"), {ssr: false});
+const PortfolioConstruction = dynamic(() => import("./mdx_sources/PortfolioConstruction/portfolio_construction.mdx"), {ssr: false});
+const SampleWeights = dynamic(() => import("./mdx_sources/SampleWeights/sample_weights.mdx"), {ssr: false});
+const StructuralBreaks = dynamic(() => import("./mdx_sources/StructuralBreaks/structural_breaks.mdx"), {ssr: false});
+const Labeling = dynamic(() => import("./mdx_sources/Labeling/labeling.mdx"), {ssr: false});
 
 const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
 
@@ -33,7 +47,51 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
         nFeaturedArticles = 4;
     }
 
-    let headerHeightWhileScreenGreaterThanMD = 350;
+    let headerHeightWhileScreenGreaterThanMD = 450;
+    console.log("intendedArticle.content_md_file", intendedArticle.title)
+
+
+    let MDXComponent = undefined;
+    switch (intendedArticle.content_md_file) {
+        case "./mdx_sources/CrossValidation/cross_validation.mdx":
+            MDXComponent = CrossValidation;
+            break;
+        case "./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx":
+            MDXComponent = DangersOfBacktesting;
+            break;
+        case "./mdx_sources/Denoising/denoising.mdx":
+            MDXComponent = Denoising;
+            break;
+        case "./mdx_sources/Ensemble/ensemble_learning.mdx":
+            MDXComponent = Ensemble;
+            break;
+        case "./mdx_sources/EntropyFeatures/entropy_features.mdx":
+            MDXComponent = EntropyFeatures;
+            break;
+        case "./mdx_sources/FeatureImportance/feature_importance.mdx":
+            MDXComponent = FeatureImportance;
+            break;
+        case "./mdx_sources/FinancialBars/financial_bars.mdx":
+            MDXComponent = FinancialBars;
+            break;
+        case "./mdx_sources/Labeling/labeling.mdx":
+            MDXComponent = Labeling;
+            break;
+        case "./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx":
+            MDXComponent = MicrostructuralBreaks;
+            break;
+        case "./mdx_sources/PortfolioConstruction/portfolio_construction.mdx":
+            MDXComponent = PortfolioConstruction;
+            break;
+        case "./mdx_sources/SampleWeights/sample_weights.mdx":
+            MDXComponent = SampleWeights;
+            break;
+        case "./mdx_sources/StructuralBreaks/structural_breaks.mdx":
+            MDXComponent = StructuralBreaks;
+            break;
+
+    }
+
     return (
         <>
             <Head>
@@ -128,7 +186,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                                     variant="outlined"
                                     key={item}
                                     label={<Typography variant={"subtitle2"}>{item}</Typography>}
-                                    icon={<Tag />}
+                                    icon={<Tag/>}
                                     // size={}
                                     color={"primary"}
                                     onClick={() => console.log("click on " + item)}
@@ -227,7 +285,8 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                             {/*<SampleWeights />*/}
                             {/*<FeatureImportance />*/}
                             {/*<DangersOfBacktesting />*/}
-                            <Denoising />
+                            {/*<Denoising />*/}
+                            <MDXComponent/>
                         </div>
 
                     </Grid>

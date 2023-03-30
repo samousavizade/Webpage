@@ -8,11 +8,8 @@ import {grey} from "@mui/material/colors";
 export function AnimatedBookIcon() {
     const theme = useTheme()
 
-    console.log(rgbToHex(theme.palette.primary.light))
-
-
     return <>
-        <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+        <script src="https://cdn.lordicon.com/ritcuqlt.js" defer></script>
         <lord-icon
             src="https://cdn.lordicon.com/wxnxiano.json"
             trigger="morph"
@@ -27,9 +24,6 @@ export function AnimatedBookIcon() {
 
 export function AnimatedHomeIcon() {
     const theme = useTheme()
-
-    console.log(rgbToHex(theme.palette.primary.light))
-
 
     return <>
         <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>

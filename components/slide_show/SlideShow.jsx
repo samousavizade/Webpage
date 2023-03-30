@@ -53,8 +53,6 @@ const Banner = (props) => {
     const theme = useTheme();
     const {materials, contentPosition, key} = props;
 
-    console.log("props.key", props.key)
-
     let items = [];
 
     const block = (

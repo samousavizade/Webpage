@@ -55,6 +55,8 @@ const About = () => {
         },
     ];
 
+    const iconSize = responsiveIconSize(useBreakpoint())
+
 
     return (
         <Grid container spacing={2} padding={3}>
@@ -107,7 +109,7 @@ const About = () => {
                                         text={item.title}
                                         icon={item.icon}
                                         to={item.to}
-                                        sx={{fontSize: responsiveIconSize(useBreakpoint())}}
+                                        sx={{fontSize: iconSize}}
                                     />
                                 );
                             })}

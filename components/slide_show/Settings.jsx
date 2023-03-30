@@ -35,8 +35,6 @@ const Settings = ({settings, setSettings}) => {
 
     /** Default function for Sliders */
     const slider = (event, value) => {
-        console.log(event);
-        console.log(value);
         setSettings({
             ...settings,
             [event.target.name]: value

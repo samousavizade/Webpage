@@ -12,7 +12,7 @@ const articlesList = [
         "September 14, 2016",
         TAG.FIN_ML,
         ["Information Driven Bars", "Imbalance Bars", "Run Bars", "Standard Bars", "ETF-Trick", "PCA Weights", "Future Roll"],
-        "./article_page/src/articles/Finanical Bars.md",
+        "./mdx_sources/FinancialBars/financial_bars.mdx",
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         5,
         false
@@ -27,7 +27,7 @@ const articlesList = [
         "September 14, 2020",
         TAG.FIN_ML,
         ["Fixed Time Horizon", "Tripple-Barrier", "Meta Labeling", "Volatility Estimate", "False Positive", "False Negative",],
-        "./article_page/src/articles/Labeling.md",
+        "./mdx_sources/Labeling/labeling.mdx",
         "We spoke about how to create a $X$-dimensional matrix of financial variables from an unstructured dataset. Unsupervised learning algorithms can learn patterns from that matrix $X$, such as whether or not it has hierarchical clusters. Supervised learning techniques, on the other hand, require that the rows in $X$ be associated with an array of labels or values $y$, so that those labels or values may be predicted on unseen feature samples. We'll talk about how to classify financial data in this section.",
         5,
         true
@@ -42,7 +42,8 @@ const articlesList = [
         "November 14, 2016",
         TAG.FIN_ML,
         ["MDI", "MDA", "SFI", "Orthogonal Features", "Substitution Effect", "Backtesting",],
-        "./article_page/src/articles/Feature Importance.md",
+        "./mdx_sources/FeatureImportance/feature_importance.mdx",
+
         "One of the most common errors in financial research is taking some data, running it through an ML algorithm, backtesting the predictions, and repeating the process until a nice-looking backtest appears. Such pseudo-discoveries abound in academic journals, and even significant hedge funds are prone to falling into this trap. It makes no difference if the backtest is an out-of-sample walk-forward. The fact that we are repeating a test on the same data will almost certainly result in a false discovery. This methodological error is so well-known among statisticians that the American Statistical Association warns against it in its ethical guidelines (American Statistical Association [2016], Discussion #4). It usually takes around 20 iterations to find a (false) investment strategy with a standard significance level (false positive rate) of 5%.",
         4,
         false
@@ -57,7 +58,8 @@ const articlesList = [
         "November 28, 2020",
         TAG.FIN_ML,
         ["Overfitting", "Generalization", "HPO", "Purged K-fold", "Embargo", "Backtesting", "CV In Finance"],
-        "",
+        "./mdx_sources/CrossValidation/cross_validation.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
 
         4,
@@ -73,7 +75,7 @@ const articlesList = [
         "November 15, 2022",
         TAG.FIN_ML,
         ["Sources Of Errors", "Bias-Variance Decompositon", "Bagging", "Variance Reduction", "Random Forest", "Boosting", "Bagging Scalability"],
-        "",
+        "./mdx_sources/Ensemble/ensemble_learning.mdx",
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         4,
         false
@@ -87,7 +89,8 @@ const articlesList = [
         "November 15, 2022",
         TAG.FIN_ML,
         ["IID Assumption", "Overlapping Outcomes", "Time Decay", "Sequential Bootstrap", "Indicator Matrix", "MCMC"],
-        "",
+        "./mdx_sources/SampleWeights/sample_weights.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         4,
         false
@@ -101,7 +104,8 @@ const articlesList = [
         "November 15, 2022",
         TAG.FIN_ML,
         ["Marcenko–Pastur", "Signal/Noise Ratio", "MV Portfolio", "M SR Portfolio", "Targeted Shrinkage"],
-        "",
+        "./mdx_sources/Denoising/denoising.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         4,
         false
@@ -115,7 +119,8 @@ const articlesList = [
         "November 15, 2022",
         TAG.FIN_ML,
         ["Flawless Backtest", "Bias Types", "Strategy Selection", "Selection Bias", "CS-CV"],
-        "",
+        "./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         3,
         false
@@ -129,7 +134,8 @@ const articlesList = [
         "October 11, 2021",
         TAG.FIN_ML,
         ["CUSUM Test", "Explosiveness Test", "S-ADF Test", "Martingale Test", "Recursive Residuals"],
-        "",
+        "./mdx_sources/StructuralBreaks/structural_breaks.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
 
         12,
@@ -144,7 +150,8 @@ const articlesList = [
         "December 15, 2021",
         TAG.FIN_ML,
         ["Shannon's Entropy", "Plug-In", "Lempel-Ziv", "Generalized Mean", "Market Efficiency"],
-        "",
+        "./mdx_sources/EntropyFeatures/entropy_features.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         6,
         false
@@ -158,7 +165,8 @@ const articlesList = [
         "October 11, 2021",
         TAG.FIN_ML,
         ["Tick Rule", "Roll Model", "Corwin & Schultz", "Kyle's Lambda", "Amihud's Lambda", "Hasbrouck’s Lambda", "V-PIN"],
-        "",
+        "./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         12,
         false
@@ -172,7 +180,8 @@ const articlesList = [
         "February 11, 2019",
         TAG.FIN_ML,
         ["MV Unstability", "Inverse Variance", "Condition Number", "Markowitz’s Curse", "HRP", "NCO"],
-        "TODO:TODO:TODO:TODO:TODO:TODO:TODO:TODO:",
+        "./mdx_sources/PortfolioConstruction/portfolio_construction.mdx",
+
         "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
         3,
         false

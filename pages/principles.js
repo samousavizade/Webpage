@@ -18,8 +18,6 @@ export async function getStaticProps() {
         }
     })
 
-    console.log("mamad", myPrinciples);
-
     return {
         props: {
             myPrinciples: myPrinciples,

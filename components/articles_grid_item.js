@@ -102,10 +102,11 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
                     </AccordionSummary>
                     <AccordionDetails>
                         <ReactMarkdown
-                            children={summaryMarkdown}
                             remarkPlugins={[remarkGfm, remarkMath]}
                             rehypePlugins={[rehypeKatex]}
-                        />
+                        >
+                            {summaryMarkdown}
+                        </ReactMarkdown>
 
                         <Divider variant="middle" sx={{marginY: 1}}/>
 

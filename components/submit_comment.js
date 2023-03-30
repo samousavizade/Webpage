@@ -22,7 +22,6 @@ const SubmitToBlogComponent = () => {
         },
     });
 
-    console.log("theme.palette.background.paper", theme.palette.background.paper)
     return (
         <Paper
             style={{borderRadius: 0, background: alpha(theme.palette.background.paper, 0.37 )}}
