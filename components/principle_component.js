@@ -11,6 +11,7 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
     // const imglink = "../public/static/philosephors/hegel.jpg";
 
     return (
+
         <Box
             container
             style={{

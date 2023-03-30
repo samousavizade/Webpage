@@ -36,6 +36,7 @@ export default function Loading(props) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
+
             <Box
                 width={`calc( 100vw - ${drawerWidthState} - 40vw)  `}
                 sx={{
