@@ -2,13 +2,16 @@ import '@/styles/globals.css'
 import NavigationBarComponent from "@/components/navigation_bar";
 import {MDXProvider} from '@mdx-js/react'
 import React, {useEffect, useState} from "react";
-import {createTheme, CssBaseline, responsiveFontSizes, ThemeProvider, Typography} from "@mui/material";
+import {createTheme, CssBaseline, responsiveFontSizes, ThemeProvider} from "@mui/material";
 import Head from "next/head";
 import {LazyPlot} from "@/components/article_page/plotly_figure";
 import "@code-hike/mdx/dist/index.css"
 import useBreakpoint, {responsiveIconSize} from "@/components/use_breakpoint";
+
+import Image from "next/image"
 import lightThemeBackground from "../public/static/bg_light.png"
 import darkThemeBackground from "../public/static/bg_dark.png"
+
 
 export const navBarHeight = "12vh";
 export const padding = "2vw";
@@ -121,14 +124,20 @@ export default function App({Component, pageProps}) {
             <ThemeProvider theme={activeTheme}>
 
                 <CssBaseline/>
-                <style jsx global>{`
-                  body {
-                    background: url(${themeBackground.src});
-                    background-repeat: no-repeat;
-                    background-position: center;
-                    background-size: cover;
-                  }
-                `}</style>
+                <div
+                    style={{
+                        zIndex: -1,
+                        position: "fixed",
+                        width: "100vw",
+                        height: "100vh",
+                    }}
+                >
+                    <Image
+                        src={themeBackground.src}
+                        fill
+                    />
+                </div>
+
                 <NavigationBarComponent
                     selectedTheme={activeThemeName}
                     toggleTheme={toggleTheme}
@@ -155,7 +164,6 @@ export default function App({Component, pageProps}) {
                     {/*    </Box>*/}
                     {/*</footer>*/}
                 </NavigationBarComponent>
-
             </ThemeProvider>
         </>
     )

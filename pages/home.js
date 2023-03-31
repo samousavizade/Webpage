@@ -4,6 +4,7 @@ import SubmitToBlogComponent from "@/components/submit_comment";
 import {useTheme} from '@mui/material/styles';
 import Head from "next/head";
 import SocrateImage from "../public/static/soc_wallpaper.jpg";
+import Image from "next/image";
 
 export default function Home(props) {
     const {
@@ -35,17 +36,25 @@ export default function Home(props) {
                 <Grid
                     container
                     style={{
-                        backgroundImage: `url(${SocrateImage.src})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
-                        backgroundSize: "cover",
+                        // backgroundImage: `url(${SocrateImage.src})`,
+                        // backgroundRepeat: "no-repeat",
+                        // backgroundPosition: "center",
+                        // backgroundSize: "cover",
                         borderRadius: 10,
                         width: '100%',
                         height: '100%',
+                        position: "relative",
                     }}
                     // className={styles.leftSideImage}
-                    height={1}
                 >
+                    <Image
+                        src={SocrateImage.src}
+                        fill
+                        style={{
+                            borderRadius: 10
+                        }}
+                    />
+
                     <Grid
                         item
                         padding={2}
