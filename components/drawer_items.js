@@ -25,7 +25,7 @@ export const drawerMainItemsParts = [
 export const drawerSecondaryItemsParts = [
     {icon: LinkedInIcon, title: "LinkedIn", to: "https://www.linkedin.com/in/s-alireza-mousavizade-41a25024b/"},
     {icon: GitHubIcon, title: "GitHub", to: "https://github.com/samousavizade"},
-    {icon: TelegramIcon, title: "Telegram", to: "@SAlirezaMousavizade"},
-    {icon: MailIcon, title: "Mail", to: "s.a.mosavizade@gmail.com"},
+    {icon: TelegramIcon, title: "Telegram", to: "https://t.me/SAlirezaMousavizade"},
+    {icon: MailIcon, title: "Mail", to: "https://mail.google.com/mail/u/?authuser=s.a.mosavizade@gmail.com"},
 
 ];
