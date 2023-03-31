@@ -41,6 +41,7 @@ export default function Home(props) {
                         // backgroundPosition: "center",
                         // backgroundSize: "cover",
                         borderRadius: 10,
+
                         width: '100%',
                         height: '100%',
                         position: "relative",
