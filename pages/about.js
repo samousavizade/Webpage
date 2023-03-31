@@ -216,7 +216,7 @@ const About = () => {
                             </AccordionDetails>
                         </Accordion>
 
-                        <Accordion defaultExpanded={true}>
+                        <Accordion defaultExpanded={false}>
                             <AccordionSummary
                                 expandIcon={<ExpandMoreIcon/>}
                                 aria-controls="experience"
