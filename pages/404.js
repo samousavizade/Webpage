@@ -7,16 +7,14 @@ import styles from "../styles/FourOhFour.module.css"
 import {useTheme} from '@mui/material/styles';
 import Head from "next/head";
 import Link from "next/link";
+import {useContext} from "react";
+import {SkeletonContext} from "@/pages/_app";
 
 export default function FourOhFour(props) {
-    const {
-        navBarHeight,
-        drawerWidthState,
-        padding,
-    } = props;
 
     const theme = useTheme();
-    const themeMode = theme.palette.mode;
+
+    const {state, dispatch} = useContext(SkeletonContext);
 
     return (
         <>
@@ -28,13 +26,13 @@ export default function FourOhFour(props) {
             </Head>
 
             <Box
-                width={`calc( 100vw - ${drawerWidthState} - 40vw)  `}
-                height={`calc( 100vh - ${navBarHeight} )`}
+                width={`calc( 100vw - ${state.drawerWidth} - 40vw)  `}
+                height={`calc( 100vh - ${state.navBarHeight} )`}
                 sx={{
                     overflow: "auto",
                     mx: "auto",
                 }}
-                padding={`calc(4*${padding})`}
+                padding={`calc(4*${state.padding})`}
             >
 
                 <Grid

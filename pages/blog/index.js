@@ -1,21 +1,24 @@
 import React, {useState} from "react";
 
-import {Box, Stack,} from "@mui/material";
-import {fetchArticles} from "@/lib/fetch_articles";
+import {Stack,} from "@mui/material";
 import ArticlesGridItemComponent from "@/components/articles_grid_item";
 import useBreakpoint from "@/components/use_breakpoint";
 import Head from "next/head";
 
+import {fetchArticles} from "@/lib/prisma";
 
 export async function getStaticProps(context) {
+    const articles = await fetchArticles();
     return {
         props: {
-            articlesList: fetchArticles(),
+            articlesList: articles,
         }
     }
 }
 
 export default function ArticlesGridComponent({articlesList, authorsList, onClickLike, ...props}) {
+    console.log(articlesList)
+
 
     // come from static props function that defined above.
     // console.log("articles list: \n", articlesList)
@@ -28,28 +31,28 @@ export default function ArticlesGridComponent({articlesList, authorsList, onClic
         const index = articlesListNextState.indexOf(article);
         const toGetChangedArticle = articlesListNextState[index];
 
-        if (toGetChangedArticle !== undefined) {
-            switch (toGetChangedArticle.doesCurrentUserLike) {
-                case true:
-                    toGetChangedArticle.doesCurrentUserLike = false;
-
-                    toGetChangedArticle.nLikes = toGetChangedArticle.nLikes - 1;
-                    setArticlesListState(articlesListNextState);
-                    break;
-
-                case false:
-                    toGetChangedArticle.doesCurrentUserLike = true;
-
-                    toGetChangedArticle.nLikes = toGetChangedArticle.nLikes + 1;
-                    setArticlesListState(articlesListNextState);
-                    break;
-
-                default:
-                    break;
-            }
-        } else {
-            // handling error
-        }
+        // if (toGetChangedArticle !== undefined) {
+        //     switch (toGetChangedArticle.doesCurrentUserLike) {
+        //         case true:
+        //             toGetChangedArticle.doesCurrentUserLike = false;
+        //
+        //             toGetChangedArticle.nLikes = toGetChangedArticle.nLikes - 1;
+        //             setArticlesListState(articlesListNextState);
+        //             break;
+        //
+        //         case false:
+        //             toGetChangedArticle.doesCurrentUserLike = true;
+        //
+        //             toGetChangedArticle.nLikes = toGetChangedArticle.nLikes + 1;
+        //             setArticlesListState(articlesListNextState);
+        //             break;
+        //
+        //         default:
+        //             break;
+        //     }
+        // } else {
+        //     // handling error
+        // }
     };
 
     const currentBreakpoint = useBreakpoint();
@@ -86,7 +89,6 @@ export default function ArticlesGridComponent({articlesList, authorsList, onClic
         columnsItems[articleIndex % nColumns].push(articlesList[articleIndex])
     }
 
-
     return (
         <>
             <Head>
@@ -95,57 +97,24 @@ export default function ArticlesGridComponent({articlesList, authorsList, onClic
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <Box
-                component="main"
-                sx={{
-                    flexGrow: 1,
-                    overflow: "auto",
-                }}
-                padding={3}
-            >
-                <Stack direction={"row"} spacing={2}>
-                    {
-                        columnsItems.map((items, columnIndex) => {
-                            return (
-                                <Stack direction={"column"} spacing={2} width={1 / nColumns} key={columnIndex}>
-                                    {
-                                        items.map((item, rowIndex) => {
-                                            return (
-                                                <ArticlesGridItemComponent
-                                                    key={item.article_ida}
-                                                    article={item}
-                                                    onClickLike={handleClickLike}
-                                                />
-                                            )
-                                        })
-                                    }
-                                </Stack>
-                            )
-                        })
-                    }
-                </Stack>
 
-                {/*<Grid container >*/}
-                {/*    {Object.keys(articlesList).map((index) => {*/}
-                {/*        return (*/}
-                {/*            <Grid*/}
-                {/*                item*/}
-                {/*                key={articlesList[index].id}*/}
-                {/*                xs={12}*/}
-                {/*                sm={12}*/}
-                {/*                md={6}*/}
-                {/*                lg={4}*/}
-                {/*                padding={1}*/}
-                {/*            >*/}
-                {/*                <ArticlesGridItemComponent*/}
-                {/*                    article={articlesList[index]}*/}
-                {/*                    onClickLike={handleClickLike}*/}
-                {/*                />*/}
-                {/*            </Grid>*/}
-                {/*        );*/}
-                {/*    })}*/}
-                {/*</Grid>*/}
-            </Box>
+            <Stack direction={"row"} spacing={2}>
+                {columnsItems.map((items, columnIndex) => {
+                    return (
+                        <Stack direction={"column"} spacing={2} width={1 / nColumns} key={columnIndex}> {
+                            items.map((item, rowIndex) => {
+                                return (
+                                    <ArticlesGridItemComponent
+                                        key={item.article_id}
+                                        article={item}
+                                        onClickLike={handleClickLike}
+                                    />
+                                )
+                            })}
+                        </Stack>
+                    )
+                })}
+            </Stack>
         </>
 
     );

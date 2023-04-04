@@ -1,11 +1,25 @@
 import * as React from "react";
-import {Avatar, Box, CardHeader, Chip, Divider, Grid, Paper, Typography, useMediaQuery, useTheme,} from "@mui/material";
+import {
+    Avatar,
+    Badge,
+    Box,
+    CardHeader,
+    Chip,
+    Divider,
+    Grid,
+    IconButton,
+    Paper,
+    Typography,
+    useMediaQuery,
+    useTheme,
+} from "@mui/material";
 import FeaturedArticleComponent from "./featured_article_component";
 import Head from "next/head";
 import Image from "next/image";
 import Tag from "@mui/icons-material/Tag";
 import dynamic from 'next/dynamic'
-import useBreakpoint from "@/components/use_breakpoint";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite"
 // import Ensemble from "./mdx_sources/Ensemble/ensemble_learning.mdx"
 // import FinancialBars from "./mdx_sources/FinancialBars/financial_bars.mdx"
 // import SampleWeights from "./mdx_sources/SampleWeights/sample_weights.mdx"
@@ -26,7 +40,16 @@ const SampleWeights = dynamic(() => import("./mdx_sources/SampleWeights/sample_w
 const StructuralBreaks = dynamic(() => import("./mdx_sources/StructuralBreaks/structural_breaks.mdx"),);
 const Labeling = dynamic(() => import("./mdx_sources/Labeling/labeling.mdx"),);
 
-const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
+
+const BlogArticleComponent = (
+    {
+        intendedArticle,
+        featuredArticles,
+        likesCount,
+        setLikesCount,
+        doesCurrentUserLike,
+        setDoesCurrentUserLike
+    }) => {
 
     const elevationValue = 3;
     const borderRadius = 20;
@@ -39,7 +62,6 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
 
     let nFeaturedArticles = 0
     let headerHeight = 0;
-    let headerHeightWhileScreenGreaterThanMD = 0;
     let blogArticleImageHeight = 0
     if (xSmallToSmall) {
         nFeaturedArticles = 1;
@@ -68,7 +90,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
     console.log("intendedArticle.content_md_file", intendedArticle.title)
 
     let MDXComponent = undefined;
-    switch (intendedArticle.content_md_file) {
+    switch (intendedArticle.contentMDFile) {
         case "./mdx_sources/CrossValidation/cross_validation.mdx":
             MDXComponent = CrossValidation;
             break;
@@ -125,13 +147,11 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
             </Head>
             <Grid
                 container
+                sx={{}}
+                padding={1}
                 bgcolor={theme.palette.background.paper}
-                padding={3}
-                marginTop={0.0}
-                paddingTop={0}
-                spacing={3}
             >
-                <Grid item xs={12} sm={12} md={6} lg={6}>
+                <Grid item xs={12} sm={12} md={6} lg={6} padding={1}>
                     <Paper
                         variant="outlined"
                         style={{
@@ -150,14 +170,14 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                             sx={{minHeight: 1, minWidth: 1}}
                         >
                             <Image
-                                src={intendedArticle.image_link}
+                                src={intendedArticle.imageLink}
                                 alt={intendedArticle.title}
                                 fill
                             />
                         </Avatar>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6}>
+                <Grid item xs={12} sm={12} md={6} lg={6} padding={1}>
                     <Box
                         sx={{
                             height: (xSmallToSmall || smallToMid) ? "100%" : headerHeight,
@@ -166,18 +186,47 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                             flexDirection: "column",
                         }}
                     >
-                        <Box
-                            component="div"
-                            alignItems="center"
+                        <div
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "left",
+                                alignItems: "center"
+                            }}
                         >
                             <Chip
-                                marginY="auto"
                                 style={{
+                                    marginLeft: 5,
                                     backgroundColor: theme.palette.secondary.main,
                                 }}
                                 label={intendedArticle.tag}
                             />
-                        </Box>
+                            <Badge color="primary" badgeContent={likesCount}>
+                                <IconButton
+                                    aria-label="like"
+                                    onClick={(e) => {
+                                        if (doesCurrentUserLike) {
+                                            fetch(`http://localhost:3030/api/updateArticleLikesCountById?id=${intendedArticle.id}&increment=${-1}`)
+                                            setLikesCount(likesCount - 1);
+
+                                        } else {
+                                            fetch(`http://localhost:3030/api/updateArticleLikesCountById?id=${intendedArticle.id}&increment=${+1}`)
+                                            setLikesCount(likesCount + 1);
+
+                                        }
+
+                                        setDoesCurrentUserLike(!doesCurrentUserLike)
+                                    }}
+                                >
+                                    {doesCurrentUserLike ? (
+                                        <FavoriteIcon color={"error"}/>
+                                    ) : (
+                                        <FavoriteBorderIcon color={"error"}/>
+                                    )}
+                                </IconButton>
+                            </Badge>
+
+                        </div>
 
                         <Typography
                             alignItems="center"
@@ -246,7 +295,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                                     color={theme.palette.text.secondary}
                                     variant="subtitle2"
                                 >
-                                    {intendedArticle.date}
+                                    {intendedArticle.createdAt}
                                 </Typography>
                             }
                         />
@@ -254,7 +303,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                 </Grid>
 
                 {nFeaturedArticles > 0 &&
-                    <Grid key={"featured_articles"} item xs={12} sm={12} md={12} lg={12}>
+                    <Grid key={"featured_articles"} padding={1} item xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             textAlign={"center"}
                             color={theme.palette.text.primary}
@@ -269,8 +318,9 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                         </Typography>
                     </Grid>
                 }
+
                 {nFeaturedArticles > 0 && featuredArticles.slice(0, nFeaturedArticles).map((article) => (
-                    <Grid key={article.title} item xs={12} sm={6} md={4} lg={3}>
+                    <Grid key={article.title} padding={1} item xs={12} sm={6} md={4} lg={3}>
                         <FeaturedArticleComponent
                             key={article.title}
                             article={article}
@@ -287,7 +337,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                     flexDirection: "column",
                 }}> </Box>}
 
-                <Grid item key={"left-column"} xs={12} sm={12} md={12} lg={12}>
+                <Grid padding={1} item key={"left-column"} xs={12} sm={12} md={12} lg={12}>
                     <Grid
                         item
                         xs={12}
@@ -306,15 +356,9 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
                                 backgroundColor: theme.palette.background.paper,
                                 color: theme.palette.text.primary,
                                 // fontFamily: "Apple, cursive",
-                                textAlign: "justify"
+                                textAlign: "justify",
                             }}
                         >
-                            {/*<Ensemble/>*/}
-                            {/*<FinancialBars />*/}
-                            {/*<SampleWeights />*/}
-                            {/*<FeatureImportance />*/}
-                            {/*<DangersOfBacktesting />*/}
-                            {/*<Denoising />*/}
                             <MDXComponent/>
                         </div>
 
@@ -323,6 +367,7 @@ const BlogArticleComponent = ({intendedArticle, featuredArticles}) => {
 
 
             </Grid>
+
         </>
     );
 };

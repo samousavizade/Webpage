@@ -1,20 +1,48 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import {alpha, Box, Grid, Typography} from "@mui/material";
 import SubmitToBlogComponent from "@/components/submit_comment";
 import {useTheme} from '@mui/material/styles';
 import Head from "next/head";
 import SocrateImage from "../public/static/soc_wallpaper.jpg";
 import Image from "next/image";
+import {SkeletonContext} from "@/pages/_app";
+
+// import clientPromise from '../lib/mongodb'
+//
+// export async function getServerSideProps(context) {
+//     try {
+//
+//         await clientPromise
+//         // `await clientPromise` will use the default database passed in the MONGODB_URI
+//         // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
+//         //
+//         // `const client = await clientPromise`
+//         // `const db = client.db("myDatabase")`
+//         //
+//         // Then you can execute queries against your database like so:
+//         // db.find({}) or any of the MongoDB Node Driver commands
+//
+//         return {
+//             props: {isConnected: true},
+//         }
+//     } catch (e) {
+//         console.error(`mamad ${e}`)
+//         return {
+//             props: {isConnected: false},
+//         }
+//     }
+//
+// }
 
 export default function Home(props) {
-    const {
-        navBarHeight,
-        drawerWidthState,
-        padding,
-    } = props;
+    const {} = props;
+    const isConnected = props.isConnected;
+    console.log("isConnected", isConnected);
 
     const theme = useTheme();
-    const themeMode = theme.palette.mode;
+
+    const {state, dispatch} = useContext(SkeletonContext);
 
     return (
         <>
@@ -25,12 +53,11 @@ export default function Home(props) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Box
-                width={`calc( 100vw - ${drawerWidthState})`}
-                height={`calc( 100vh - ${navBarHeight})`}
+                height={`calc( 100vh - ${56}px - 2*${state.padding} - 5px )`}
                 sx={{
+                    flexGrow: 1,
                     overflow: "auto",
                 }}
-                padding={padding}
             >
 
                 <Grid
@@ -51,6 +78,7 @@ export default function Home(props) {
                     <Image
                         src={SocrateImage.src}
                         fill
+                        alt={"leftsideimage"}
                         style={{
                             borderRadius: 10
                         }}
@@ -81,7 +109,7 @@ export default function Home(props) {
                         }}
                     >
                         <Typography variant={"h3"} component={"h1"}>
-                            <span style={{color: theme.palette.text.primary}}><b>Welcome</b> </span><br/>
+                            <span style={{color: theme.palette.mode === "light" ? theme.palette.primary.dark : theme.palette.primary.light}}><b>Welcome</b> </span><br/>
                             To My Page
                         </Typography>
                         <Typography

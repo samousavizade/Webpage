@@ -23,5 +23,5 @@ const authorsList = [
   
   
 export function fetchAuthors() {
-    return authorsList
+    return authorsList.map((author) => JSON.parse(JSON.stringify(author)))
 }

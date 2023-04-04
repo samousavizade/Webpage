@@ -1,12 +1,15 @@
 import {alpha, Box, Paper, Typography, useTheme} from "@mui/material";
 import * as React from "react";
-import {navBarHeight} from "@/pages/_app";
+import {SkeletonContext} from "@/pages/_app";
 import Hegel from "../public/static/philosephors/hegel.jpg"
 import SocrateImage from "@/public/static/soc_wallpaper.jpg";
 import * as url from "url";
+import {useContext} from "react";
 
 const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
     const theme = useTheme();
+
+    const {state, dispatch} = useContext(SkeletonContext);
 
     // const imglink = "../public/static/philosephors/hegel.jpg";
 
@@ -29,7 +32,7 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
                     display: "flex",
                     flexDirection: "column",
                     borderRadius: 0,
-                    height: `calc( 100vh -  ${navBarHeight} - 6vh )`
+                    height: `calc( 100vh -  ${state.navBarHeight} - 6vh )`
                 }}
                 style={{
                     backgroundColor: alpha(theme.palette.background.paper, 0.1),

@@ -1,7 +1,6 @@
 import Principle from "../models/principle";
 
 const myPrinciples = [
-
     {
         subject: "On Freedom",
         principles: [

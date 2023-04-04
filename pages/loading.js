@@ -18,12 +18,11 @@ import {useTheme} from '@mui/material/styles';
 import Head from "next/head";
 import Link from "next/link";
 
-import {padding} from "./_app"
+import {padding, SkeletonContext} from "./_app"
+import {useContext} from "react";
 export default function Loading(props) {
-    const {
-        navBarHeight,
-        drawerWidthState,
-    } = props;
+    const {state, dispatch} = useContext(SkeletonContext);
+
 
     const theme = useTheme();
 
@@ -38,12 +37,12 @@ export default function Loading(props) {
 
 
             <Box
-                width={`calc( 100vw - ${drawerWidthState} - 40vw)  `}
+                width={`calc( 100vw - ${state.drawerWidth} - 40vw)  `}
                 sx={{
                     overflow: "auto",
                     mx: "auto",
                 }}
-                padding={`calc(4*${padding})`}
+                padding={`calc(4*${state.padding})`}
             >
 
                 <Grid

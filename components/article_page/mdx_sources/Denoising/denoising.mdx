@@ -4,12 +4,7 @@ import {useTheme} from "@mui/material"; import {grey} from "@mui/material/colors
 import VisualizationOfTheMP from "./Visualization of The Marcenko–Pastur Theorem.json"
 import AComparisonOfEigenValue from "./A comparison of eigenvalues before and after applying the residual eigenvalue method.json"
 
-export const CyanSpan = ({children}) => {
-    const theme = useTheme();
-    return <span style={{color: theme.palette.secondary.main}}>
-        {children}
-    </span>
-}
+import CyanSpan from "@/components/article_page/mdx_sources/CyanSpan";
 
 export const ImageFigure = ({src, figureCaption}) => {
     const theme = useTheme();

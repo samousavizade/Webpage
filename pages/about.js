@@ -1,4 +1,4 @@
-import {React} from "react";
+import {React, useContext} from "react";
 import {
     Accordion,
     AccordionDetails,
@@ -27,6 +27,7 @@ import {drawerSecondaryItemsParts} from "@/components/drawer_items";
 import ConstructionIcon from '@mui/icons-material/Construction';
 import useBreakpoint, {responsiveIconSize} from "@/components/use_breakpoint";
 import Head from "next/head";
+import {SkeletonContext} from "@/pages/_app";
 
 const elevationValue = 3;
 
@@ -68,7 +69,7 @@ const About = () => {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            <Grid container spacing={2} padding={3}>
+            <Grid container spacing={2}>
                 <Grid
                     item
                     key={"avatar-name-social_media_links"}
@@ -356,11 +357,11 @@ const About = () => {
                         }}
                         xs={12}
                         sm={12}
-                        md={12}
+                        md={12 / sectionItems.length}
                         lg={12 / sectionItems.length}
                         key={"skills-" + item.id}
                     >
-                        <Paper elevation={elevationValue} sx={{height: "100%"}}>
+                        <Paper elevation={elevationValue} sx={{height: "100%", overflow: "auto"}}>
                             <Stack
                                 display="flex"
                                 alignItems="center"

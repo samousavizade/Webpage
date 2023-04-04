@@ -2,13 +2,7 @@ import {LazyPlot} from "@/components/article_page/plotly_figure";
 import {Typography} from "@mui/material";
 import StandardBarsFrequency from "./Standard Bars Frequency.json";
 import {useTheme} from "@mui/material";
-
-export const CyanSpan = ({children}) => {
-    const theme = useTheme();
-    return <span style={{color: theme.palette.secondary.main}}>
-        {children}
-    </span>
-}
+import CyanSpan from "@/components/article_page/mdx_sources/CyanSpan";
 
 # Financial Bars
 

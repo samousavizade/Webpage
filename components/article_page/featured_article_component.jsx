@@ -13,7 +13,7 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                 display: "flex",
                 flexDirection: "column",
                 "&:hover": {
-                    transform: "scale3d(1.02, 1.02, 1)",
+                    transform: "scale3d(1.015, 1.015, 1)",
                     transition: "transform 0.2s ease-out",
                 }
             }}
@@ -52,7 +52,7 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                         sx={{minHeight: 1, minWidth: 1}}
                     >
                         <Image
-                            src={article.image_link}
+                            src={article.imageLink}
                             alt={article.title}
                             fill
                         />

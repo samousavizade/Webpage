@@ -3,23 +3,19 @@ import {
     AccordionDetails,
     AccordionSummary,
     alpha,
-    Avatar,
-    Badge,
+    Avatar, Box,
     Button,
     Card,
-    CardActions, CardContent,
+    CardActions,
+    CardContent,
     CardHeader,
     CardMedia,
     Divider,
-    Grid,
-    IconButton,
     Typography,
     useTheme,
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -27,27 +23,24 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import Link from "next/link";
 import Image from "next/image";
-import useBreakpoint from "@/components/use_breakpoint";
 import ResponsiveIcon from "@/components/ResponsiveIcon";
 
 const ArticlesGridItemComponent = ({article, onClickLike}) => {
+
     const summaryMarkdown = article.summary;
     const fullName = `${article.author.firstName} ${article.author.lastName}`
 
     const theme = useTheme();
 
-    const currentBreakpointAbbr = useBreakpoint();
-
     return (
         <Card
-            // className={styles.articleItem}
             sx={{
-                backgroundColor: alpha(theme.palette.background.paper, 0.5),
+                backgroundColor: alpha(theme.palette.background.paper, 0.7),
                 backdropFilter: "blur(1.5px)",
 
                 '&:hover': {
-                    backgroundColor: alpha(theme.palette.background.paper, 0.7),
-                    transform: "scale3d(1.02, 1.02, 1)",
+                    backgroundColor: alpha(theme.palette.background.paper, 0.85),
+                    transform: "scale3d(1.015, 1.015, 1)",
                     transition: "transform 0.25s ease-out",
                 }
             }}
@@ -57,7 +50,7 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
                 <CardMedia
                     component={Image}
                     height={350}
-                    image={article.image_link}
+                    image={article.imageLink}
 
                 />
             </Link>
@@ -94,7 +87,7 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
 
                 }
                 title={<Typography variant={"subtitle1"}> {fullName} </Typography>}
-                subheader={<Typography variant={"subtitle2"}> {article.date} </Typography>}
+                subheader={<Typography variant={"subtitle2"}> {article.createdAt} </Typography>}
             />
 
             <Divider variant="middle"/>
@@ -119,39 +112,14 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
 
                         <Divider variant="middle" sx={{marginY: 1}}/>
 
-                        <Grid container>
-                            <Grid item key={"like-button"} xs={2} sm={2} md={2} lg={2}>
-                                <Badge color="primary" badgeContent={article.nLikes}>
-                                    <IconButton
-                                        aria-label="like"
-                                        onClick={(e) => {
-                                            onClickLike(article);
-                                        }}
-                                    >
-                                        {article.doesCurrentUserLike ? (
-                                            <FavoriteIcon color={"error"}/>
-                                        ) : (
-                                            <FavoriteBorderIcon color={"error"}/>
-                                        )}
-                                    </IconButton>
-                                </Badge>
-                            </Grid>
-                            <Grid
-                                item
-                                key={"[index].id"}
-                                xs={"auto"}
-                                sm={"auto"}
-                                md={"auto"}
-                                lg={"auto"}
-                                marginLeft={"auto"}
-                            >
-                                <Button size={'large'}>
-                                    <Link href={"/blog/" + article.id} legacyBehavior>
-                                        Continue
-                                    </Link>
-                                </Button>
-                            </Grid>
-                        </Grid>
+                        <Box container display={"flex"}>
+                            <Button size={'large'} sx={{marginLeft: "auto"}}>
+                                <Link href={"/blog/" + article.id} legacyBehavior>
+                                    Continue
+                                </Link>
+                            </Button>
+
+                        </Box>
                     </AccordionDetails>
                 </Accordion>
             </CardActions>

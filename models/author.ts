@@ -18,10 +18,6 @@ class Author {
     this.bio = bio;
     this.cv = cv;
   }
-
-  getFullName() {
-    return this.firstName + " " + this.lastName;
-  }
 }
 
 export default Author;

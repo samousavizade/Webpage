@@ -29,7 +29,7 @@ function MainFeaturedPost({ article, elevationValue }) {
             variant="square"
             sx={{ minHeight: 1, minWidth: 1 }}
             alt="Example Alt"
-            src={article.image_link}
+            src={article.imageLink}
           />
         </Grid>
 

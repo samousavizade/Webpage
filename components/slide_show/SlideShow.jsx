@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Carousel from 'react-material-ui-carousel';
 
 // import Settings, {DefaultSettingsT} from './Settings';
@@ -8,9 +8,12 @@ import {DefaultSettingsT} from "@/components/slide_show/Settings";
 import PrincipleComponent from "@/components/principle_component";
 import {grey} from "@mui/material/colors";
 import useBreakpoint from "@/components/use_breakpoint";
+import {SkeletonContext} from "@/pages/_app";
 
 
-const SlideShow = ({navBarHeight, myPrinciples}) => {
+const SlideShow = ({myPrinciples}) => {
+
+    const {state, dispatch} = useContext(SkeletonContext);
 
     const theme = useTheme();
 
@@ -29,7 +32,7 @@ const SlideShow = ({navBarHeight, myPrinciples}) => {
                 // height:"100%",
                 backgroundColor: grey.A400,
             }}
-            height={`calc( 100vh - ${navBarHeight} - 8vh )`}
+            height={`calc( 100vh - ${state.navBarHeight} - 8vh )`}
             {...settings}
             // next={(now: any, previous:any) => console.log(`Next User Callback: Now displaying child ${now}. Previously displayed child ${previous}`)}
             // prev={(now, previous) => console.log(`Prev User Callback: Now displaying child ${now}. Previously displayed child ${previous}`)}

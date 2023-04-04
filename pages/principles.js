@@ -5,6 +5,8 @@ import SlideShow from "@/components/slide_show/SlideShow";
 import {fetchPrinciples} from "@/lib/fetch_principles";
 import Loading from "@/pages/loading";
 import Head from "next/head";
+import {useContext} from "react";
+import {SkeletonContext} from "@/pages/_app";
 
 
 export async function getStaticProps() {
@@ -28,19 +30,15 @@ export async function getStaticProps() {
 }
 
 
-const Principles = (props) => {
+const Principles = ({myPrinciples}) => {
 
-    const {
-        navBarHeight,
-        drawerWidthState,
-        myPrinciples,
-    } = props;
+    const {state, dispatch} = useContext(SkeletonContext);
 
     const router = useRouter();
+
     if (router.isFallback) {
         return <Loading />
     }
-
 
     return (
         <>
@@ -53,9 +51,10 @@ const Principles = (props) => {
             <Box
                 sx={{
                     overflow: "auto",
+                    width: 1
                 }}
             >
-                <SlideShow navBarHeight={navBarHeight} myPrinciples={myPrinciples}/>
+                <SlideShow navBarHeight={state.navBarHeight} myPrinciples={myPrinciples}/>
             </Box>
         </>
     )

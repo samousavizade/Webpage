@@ -10,46 +10,43 @@ export enum TAG {
 class Article {
   id: number;
 
-  image_link: string;
+  imageLink: string;
   title: string;
   subTitle: string;
   author: Author;
-  date: string;
+  createdAt: Date | string;
   tag: TAG;
   keywords: string[];
 
-  content_md_file: string;
+  contentMDFile: string;
   summary: string;
 
   nLikes: number;
-  doesCurrentUserLike: boolean;
 
   constructor(
     id: number,
-    image_link: string,
+    imageLink: string,
     title: string,
     subTitle: string,
     author: Author,
-    date: string,
+    createdAt: Date,
     tag: TAG,
     keywords: string[],
     content_md_file: string,
     summary: string,
     nLikes: number,
-    doesCurrentUserLike: boolean
   ) {
     this.id = id;
-    this.image_link = image_link;
+    this.imageLink = imageLink;
     this.title = title;
     this.subTitle = subTitle;
     this.author = author;
-    this.date = date;
+    this.createdAt = createdAt;
     this.tag = tag;
     this.keywords = keywords;
-    this.content_md_file = content_md_file;
+    this.contentMDFile = content_md_file;
     this.summary = summary;
     this.nLikes = nLikes;
-    this.doesCurrentUserLike = doesCurrentUserLike;
   }
 }
 

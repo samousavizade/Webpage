@@ -2,17 +2,18 @@ import {LazyPlot} from "@/components/article_page/plotly_figure";
 import StandardDeviationOfTheBaggedPredictionPlotData from "./Standard Deviation of the bagged prediction (function of ρ and N).json";
 import BaggingClassifierAccuracy from "./Bagging Classifier Accuracy (function of p and N).json"
 import {Typography} from "@mui/material";
+import CyanSpan from "@/components/article_page/mdx_sources/CyanSpan";
 
 # Ensemble Methods
 
 
-## You have most likely utilized <span style={{color:"cyan"}}>ensemble approaches</span> to avoid overfitting!
+## You have most likely utilized <CyanSpan>ensemble approaches</CyanSpan> to avoid overfitting!
 
 
 Let us discuss what makes ensemble techniques useful and how to prevent frequent mistakes that lead to their abuse in finance.
 
 
-## How can we break down <span style={{color:"cyan"}}>algorithmic errors</span>?
+## How can we break down <CyanSpan>algorithmic errors</CyanSpan>?
 
 
 Three errors due to unrealistic assumptions are common in machine learning models. The model fails to detect critical feature-outcome relationships when the bias is significant, resulting in an underfit. Variance error is created by the training set's sensitivity to small movements in the market. When the variance is substantial, the model has overfitted the training set. Therefore even little changes in the training set samples might result in different predictions. When overfitting is present, the noise is calibrated as the signal instead of modeling the patterns in the training data.
@@ -51,13 +52,13 @@ $$
 An ensemble approach is a method that combines a group of weak learners that use the same learning algorithm to build a stronger learner who outperforms all the base learners.
 
 
-## How can model aggregation be used to <span style={{color:"cyan"}}>reduce variance</span>?
+## How can model aggregation be used to <CyanSpan>reduce variance</CyanSpan>?
 
 
 Bootstrap aggregation, often known as bagging, is an efficient method for lowering prediction variation. It works like this: To begin, create $N$ training datasets using random sampling with replacement. Second, for each training set, fit $N$ estimators. Because these estimators are trained independently, the models can be fit together. Third, the ensemble prediction is the simple average of the $N$ models' forecasts. For classification problems, the ratio of base estimators that vote for a specific outcome can form a pseudo-probability indicating how likely that label can be assigned to a test set sample. The bagging classifier may calculate the mean of the probabilities when the base estimator provides a probability forecast. For example, assume you have a series of Gaussian Mixture models giving you probabilities that a given sample $x_\text{new}$ can be assigned to any of your $K$ labels. If there is an ensemble of N GMMs, then we can calculate the mean of these probabilities across all the N base estimators.
 
 
-## Let us show mathematically how the bagging method we just discussed <span style={{color:"cyan"}}>reduces variance</span>?
+## Let us show mathematically how the bagging method we just discussed <CyanSpan>reduces variance</CyanSpan>?
 
 
 The fundamental advantage of bagging is that it minimizes forecast variance to address overfitting. The variance of the bagged prediction $\left(\varphi_{i}[c]\right)$ varies with the number of base estimators $(N)$, the average variance of a single estimator's prediction $(\bar{\sigma})$, and the average correlation between their predictions $(\bar{\rho})$:
@@ -113,7 +114,7 @@ The standard deviation of the bagged prediction is plotted in this Figure as a f
 <LazyPlot {...StandardDeviationOfTheBaggedPredictionPlotData} plotType={"Heatmap"}/>
 
 
-## How does the bagging classifier's voting mechanism <span style={{color:"cyan"}}>improves accuracy</span>?
+## How does the bagging classifier's voting mechanism <CyanSpan>improves accuracy</CyanSpan>?
 
 Consider a bagging classifier that predicts $k$ classes based on a majority vote among $N$ independent classifiers with a $\{0,1\}$ outcome. A base classifier's accuracy is the probability $p$ of identifying a correct prediction as label 1. We will obtain $N p$ predictions labeled as 1 on average, with a famously known variance of $N p(1-p)$. When a class with the highest votes is observed, majority voting makes an accurate prediction. A sufficient condition is that the total of these labels is greater than $\frac{N}{2}$. A required condition is that $X>\frac{N}{k}$ happens with probability:
 
@@ -176,7 +177,7 @@ Similarly, in RiskLabAI's python library, the function `bagging_classifier_accur
 The accuracy of the bagged prediction is plotted in this Figure:
 
 
-## What challenges the <span style={{color:"cyan"}}>dependency structure</span> in the observation set will bring to our bagging framework?
+## What challenges the <CyanSpan>dependency structure</CyanSpan> in the observation set will bring to our bagging framework?
 
 We know that financial observations cannot be presumed to be IIDs. Redundant observations can bring two drawbacks to bagging:
 
@@ -185,12 +186,6 @@ We know that financial observations cannot be presumed to be IIDs. Redundant obs
 * The second negative impact of observation redundancy is increased out-of-bag accuracy. This occurs because random sampling with replacement places samples in the training set that are highly similar to those from the bag. In this scenario, a suitable stratified k-fold cross-validation without shuffling before partitioning will yield a significantly lower validation-set accuracy than the one calculated out-of-bag.
 
 --- until here ---
-
-export const CyanSpan = ({children}) => {
-    return <span style={{color: "cyan"}}>
-        {children}
-    </span>
-}
 
 ## How can <CyanSpan>Random Forests</CyanSpan> help us address the existing dependency in our observation set?
 
