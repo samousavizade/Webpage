@@ -421,6 +421,8 @@ function getCurrentTabTitle(router) {
 
 function NavBarDrawerComponent(props) {
 
+    console.log("mamad")
+
     const {state, dispatch} = useContext(SkeletonContext);
     const theme = useTheme();
     const router = useRouter();

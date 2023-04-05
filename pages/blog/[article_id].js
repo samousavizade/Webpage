@@ -53,11 +53,14 @@ export async function getStaticPaths() {
 const ArticleComponent = ({intendedArticle, featuredArticles}) => {
 
     const fetcher = (url) => fetch(url).then((res) => res.json());
-    const [likesCount, setLikesCount] = useState(intendedArticle.nLikes);
     const {
         data,
         error
     } = useSWR(`http://localhost:3030/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
+
+    const [likesCount, setLikesCount] = useState(intendedArticle.nLikes);
+    const [doesCurrentUserLike, setDoesCurrentUserLike] = useState(false);
+
     useEffect(() => {
         if (data) {
             setLikesCount(data.nLikes);
@@ -66,7 +69,6 @@ const ArticleComponent = ({intendedArticle, featuredArticles}) => {
         }
     }, [data]);
 
-    const [doesCurrentUserLike, setDoesCurrentUserLike] = useState(false);
 
     return (
         // <>

@@ -108,7 +108,7 @@ export default function App({Component, pageProps}) {
 
     useEffect(() => {
         setActiveTheme(activeThemeName === "dark" ? darkTheme : lightTheme);
-    }, [activeThemeName, darkTheme, lightTheme]);
+    }, [activeThemeName,]);
 
 
     //.........................................................
@@ -151,6 +151,7 @@ export default function App({Component, pageProps}) {
         LazyPlot,
     }
 
+
     return (<>
             <Head>
                 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -190,9 +191,6 @@ export default function App({Component, pageProps}) {
                         toggleTheme={toggleTheme}
 
                         navBarHeight={navBarHeight}
-                        drawerWidthWhileExpanded={drawerWidthWhileExpanded}
-                        drawerWidthWhileClosed={drawerWidthWhileClosed}
-                        drawerWidthInSmallScreen={drawerWidthInSmallScreen}
                     >
 
                         <MDXProvider components={components}>
