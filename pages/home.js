@@ -38,7 +38,6 @@ import {SkeletonContext} from "@/pages/_app";
 export default function Home(props) {
     const {} = props;
     const isConnected = props.isConnected;
-    console.log("isConnected", isConnected);
 
     const theme = useTheme();
 

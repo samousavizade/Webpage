@@ -17,9 +17,6 @@ export async function getStaticProps(context) {
 }
 
 export default function ArticlesGridComponent({articlesList, authorsList, onClickLike, ...props}) {
-    console.log(articlesList)
-
-
     // come from static props function that defined above.
     // console.log("articles list: \n", articlesList)
 

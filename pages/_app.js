@@ -108,7 +108,7 @@ export default function App({Component, pageProps}) {
 
     useEffect(() => {
         setActiveTheme(activeThemeName === "dark" ? darkTheme : lightTheme);
-    }, [activeThemeName]);
+    }, [activeThemeName, darkTheme, lightTheme]);
 
 
     //.........................................................

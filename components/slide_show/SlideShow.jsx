@@ -21,7 +21,6 @@ const SlideShow = ({myPrinciples}) => {
 
     const currentBreakpoint = useBreakpoint();
     const isMobileSizeScreen = ["xs", "sm"].includes(currentBreakpoint);
-    console.log("isMobileSizeScreen", isMobileSizeScreen)
 
     return (
         <Carousel

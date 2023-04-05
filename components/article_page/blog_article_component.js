@@ -87,7 +87,6 @@ const BlogArticleComponent = (
 
     }
 
-    console.log("intendedArticle.content_md_file", intendedArticle.title)
 
     let MDXComponent = undefined;
     switch (intendedArticle.contentMDFile) {

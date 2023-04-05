@@ -424,7 +424,6 @@ function NavBarDrawerComponent(props) {
     const {state, dispatch} = useContext(SkeletonContext);
     const theme = useTheme();
     const router = useRouter();
-    console.log("router.pathname", router.pathname)
 
     const currentTabTitle = getCurrentTabTitle(router);
 

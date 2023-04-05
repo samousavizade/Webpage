@@ -1,10 +1,8 @@
-import {useRouter} from "next/router";
 import BlogArticleComponent from "@/components/article_page/blog_article_component";
-import Loading from "@/pages/loading";
 import Head from "next/head";
 import React, {useEffect, useState} from "react";
-import {fetchArticles} from "@/lib/prisma";
 import useSWR from "swr";
+import {fetchArticles} from "@/lib/prisma";
 
 export async function getStaticProps(staticProps) {
     const params = staticProps.params;
@@ -17,16 +15,19 @@ export async function getStaticProps(staticProps) {
     });
 
     if (article === undefined) {
-        console.log("article is undefined ...")
+        console.log("article is undefined ... ", params.article_id)
         return {
             notFound: true, //redirects to 404 page
         };
     }
 
+    console.log("article.id", article.id)
+
     const featuredArticles = articles.filter((item) => {
         let n = (Math.abs(item.id - intendedArticleId) % articles.length)
         return n >= 1 && n <= 3;
     })
+
 
     return {
         props: {
@@ -42,9 +43,10 @@ export async function getStaticPaths() {
 
     return {
         paths: articles.map((item) => {
-            return {params: {article_id: `${item.article_id}`}}
+            console.log("item.id", item.id)
+            return {params: {article_id: `${item.id}`}}
         }),
-        fallback: true
+        fallback: false
     }
 }
 
@@ -52,12 +54,11 @@ const ArticleComponent = ({intendedArticle, featuredArticles}) => {
 
     const fetcher = (url) => fetch(url).then((res) => res.json());
     const [likesCount, setLikesCount] = useState(intendedArticle.nLikes);
-    const { data, error } = useSWR(`http://localhost:3030/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
+    const {
+        data,
+        error
+    } = useSWR(`http://localhost:3030/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
     useEffect(() => {
-        if (error) {
-            throw new Error("Something went wrong.")
-        }
-
         if (data) {
             setLikesCount(data.nLikes);
         } else {
@@ -66,16 +67,6 @@ const ArticleComponent = ({intendedArticle, featuredArticles}) => {
     }, [data]);
 
     const [doesCurrentUserLike, setDoesCurrentUserLike] = useState(false);
-
-    const router = useRouter();
-
-    if (router.isFallback) {
-        return <Loading/>
-    }
-
-
-
-
 
     return (
         // <>
