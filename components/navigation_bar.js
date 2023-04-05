@@ -531,7 +531,7 @@ function NavBarDrawerComponent(props) {
                                 let isActiveTab = currentTabTitle === item.title;
 
                                 return (
-                                    <Link href={item.to}>
+                                    <Link href={item.to} key={item.title}>
                                         <Button
                                             sx={{
                                                 "&:hover": {

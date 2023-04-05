@@ -50,24 +50,32 @@ export async function getStaticPaths() {
 
 const ArticleComponent = ({intendedArticle, featuredArticles}) => {
 
+    const fetcher = (url) => fetch(url).then((res) => res.json());
+    const [likesCount, setLikesCount] = useState(intendedArticle.nLikes);
+    const { data, error } = useSWR(`http://localhost:3030/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
+    useEffect(() => {
+        if (error) {
+            throw new Error("Something went wrong.")
+        }
+
+        if (data) {
+            setLikesCount(data.nLikes);
+        } else {
+            setLikesCount(0);
+        }
+    }, [data]);
+
+    const [doesCurrentUserLike, setDoesCurrentUserLike] = useState(false);
+
     const router = useRouter();
 
     if (router.isFallback) {
         return <Loading/>
-
     }
 
-    const [likesCount, setLikesCount] = useState(intendedArticle.nLikes);
-    const [doesCurrentUserLike, setDoesCurrentUserLike] = useState(false);
 
-    const fetcher = (url) => fetch(url).then((res) => res.json());
-    const { data, error } = useSWR(`http://localhost:3030/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
 
-    useEffect(() => {
-        if (data) {
-            setLikesCount(data.nLikes);
-        }
-    }, [data]);
+
 
     return (
         // <>
