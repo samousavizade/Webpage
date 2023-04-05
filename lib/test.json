@@ -1,0 +1,320 @@
+[
+  {
+    "imageLink": "/static/articles_images/financial_bars.jpg",
+    "title": "Financial Bars",
+    "subTitle": "What are the numerous sorts of bars and how do they differ? What is the purpose of information-driven bars? ",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Information Driven Bars",
+      "Imbalance Bars",
+      "Run Bars",
+      "Standard Bars",
+      "ETF-Trick",
+      "PCA Weights",
+      "Future Roll"
+    ],
+    "contentMDFile": "./mdx_sources/FinancialBars/financial_bars.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 5
+  },
+  {
+    "imageLink": "/static/articles_images/labeling.jpg",
+    "title": "Labeling",
+    "subTitle": "What are the numerous sorts of labelling techniques and how they differ?",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Fixed Time Horizon",
+      "Tripple-Barrier",
+      "Meta Labeling",
+      "Volatility Estimate",
+      " Positive",
+      " Negative"
+    ],
+    "contentMDFile": "./mdx_sources/Labeling/labeling.mdx",
+    "summary": "We spoke about how to create a $X$-dimensional matrix of financial variables from an unstructured dataset. Unsupervised learning algorithms can learn patterns from that matrix $X$, such as whether or not it has hierarchical clusters. Supervised learning techniques, on the other hand, require that the rows in $X$ be associated with an array of labels or values $y$, so that those labels or values may be predicted on unseen feature samples. We'll talk about how to classify financial data in this section.",
+    "nLikes": 5
+  },
+  {
+    "imageLink": "/static/articles_images/feature_importance.jpg",
+    "title": "Feature Importance",
+    "subTitle": "Why repeating of backtest may fail? and how to prevent it. Why repeating a test over and over on the same data will likely lead to a  discovery?",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "MDA",
+      "MDI",
+      "SFI",
+      "Orthogonal Features",
+      "Substitution Effect",
+      "Backtesting",
+      "Parallelized FI",
+      "Stacked FI"
+    ],
+    "contentMDFile": "./mdx_sources/FeatureImportance/feature_importance.mdx",
+    "summary": "One of the most common errors in financial research is taking some data, running it through an ML algorithm, backtesting the predictions, and repeating the process until a nice-looking backtest appears. Such pseudo-discoveries abound in academic journals, and even significant hedge funds are prone to falling into this trap. It makes no difference if the backtest is an out-of-sample walk-forward. The fact that we are repeating a test on the same data will almost certainly result in a  discovery. This methodological error is so well-known among statisticians that the American Statistical Association warns against it in its ethical guidelines (American Statistical Association [2016], Discussion #4). It usually takes around 20 iterations to find a () investment strategy with a standard significance level ( positive rate) of 5%.",
+    "nLikes": 4
+  },
+  {
+    "imageLink": "/static/articles_images/cross_validation.jpeg",
+    "title": "Cross Validation",
+    "subTitle": "CV is yet another instance where standard ML techniques fail when applied to financial problems. Overfitting will take\nplace, and CV will not be able to detect it.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Overfitting",
+      "Generalization",
+      "HPO",
+      "Purged K-fold",
+      "Embargo",
+      "Backtesting",
+      "CV Failure In Finance"
+    ],
+    "contentMDFile": "./mdx_sources/CrossValidation/cross_validation.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 4
+  },
+  {
+    "imageLink": "/static/articles_images/ensemble_learning.jpg",
+    "title": "Ensemble Learning",
+    "subTitle": "What makes Ensemble Methods effective, and how to avoid common errors that lead to their misuse in finance.place, and CV will not be able to detect it.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Sources Of Errors",
+      "Bias-Variance Decompositon",
+      "Bagging",
+      "Variance Reduction",
+      "Random Forest",
+      "Boosting",
+      "Bagging Scalability"
+    ],
+    "contentMDFile": "./mdx_sources/Ensemble/ensemble_learning.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 4
+  },
+  {
+    "imageLink": "/static/articles_images/sample_weights.jpg",
+    "title": "Sample Weights",
+    "subTitle": "How to use sample weights to address the problem that observations are not generated by (IID) processes.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "IID Assumption",
+      "Overlapping Outcomes",
+      "Time Decay",
+      "Sequential Bootstrap",
+      "Indicator Matrix",
+      "MCMC"
+    ],
+    "contentMDFile": "./mdx_sources/SampleWeights/sample_weights.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 4
+  },
+  {
+    "imageLink": "/static/articles_images/denoising.jpg",
+    "title": "Denoising",
+    "subTitle": "Explain a procedure for reducing the noise and enhancing the signal included in an empirical covariance matrix.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Marcenko–Pastur",
+      "Signal/Noise Ratio",
+      "MV Portfolio",
+      "M SR Portfolio",
+      "Targeted Shrinkage"
+    ],
+    "contentMDFile": "./mdx_sources/Denoising/denoising.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 4
+  },
+  {
+    "imageLink": "/static/articles_images/dangers_of_backtesting.jpg",
+    "title": "Backtesting Dangers",
+    "subTitle": "A common misunderstanding is to think of backtesting as a research tool. Researching and backtesting is like drinking and driving.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Flawless Backtest",
+      "Bias Types",
+      "Strategy Selection",
+      "Selection Bias",
+      "CS-CV",
+      "Overfitting"
+    ],
+    "contentMDFile": "./mdx_sources/DangersOfBacktesting/dangers_of_backtesting.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 3
+  },
+  {
+    "imageLink": "/static/articles_images/structural_breaks.jpg",
+    "title": "Structural Breaks",
+    "subTitle": "Structural breaks, like the transition from one market regime to another, is one example of such a confluence that is of particular interest.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "CUSUM Test",
+      "Explosiveness Test",
+      "Dicky Fuller Test",
+      "S-ADF Test",
+      "Martingale Test",
+      "Recursive Residuals"
+    ],
+    "contentMDFile": "./mdx_sources/StructuralBreaks/structural_breaks.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 12
+  },
+  {
+    "imageLink": "/static/articles_images/entropy_features.jpg",
+    "title": "Entropy Features",
+    "subTitle": "When markets are not perfect, prices are formed with partial information, and as some agents know more than others.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Shannon's Entropy",
+      "Plug-In",
+      "Lempel-Ziv",
+      "Gaussian Process Entropy",
+      "Generalized Mean",
+      "Market Efficiency",
+      "Market Microstructure"
+    ],
+    "contentMDFile": "./mdx_sources/EntropyFeatures/entropy_features.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 6
+  },
+  {
+    "imageLink": "/static/articles_images/microstructural_features.jpg",
+    "title": "Microstructural Features",
+    "subTitle": "The level of detail contained in FIX messages provides researchers with the ability to understand how market participants conceal and reveal their intentions.",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "Tick Rule",
+      "Roll Model",
+      "Corwin & Schultz",
+      "Kyle's Lambda",
+      "Amihud's Lambda",
+      "Hasbrouck’s Lambda",
+      "V-PIN"
+    ],
+    "contentMDFile": "./mdx_sources/MicrostructuralFeatures/microstructural_features.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 12
+  },
+  {
+    "imageLink": "/static/articles_images/portfolio_construction.jpg",
+    "title": "Portfolio Construction",
+    "subTitle": "In practice, mean-variance optimal solutions tend to be concentrated and unstable. How to deal with the instability caused by the noise contained in the covariance matrix?",
+    "author": {
+      create: {
+        "firstName": "S.Alireza",
+        "lastName": "Mousavizade",
+        "bio": "CS & Economics Student",
+        "cv": "\n          Market data include any trading activity that occurs on an exchange or trading venue. Ideally, your data source has provided you with a raw feed including a variety of unstructured data, such as FIX messages that allow you to fully rebuild the trading book or the whole collection of BWIC (bids requested in competition) answers. Every market player leaves a distinct imprint in the trade records, and with enough perseverance, you will be able to predict a competitor's future action. TWAP algorithms, for example, create a distinct imprint that predatory algorithms utilize to advance their end-of-day trading (typically hedging) activities (Easley, López de Prado, and O'Hara [2011]). Human GUI traders frequently trade in round lots, which may be used to determine what percentage of the volume is originating from them at any given period in time and then connect it with a certain market behavior.\n          "
+      }
+    },
+    "createdAt": "2022-03-05T20:30:00.000Z",
+    "tag": "Financial ML.",
+    "keywords": [
+      "MV Unstability",
+      "Inverse Variance",
+      "Condition Number",
+      "Markowitz’s Curse",
+      "HRP",
+      "NCO"
+    ],
+    "contentMDFile": "./mdx_sources/PortfolioConstruction/portfolio_construction.mdx",
+    "summary": "What's the distinction between organized and unstructured data? We will learn how to work with unstructured financial data and then transform it into a structured dataset that can be used by $mathrmML$ algorithms. In general, you should avoid consuming someone else's processed dataset because you will most likely find what someone else already knows or will figure out shortly. Ideally, your starting point will be a collection of unstructured, raw data that you will analyse in order to generate relevant characteristics.",
+    "nLikes": 3
+  }
+]
