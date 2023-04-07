@@ -291,7 +291,7 @@ const SignInComponent = () => {
                 logger.debug(`POSTing ${JSON.stringify(body, null, 2)}`);
                 let res = await signIn("credentials", {
                     ...body,
-                    callbackUrl: "/home"
+                    redirect: false,
                 });
 
                 logger.debug("returned result from signIn() : ", res)
