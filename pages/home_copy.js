@@ -106,7 +106,7 @@ export default function Home2(props) {
     //                     <Typography
     //                         sx={{flexGrow: 1, marginTop: 1, maxWidth: 400}}
     //                         color={"white"}
-    //                         textAlign={"justify"}
+    //                         textalign={"justify"}
     //                         variant={"body1"} component={"h2"}
     //                     >
     //                         “If you don't get what you want, you suffer; if you get what you don't want, you suffer;

@@ -58,7 +58,8 @@ export default function Loading(props) {
 
 
                 <Grid
-                    container
+                    container={"true"}
+
                     height={1}
                 >
                     <Grid

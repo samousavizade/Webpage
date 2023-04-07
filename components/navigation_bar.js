@@ -186,7 +186,7 @@ function NavBarDrawerComponent(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{textAlign: 'center'}}>
-            <Typography variant="h6" sx={{my: 2, ml: 2.5}} textAlign={"left"}>
+            <Typography variant="h6" sx={{my: 2, ml: 2.5}} textalign={"left"}>
                 Sections
             </Typography>
             <Divider/>
@@ -219,7 +219,7 @@ function NavBarDrawerComponent(props) {
                 })}
 
                 <Divider sx={{my: 1}}/>
-                <Typography variant="body1" sx={{my: 2, ml: 2.5}} textAlign={"left"}>
+                <Typography variant="body1" sx={{my: 2, ml: 2.5}} textalign={"left"}>
                     Links
                 </Typography>
                 <Divider/>

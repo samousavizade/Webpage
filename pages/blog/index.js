@@ -134,7 +134,7 @@ export default function ArticlesGridComponent({articlesList, authorsList, onClic
             <Stack direction={"column"} spacing={2}>
                 {someoneIsSignedIn &&
                     <Paper
-                        textAlign={"left"}
+                        textalign={"left"}
 
                         style={{
                             color: theme.palette.text.primary,
@@ -169,7 +169,7 @@ export default function ArticlesGridComponent({articlesList, authorsList, onClic
 
                 {someoneIsSignedIn &&
                     <Paper
-                        textAlign={"left"}
+                        textalign={"left"}
 
                         style={{
                             color: theme.palette.text.primary,

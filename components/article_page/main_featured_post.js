@@ -22,7 +22,10 @@ function MainFeaturedPost({ article, elevationValue }) {
         // backgroundImage: `url(${article.image_link})`,
       }}
     >
-      <Grid height={1} container>
+      <Grid height={1}
+            container={"true"}
+
+      >
         <Grid item bgcolor="green" xs={4} sm={4} md={4} lg={4}>
           <Avatar
             key={"avatar"}

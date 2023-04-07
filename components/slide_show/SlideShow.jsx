@@ -101,7 +101,7 @@ const DesktopBanner = ({principles, subject, contentPosition, key}) => {
             lg={3}
 
         >
-            <Typography variant={"h5"} textAlign={"center"} padding={2.5}>
+            <Typography variant={"h5"} textalign={"center"} padding={2.5}>
                 {subject}
             </Typography>
         </Grid>
@@ -133,7 +133,9 @@ const DesktopBanner = ({principles, subject, contentPosition, key}) => {
     }
 
     return (
-        <Grid container spacing={0}>
+        <Grid
+            container={"true"}
+            spacing={0}>
             {items}
         </Grid>
     )

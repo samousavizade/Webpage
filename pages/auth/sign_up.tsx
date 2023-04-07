@@ -70,7 +70,7 @@
 //         px={6}
 //       >
 //         <Stack align={"center"}>
-//           <Heading fontSize={"4xl"} textAlign={"center"}>
+//           <Heading fontSize={"4xl"} textalign={"center"}>
 //             Sign up
 //           </Heading>
 //           <Text fontSize={"lg"} color={"gray.600"}>
@@ -241,7 +241,7 @@ const SignUpComponent = () => {
                     console.log("res.text()", message)
 
                     setStatus({
-                        ok: res.ok,
+                        ok: false,
                         statusCode: res.status,
                         statusText: message.statusText,
                     })
@@ -253,7 +253,7 @@ const SignUpComponent = () => {
                     const user = await res.json()
 
                     setStatus({
-                        ok: res.ok,
+                        ok: true,
                         statusCode: res.status,
                         statusText: "Registration is complete and You will redirect to login page in seconds."
                     })
@@ -347,7 +347,8 @@ const SignUpComponent = () => {
                             }}
                         >
                             <Grid
-                                container
+                                container={"true"}
+
                                 sx={{padding: 2}}
 
                             >

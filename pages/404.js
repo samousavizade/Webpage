@@ -42,7 +42,7 @@ export default function FourOhFour(props) {
 
 
                 <Grid
-                    container
+                    container={"true"}
                     style={{
                         background: "./static/soc_wallpaper.jpg",
 
@@ -72,7 +72,7 @@ export default function FourOhFour(props) {
                     >
                         <Typography
                             color={theme.palette.primary.main}
-                            textAlign={"center"}
+                            textalign={"center"}
                             variant={"h1"} component={"h1"}
                         >
                             Oops!
@@ -80,7 +80,7 @@ export default function FourOhFour(props) {
 
                         <Typography
                             color={theme.palette.error.main}
-                            textAlign={"center"}
+                            textalign={"center"}
                             variant={"h3"} component={"h1"}
                         >
                             404 not found
@@ -88,7 +88,7 @@ export default function FourOhFour(props) {
 
                         <Typography
                             color={theme.palette.text.primary}
-                            textAlign={"justify"}
+                            textalign={"justify"}
                             variant={"body1"} component={"h1"}
                             sx={{flexGrow: 1}}
                             marginTop={1.5}

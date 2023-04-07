@@ -52,7 +52,7 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
                         fontFamily: "Fondamento",
                         // textAlignLast: "center",
                     }}
-                    textAlign={"justify"}
+                    textalign={"justify"}
 
                 >
                     <i>{"❝ " + text + " ❞"}</i>
@@ -68,7 +68,7 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
                     style={{
                         alignContent: "center",
                     }}
-                    textAlign={"right"}
+                    textalign={"right"}
                     fontFamily={"Parisienne "}
                 >
                     {author}

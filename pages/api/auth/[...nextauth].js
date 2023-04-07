@@ -56,7 +56,7 @@ export const authOptions = {
                     .then((res) => res.json())
                     .catch((err) => {
                         logger.debug(`Error in call check_credentials api: ${err}`)
-                        return {err:err};
+                        return null;
                     });
 
 
@@ -65,14 +65,14 @@ export const authOptions = {
                 if (user) {
                     return user;
                 } else {
-                    return {err: "mfmfmf"};
+                    return null;
                 }
             }
         })
         // ...add more providers here
     ],
     adapter: PrismaAdapter(prisma),
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
 
     session: {
         strategy: "jwt",

@@ -86,7 +86,7 @@ const ArticlesGridItemComponent = ({article}) => {
 
                 <Typography
                     marginTop={1}
-                    textAlign={"justify"}
+                    textalign={"justify"}
                     variant="body1"
                 >
                     {article.subTitle}
@@ -133,7 +133,9 @@ const ArticlesGridItemComponent = ({article}) => {
 
                         <Divider variant="middle" sx={{marginY: 1}}/>
 
-                        <Box container display={"flex"}>
+                        <Box
+                            container={"true"}
+                            display={"flex"}>
                             <Button size={'large'} sx={{marginLeft: "auto"}}>
                                 <Link href={"/blog/" + article.id} legacyBehavior>
                                     Continue

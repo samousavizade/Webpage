@@ -60,7 +60,8 @@ export default function Home(props) {
             >
 
                 <Grid
-                    container
+                    container={"true"}
+
                     style={{
                         // backgroundImage: `url(${SocrateImage.src})`,
                         // backgroundRepeat: "no-repeat",
@@ -114,7 +115,7 @@ export default function Home(props) {
                         <Typography
                             sx={{flexGrow: 1, marginTop: 1, maxWidth: 400}}
                             color={"white"}
-                            textAlign={"justify"}
+                            textalign={"justify"}
                             marginBottom={2}
                             variant={"body1"} component={"h2"}
                         >

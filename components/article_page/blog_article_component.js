@@ -176,7 +176,7 @@ const BlogArticleComponent = (
                 />
             </Head>
             <Grid
-                container
+                container={"true"}
                 sx={{}}
                 padding={1}
                 bgcolor={theme.palette.background.paper}
@@ -373,7 +373,7 @@ const BlogArticleComponent = (
                 {nFeaturedArticles > 0 &&
                     <Grid key={"featured_articles_header"} padding={1} item xs={12} sm={12} md={12} lg={12}>
                         <Typography
-                            textAlign={"center"}
+                            textalign={"center"}
                             color={theme.palette.text.primary}
                             style={{borderRadius: borderRadius}}
                             sx={{

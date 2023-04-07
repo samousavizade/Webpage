@@ -211,6 +211,7 @@ import * as React from 'react';
 import {useTheme} from "@mui/material/styles";
 import Head from "next/head";
 import {
+    Alert,
     alpha,
     Box,
     Button,
@@ -222,7 +223,7 @@ import {
     ListItemIcon,
     ListItemText,
     ListSubheader,
-    Paper
+    Paper, Snackbar
 } from "@mui/material";
 import {Form, FormikProvider, useFormik} from "formik";
 import * as yup from "yup";
@@ -235,6 +236,8 @@ import {useRouter} from "next/router";
 import GoogleIcon from '@mui/icons-material/Google';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import {useEffect, useState} from "react";
+import Fade from "@mui/material/Fade";
 
 
 const validationSchema = yup.object({
@@ -256,6 +259,7 @@ const validationSchema = yup.object({
     //     .required("Description is required."),
 });
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const SignInComponent = () => {
 
     const theme = useTheme();
@@ -267,8 +271,13 @@ const SignInComponent = () => {
             email: "",
             password: "",
         },
+        initialStatus: {
+            ok: false,
+            statusCode: "",
+            statusText: "",
+        },
         validationSchema: validationSchema,
-        onSubmit: async (values) => {
+        onSubmit: async (values, {resetForm, setSubmitting, setStatus, setErrors}) => {
             try {
                 const body = {
                     // grant_type: "",
@@ -285,6 +294,24 @@ const SignInComponent = () => {
                     redirect: false,
                     // callbackUrl: "/home"
                 });
+
+                logger.debug("returned result from signIn() : ", res)
+
+                if (!res.ok) {
+
+                    setStatus({
+                        ok: false,
+                        statusCode: res.status,
+                        statusText: "Login failed with error: " + res.error,
+                    })
+
+                    setSnackBarOpen(true)
+                    setSubmitting(false)
+
+                } else {
+                    router.push("/home").then(r => r);
+                }
+
             } catch (error) {
                 logger.error(error);
             }
@@ -292,22 +319,9 @@ const SignInComponent = () => {
         },
     });
 
-
-    if (status === "authenticated") {
-        router.push("/home");
-    } else {
-        // handle error
-    }
-
     const borderRadius = 10;
 
-    ///////////////////////// show / hide passowrd /////////////////////////////////////
-    // const [showPassword, setShowPassword] = React.useState(false);
-    // const handleClickShowPassword = () => setShowPassword((show) => !show);
-    // const handleMouseDownPassword = (event) => {
-    //     event.preventDefault();
-    // };
-    ////////////////////////////////////////////////////////////////////////////////////
+    const [snackBarOpen, setSnackBarOpen] = useState(false);
 
     return (
         <>
@@ -356,7 +370,8 @@ const SignInComponent = () => {
                             }}
                         >
                             <Grid
-                                container
+                                container={"true"}
+
                                 sx={{padding: 2}}
                             >
                                 <Grid padding={1} item xs={12} sm={12} md={12} lg={12}>
@@ -516,9 +531,25 @@ const SignInComponent = () => {
 
             </Box>
 
+            <Snackbar
+                open={snackBarOpen}
+                transitionDuration={1250}
+                TransitionComponent={TransitionLeft}
+            >
+                <Alert onClose={(e) => {
+                    setSnackBarOpen(false)
+                }} severity={formik.status.ok ? "success" : "error"} sx={{width: '100%'}}>
+                    <strong>{formik.status.statusCode}</strong> {formik.status.statusText}
+                </Alert>
+            </Snackbar>
+
         </>
     )
 
+}
+
+function TransitionLeft(props) {
+    return <Fade {...props} direction="left"/>;
 }
 
 export default SignInComponent;
