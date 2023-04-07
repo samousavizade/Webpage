@@ -1,12 +1,4 @@
 import * as React from 'react';
-import {useContext} from 'react';
-import {alpha, Box, Grid, Typography} from "@mui/material";
-import SubmitToBlogComponent from "@/components/submit_comment";
-import {useTheme} from '@mui/material/styles';
-import Head from "next/head";
-import SocrateImage from "../public/static/soc_wallpaper.jpg";
-import Image from "next/image";
-import {SkeletonContext} from "@/pages/_app";
 
 // import clientPromise from '../lib/mongodb'
 //

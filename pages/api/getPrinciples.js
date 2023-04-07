@@ -1,6 +1,5 @@
 // pages/index.tsx
-import prisma from "../../lib/prisma"
-import {fetchPrinciples} from "@/lib/fetch_principles";
+import {fetchPrinciples} from "../../lib/fetch_principles";
 
 export default async (req, res) => {
 
