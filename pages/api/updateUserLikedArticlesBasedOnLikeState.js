@@ -1,4 +1,4 @@
-import {updateUserLikedArticles} from "../../lib/prisma"
+import prisma, from "../../lib/prisma"
 import {logger} from "../../lib/logger";
 
 export default async (req, res) => {
@@ -20,3 +20,39 @@ export default async (req, res) => {
     }
 
 };
+
+async function updateUserLikedArticles(user, article, pushOrPop) {
+
+
+    logger.debug("Hello")
+
+    let result;
+
+    if (pushOrPop === "push")
+        result = await prisma.user.update({
+            where: {
+                email: user.email,
+            },
+            data: {
+                likedArticles: {
+                    connect: [{id: article.id}],
+                }
+            }
+        })
+
+    else if (pushOrPop === "pop")
+        result = await prisma.user.update({
+            where: {
+                email: user.email,
+            },
+            data: {
+                likedArticles: {
+                    disconnect: [{id: article.id}],
+                }
+            }
+        })
+    else
+        throw Error(`pushOrPop invalid value: ${pushOrPop}`)
+
+    return result;
+}

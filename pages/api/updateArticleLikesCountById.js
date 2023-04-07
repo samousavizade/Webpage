@@ -1,4 +1,4 @@
-import prisma, {fetchArticleLikesCountById, updateArticleLikesCountById} from "../../lib/prisma"
+import prisma, from "../../lib/prisma"
 
 export default async (req, res) => {
     let {id, increment} = req.query;
@@ -21,3 +21,20 @@ export default async (req, res) => {
     }
 
 };
+
+async function updateArticleLikesCountById(id, incrementValue) {
+    const result = await prisma.article.update({
+        where: {
+            id: id
+        },
+        data: {
+            nLikes: {
+                increment: incrementValue,
+            }
+        }
+    })
+
+    return result;
+}
+
+
