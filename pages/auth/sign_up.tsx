@@ -199,10 +199,10 @@ const validationSchema = yup.object({
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 const SignUpComponent = () => {
+    const {data: session, status} = useSession();
 
     const theme = useTheme();
     const {state, dispatch} = useContext(SkeletonContext);
-    const {data: session, status} = useSession();
     const router = useRouter();
 
     const formik = useFormik({

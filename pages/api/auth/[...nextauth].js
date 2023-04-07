@@ -133,30 +133,30 @@ export const authOptions = {
             // session.user.id = token.id
             logger.debug(`Session callback called. ${token.email}`)
 
-            const result = await prisma.user.findUnique({
-                where: {
-                    email: token.email,
-                },
-                select: {
-                    likedArticles: {
-                        select: {
-                            id: true
-                        }
-                    },
-                    createdAt: true,
-                    updatedAt: true,
-                    status: true,
-                    role: true,
-                }
-            })
-
-            session.user = {
-                ...session.user,
-                ...result,
-                likedArticles: result.likedArticles.map(item => item.id)
-            }
-
-            logger.debug("Manipulated session.user:", session.user)
+            // const result = await prisma.user.findUnique({
+            //     where: {
+            //         email: token.email,
+            //     },
+            //     select: {
+            //         likedArticles: {
+            //             select: {
+            //                 id: true
+            //             }
+            //         },
+            //         createdAt: true,
+            //         updatedAt: true,
+            //         status: true,
+            //         role: true,
+            //     }
+            // })
+            //
+            // session.user = {
+            //     ...session.user,
+            //     ...result,
+            //     likedArticles: result.likedArticles.map(item => item.id)
+            // }
+            //
+            // logger.debug("Manipulated session.user:", session.user)
 
             return session
         }

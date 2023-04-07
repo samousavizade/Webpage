@@ -151,6 +151,7 @@ function dateDiff(d1, d2) {
 }
 
 function NavBarDrawerComponent(props) {
+    const {data: session, status} = useSession();
 
     const {state, dispatch} = useContext(SkeletonContext);
     const theme = useTheme();
@@ -161,7 +162,6 @@ function NavBarDrawerComponent(props) {
         return router.pathname === pathname;
     };
 
-    const {data: session, status} = useSession();
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
     const handleOpenUserMenu = (event) => {
