@@ -55,7 +55,7 @@ export const authOptions = {
                     .then((res) => res.json())
                     .catch((err) => {
                         logger.debug(`Error in call check_credentials api: ${err}`)
-                        throw new Error(res)
+                        throw new Error(err)
                         return null;
                     });
 

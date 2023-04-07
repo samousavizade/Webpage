@@ -13,9 +13,7 @@ export default async function handle(
     if (req.method === "POST") {
         await handlePOST(res, req);
     } else {
-        throw new Error(
-            `The HTTP ${req.method} method is not supported at this route.`,
-        );
+        res.status(400).end("method is not POST type.");
     }
 }
 
@@ -48,10 +46,12 @@ async function handlePOST(res, req) {
         logger.debug("incorrect credentials");
         if (!user) {
             logger.debug("user not found");
+
         } else if (user.password !== hashPassword(req.body.password)) {
             logger.debug("password is incorrect")
         }
 
         res.status(400).end("Username (mail) or address is incorrect.");
+
     }
 }
