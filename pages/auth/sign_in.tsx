@@ -282,9 +282,9 @@ const SignInComponent = () => {
                 logger.debug(`POSTing ${JSON.stringify(body, null, 2)}`);
                 let res = await signIn("credentials", {
                     ...body,
+                    redirect: false,
                     callbackUrl: "/home"
                 });
-                logger.debug(`Sign in response: `, res);
             } catch (error) {
                 logger.error(error);
             }
