@@ -6,6 +6,7 @@ import {PrismaAdapter} from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 import {logger} from "../../../lib/logger";
 import sha256 from "crypto-js/sha256";
+import {redirect} from "next/navigation";
 
 
 const hashPassword = (password) => {
@@ -54,6 +55,7 @@ export const authOptions = {
                     .then((res) => res.json())
                     .catch((err) => {
                         logger.debug(`Error in call check_credentials api: ${err}`)
+                        redirect("/blog")
                         return null;
                     });
 
