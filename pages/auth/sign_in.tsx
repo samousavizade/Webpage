@@ -238,13 +238,14 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 
 
 const validationSchema = yup.object({
-    // name: yup.string("Enter name.").required("Name is required"),
 
-    email: yup.string("Enter your mail.")
+    email: yup
+        .string()
         .email("Enter a valid mail please.")
         .required("Mail is required."),
 
-    password: yup.string("Enter your password")
+    password: yup
+        .string()
         .min(10, "Password must be at least 10 characters.")
         .required("Password is required"),
 
@@ -338,8 +339,8 @@ const SignInComponent = () => {
             >
                 <Paper
                     elevation={12}
-                    alignItems="center"
                     style={{
+                        alignItems: "center",
                         background: alpha(theme.palette.background.default, 0.55),
                         backdropFilter: "blur(9.5px)",
                         borderWidth: "5.5px",
@@ -353,13 +354,10 @@ const SignInComponent = () => {
                             style={{
                                 borderRadius: borderRadius,
                             }}
-                            value={formik}
                         >
                             <Grid
                                 container
                                 sx={{padding: 2}}
-                                noValidate
-                                autoComplete="on"
                             >
                                 <Grid padding={1} item xs={12} sm={12} md={12} lg={12}>
                                     <LiveFeedbackTextInput
@@ -447,8 +445,8 @@ const SignInComponent = () => {
 
                 <Paper
                     elevation={12}
-                    alignItems="center"
                     style={{
+                        alignItems: "center",
                         backgroundColor: alpha(theme.palette.background.default, 0.3),
                         backdropFilter: "blur(9.5px)",
                         borderWidth: "5.5px",

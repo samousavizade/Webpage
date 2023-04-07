@@ -63,9 +63,10 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                 <Box
                     component="div"
                     display={"flex"}
-                    alignItems="center"
-                    marginTop={1}
-                    // minHeight={0.1}
+                    style={{
+                        alignItems: "center",
+                        marginTop: 1
+                    }}
                 >
                     <Chip
                         marginY="auto"

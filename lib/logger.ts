@@ -3,7 +3,6 @@ import chalk from "chalk";
 import prefix from "loglevel-plugin-prefix";
 
 const colors = {
-    TRACE: chalk.purple,
     DEBUG: chalk.cyan,
     INFO: chalk.blue,
     WARN: chalk.yellow,

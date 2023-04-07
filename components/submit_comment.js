@@ -1,9 +1,9 @@
 import * as React from "react";
-import {Button, Paper, TextField, Box, IconButton, Tooltip, Typography, alpha} from "@mui/material";
+import {alpha, Box, IconButton, Paper, TextField, Tooltip, Typography} from "@mui/material";
 import {Form, FormikProvider, useFormik} from "formik";
 import * as yup from "yup";
 import SendSharpIcon from '@mui/icons-material/SendSharp';
-import { useTheme } from '@mui/material/styles';
+import {useTheme} from '@mui/material/styles';
 
 const validationSchema = yup.object({
     email: yup.string().email("Please validate your entered mail.").required("Mail is required."),
@@ -24,12 +24,15 @@ const SubmitToBlogComponent = () => {
 
     return (
         <Paper
-            style={{borderRadius: 0, background: alpha(theme.palette.background.paper, 0.37 )}}
+            style={{
+                borderRadius: 0,
+                background: alpha(theme.palette.background.paper, 0.37),
+                alignItems: "center",
+            }}
             elevation={20}
             sx={{
                 maxWidth: 400
             }}
-            alignItems="center"
         >
             <FormikProvider value={formik} validateOnChange={false}
                             validateOnBlur={false}>
@@ -63,7 +66,7 @@ const SubmitToBlogComponent = () => {
 
                                         type="submit"
                                     >
-                                        <SendSharpIcon />
+                                        <SendSharpIcon/>
                                     </IconButton>
                                 </Tooltip>
                             }}

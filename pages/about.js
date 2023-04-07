@@ -81,7 +81,10 @@ const About = () => {
                     <Paper elevation={elevationValue}>
                         <Stack
                             display="flex"
-                            alignItems="center"
+                            style={{
+                                alignItems: "center",
+
+                            }}
                             justifycontent="center"
                             spacing={2}
                             padding={2}
@@ -363,9 +366,11 @@ const About = () => {
                     >
                         <Paper elevation={elevationValue} sx={{height: "100%", overflow: "auto"}}>
                             <Stack
-                                display="flex"
-                                alignItems="center"
-                                justifycontent="center"
+                                style={{
+                                    display:"flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
                                 padding={2}
                             >
                                 {item.icon}

@@ -295,7 +295,9 @@ const BlogArticleComponent = (
                         </div>
 
                         <Typography
-                            alignItems="center"
+                            style={{
+                                alignItems: "center"
+                            }}
                             marginTop={1}
                             color={theme.palette.text.primary}
                             variant="h3"

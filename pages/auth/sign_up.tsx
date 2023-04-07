@@ -179,13 +179,17 @@ import Fade from "@mui/material/Fade";
 import LoadingButton from '@mui/lab/LoadingButton';
 
 const validationSchema = yup.object({
-    name: yup.string("Enter your full name.").required("Name is required."),
+    name: yup
+        .string()
+        .required("Name is required."),
 
-    email: yup.string("Enter your mail.")
+    email: yup
+        .string()
         .email("Enter a valid mail please.")
         .required("Mail is required."),
 
-    password: yup.string("Enter your password.")
+    password: yup
+        .string()
         .min(10, "Password must be at least 10 characters.")
         .required("Password is required."),
 
@@ -326,8 +330,8 @@ const SignUpComponent = () => {
             >
                 <Paper
                     elevation={12}
-                    alignItems="center"
                     style={{
+                        alignItems: "center",
                         background: alpha(theme.palette.background.default, 0.55),
                         backdropFilter: "blur(9.5px)",
                         borderWidth: "5.5px",
@@ -341,13 +345,11 @@ const SignUpComponent = () => {
                             style={{
                                 borderRadius: borderRadius,
                             }}
-                            value={formik}
                         >
                             <Grid
                                 container
                                 sx={{padding: 2}}
-                                noValidate
-                                autoComplete="on"
+
                             >
                                 <Grid padding={1} item xs={12} sm={12} md={4} lg={4}>
                                     <LiveFeedbackTextInput

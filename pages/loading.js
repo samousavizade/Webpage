@@ -82,9 +82,16 @@ export default function Loading(props) {
                             borderColor: alpha(theme.palette.background.paper, 0.2),
                         }}
                     >
-                        <ListItem sx={{height: "12vh", flexGrow: 1}}
-                                  style={{backgroundColor: theme.palette.primary.main}} alignSelf={"center"}
-                                  alignItems={"center"} alignContent={"center"}>
+                        <ListItem
+                            style={{
+                                backgroundColor: theme.palette.primary.main,
+                                height: "12vh",
+                                flexGrow: 1,
+                                alignItems: "center",
+                                alignSelf: "center",
+                                alignContent: "center",
+                            }}
+                        >
                             <ListItemIcon>
                                 <CircularProgress color="inherit"/>
                             </ListItemIcon>
