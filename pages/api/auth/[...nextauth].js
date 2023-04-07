@@ -131,11 +131,11 @@ export const authOptions = {
             // Send properties to the client, like an access_token and user id from a provider.
             // session.accessToken = token.accessToken
             // session.user.id = token.id
-            logger.debug("Session callback called.")
+            logger.debug(`Session callback called. ${token.email}`)
 
             const result = await prisma.user.findUnique({
                 where: {
-                    email: session.user.email,
+                    email: token.email,
                 },
                 select: {
                     likedArticles: {
