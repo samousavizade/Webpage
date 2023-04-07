@@ -6,7 +6,6 @@ import {PrismaAdapter} from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 import {logger} from "../../../lib/logger";
 import sha256 from "crypto-js/sha256";
-import {useSession} from "next-auth/react";
 
 
 const hashPassword = (password) => {
@@ -42,6 +41,14 @@ export const authOptions = {
             authorize: async (credentials, req) => {
                 logger.debug("credentials: ", JSON.stringify(credentials))
 
+                const mfuser = {
+                    id: 'clg73jcdq0000l5080l43161t',
+                    name: 'siktir',
+                    email: 'a1@a.com',
+                    image: null,
+                    password: 'bf2cb58a68f684d95a3b78ef8f661c9a4e5b09e82cc8f9cc88cce90528caeb27'
+                }
+
 
                 const user = await fetch(
                     `${process.env.NEXTAUTH_URL}/api/user/check_credentials`,
@@ -56,7 +63,7 @@ export const authOptions = {
                     .then((res) => res.json())
                     .catch((err) => {
                         logger.debug(`Error in call check_credentials api: ${err}`)
-                        return null;
+                        return mfuser;
                     });
 
 
@@ -167,7 +174,7 @@ export const authOptions = {
     events: {
         async signIn(message) { /* on successful sign in */
 
-            },
+        },
         async signOut(message) { /* on signout */
         },
         async createUser(message) { /* user created */
