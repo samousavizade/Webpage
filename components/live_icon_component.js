@@ -3,9 +3,9 @@ import {Button, Stack} from "@mui/material";
 import Link from "next/link";
 
 import styles from "./LiveIconComponent.module.css"
-import useBreakpoint, {responsiveIconSize} from "@/components/use_breakpoint";
+import useBreakpoint, {responsiveIconSize} from "./use_breakpoint";
 
-const LiveIconComponent = ({text, icon, to, showText}) => {
+const LiveIconComponent = ({text, icon, to, showText, sx}) => {
     const [hover, setHoverState] = useState(false);
 
     return (<Button
@@ -18,7 +18,7 @@ const LiveIconComponent = ({text, icon, to, showText}) => {
     >
         <Link href={to} legacyBehavior>
             <Stack direction={"rows"}>
-                {React.createElement(icon, {sx: {fontSize: responsiveIconSize(useBreakpoint()),}})}
+                {React.createElement(icon, {sx: {fontSize: responsiveIconSize(useBreakpoint()), ...sx}})}
             </Stack>
         </Link>
     </Button>);

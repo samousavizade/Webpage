@@ -23,11 +23,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import CodeIcon from "@mui/icons-material/Code";
 import ArchitectureIcon from "@mui/icons-material/Architecture";
 import ScienceIcon from "@mui/icons-material/Science";
-import {drawerSecondaryItemsParts} from "@/components/drawer_items";
+import {drawerSecondaryItemsParts} from "../components/drawer_items";
 import ConstructionIcon from '@mui/icons-material/Construction';
-import useBreakpoint, {responsiveIconSize} from "@/components/use_breakpoint";
+import useBreakpoint, {responsiveIconSize} from "../components/use_breakpoint";
 import Head from "next/head";
-import {SkeletonContext} from "@/pages/_app";
+import {SkeletonContext} from "../pages/_app";
 
 const elevationValue = 3;
 

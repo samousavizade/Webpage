@@ -1,0 +1,22 @@
+import {updateUserLikedArticles} from "../../lib/prisma"
+import {logger} from "../../lib/logger";
+
+export default async (req, res) => {
+    let {user, article, pushOrPop} = req.body;
+
+    logger.debug("USER OBJECT", user)
+
+    try {
+        const result = await updateUserLikedArticles(user, article, pushOrPop);
+
+        if (result) {
+            res.status(200).json(result)
+        } else {
+            res.status(404).json({message: "Update liked articles of user failed: ", result})
+        }
+    } catch (error) {
+        logger.debug("Something went wrong: ", error)
+        res.status(500).json({message: "Something went wrong: ", error})
+    }
+
+};

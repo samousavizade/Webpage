@@ -6,5 +6,5 @@ export enum AppBarTitleEnum {
     PROJECTS = "Projects",
     COURSES = "Courses",
     INTEGRATION = "Integration",
-    Others = "Others"
+    Others = ""
 }

@@ -3,14 +3,15 @@ import {
     AccordionDetails,
     AccordionSummary,
     alpha,
-    Avatar, Box,
+    Avatar,
+    Box,
     Button,
     Card,
     CardActions,
     CardContent,
     CardHeader,
-    CardMedia,
     Divider,
+    Paper,
     Typography,
     useTheme,
 } from "@mui/material";
@@ -23,21 +24,26 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import Link from "next/link";
 import Image from "next/image";
-import ResponsiveIcon from "@/components/ResponsiveIcon";
+import ResponsiveIcon from "../components/ResponsiveIcon";
+import * as React from "react";
 
-const ArticlesGridItemComponent = ({article, onClickLike}) => {
+const ArticlesGridItemComponent = ({article}) => {
 
     const summaryMarkdown = article.summary;
+    if (!article.author) {
+        console.log("article mamad", article.id)
+    }
     const fullName = `${article.author.firstName} ${article.author.lastName}`
 
     const theme = useTheme();
+    const borderRadius = "0.75rem";
 
     return (
         <Card
             sx={{
                 backgroundColor: alpha(theme.palette.background.paper, 0.7),
                 backdropFilter: "blur(1.5px)",
-
+                borderRadius: borderRadius,
                 '&:hover': {
                     backgroundColor: alpha(theme.palette.background.paper, 0.85),
                     transform: "scale3d(1.015, 1.015, 1)",
@@ -47,12 +53,27 @@ const ArticlesGridItemComponent = ({article, onClickLike}) => {
             // sx={{maxHeight: "100%"}}
         >
             <Link href={`/blog/${article.id}`}>
-                <CardMedia
-                    component={Image}
-                    height={350}
-                    image={article.imageLink}
-
-                />
+                <Paper
+                    variant="outlined"
+                    sx={{
+                        height: 300,
+                    }}
+                >
+                    <Avatar
+                        key={"avatar"}
+                        variant="square"
+                        sx={{
+                            minHeight: 1,
+                            minWidth: 1,
+                        }}
+                    >
+                        <Image
+                            src={article.imageLink}
+                            alt={article.title}
+                            fill
+                        />
+                    </Avatar>
+                </Paper>
             </Link>
 
             <CardContent>

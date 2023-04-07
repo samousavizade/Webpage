@@ -4,11 +4,11 @@ import Carousel from 'react-material-ui-carousel';
 // import Settings, {DefaultSettingsT} from './Settings';
 // import './SlideShow.module.scss';
 import {alpha, Grid, Typography, useTheme,} from '@mui/material';
-import {DefaultSettingsT} from "@/components/slide_show/Settings";
-import PrincipleComponent from "@/components/principle_component";
+import {DefaultSettingsT} from "../../components/slide_show/Settings";
+import PrincipleComponent from "../../components/principle_component";
 import {grey} from "@mui/material/colors";
-import useBreakpoint from "@/components/use_breakpoint";
-import {SkeletonContext} from "@/pages/_app";
+import useBreakpoint from "../../components/use_breakpoint";
+import {SkeletonContext} from "../../pages/_app";
 
 
 const SlideShow = ({myPrinciples}) => {

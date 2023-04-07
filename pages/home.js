@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {useContext} from 'react';
 import {alpha, Box, Grid, Typography} from "@mui/material";
-import SubmitToBlogComponent from "@/components/submit_comment";
+import SubmitToBlogComponent from "../components/submit_comment";
 import {useTheme} from '@mui/material/styles';
 import Head from "next/head";
 import SocrateImage from "../public/static/soc_wallpaper.jpg";
 import Image from "next/image";
-import {SkeletonContext} from "@/pages/_app";
+import {SkeletonContext} from "../pages/_app";
 
 // import clientPromise from '../lib/mongodb'
 //
@@ -52,7 +52,7 @@ export default function Home(props) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Box
-                height={`calc( 100vh - ${56}px - 2*${state.padding} - 5px )`}
+                minHeight={`calc( 100vh - ${56}px - 2*${state.padding} - 5px )`}
                 sx={{
                     flexGrow: 1,
                     overflow: "auto",
@@ -115,6 +115,7 @@ export default function Home(props) {
                             sx={{flexGrow: 1, marginTop: 1, maxWidth: 400}}
                             color={"white"}
                             textAlign={"justify"}
+                            marginBottom={2}
                             variant={"body1"} component={"h2"}
                         >
                             “If you don't get what you want, you suffer; if you get what you don't want, you suffer;

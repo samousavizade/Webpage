@@ -1,17 +1,11 @@
 import {alpha, Box, Paper, Typography, useTheme} from "@mui/material";
 import * as React from "react";
-import {SkeletonContext} from "@/pages/_app";
-import Hegel from "../public/static/philosephors/hegel.jpg"
-import SocrateImage from "@/public/static/soc_wallpaper.jpg";
-import * as url from "url";
 import {useContext} from "react";
+import {SkeletonContext} from "../pages/_app";
 
 const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
     const theme = useTheme();
-
     const {state, dispatch} = useContext(SkeletonContext);
-
-    // const imglink = "../public/static/philosephors/hegel.jpg";
 
     return (
 
@@ -45,9 +39,9 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
             >
                 <Typography
                     variant={"body1"} component={"h4"}
-                    paddingRight={8}
-                    paddingLeft={8}
-                    paddingTop={8}
+                    paddingRight={4}
+                    paddingLeft={4}
+                    paddingTop={4}
 
                     sx={{
                         flexGrow: 1,
@@ -68,9 +62,9 @@ const PrincipleComponent = ({principleTitle, imageLink, text, author}) => {
                     sx={{display: ""}}
                     // color={"white"}
                     variant={"h6"} component={"h6"}
-                    paddingRight={8}
-                    paddingLeft={8}
-                    paddingBottom={8}
+                    paddingRight={4}
+                    paddingLeft={4}
+                    paddingBottom={4}
                     style={{
                         alignContent: "center",
                     }}

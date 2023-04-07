@@ -10,7 +10,9 @@ import Fade from '@mui/material/Fade';
 import {
     alpha,
     AppBar,
+    Avatar,
     Button,
+    ButtonGroup,
     Divider,
     Drawer,
     Icon,
@@ -20,320 +22,35 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
+    Menu,
+    MenuItem,
+    Tooltip,
     useScrollTrigger
 } from "@mui/material";
-import {SKELETON_ACTION_TYPES, SkeletonContext} from "@/pages/_app";
+import {SKELETON_ACTION_TYPES, SkeletonContext} from "../pages/_app";
 import MenuIcon from "@mui/icons-material/Menu";
 import Brightness7Icon from "@mui/icons-material/Brightness7"
 import Brightness4Icon from "@mui/icons-material/Brightness4"
+import Person2Icon from '@mui/icons-material/Person2';
+import EmailIcon from '@mui/icons-material/Email';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import Logout from "@mui/icons-material/Logout"
 
 import {useTheme} from "@mui/material/styles";
-import ResponsiveIcon from "@/components/ResponsiveIcon";
+import ResponsiveIcon from "./ResponsiveIcon";
 import {drawerMainItemsParts, drawerSecondaryItemsParts,} from "./drawer_items";
 import Link from "next/link";
 import {useRouter} from "next/router";
-import {AppBarTitleEnum} from "@/components/app_bar_title_enum";
+import {AppBarTitleEnum} from "./app_bar_title_enum";
+import {signOut, useSession} from "next-auth/react";
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
-// function NavBarDrawerComponent(props) {
-//     const theme = useTheme();
-//
-//     const {state, dispatch} = useContext(SkeletonContext);
-//
-//     const {
-//         windowFunction,
-//         children,
-//
-//         selectedTheme,
-//         toggleTheme,
-//
-//         navBarHeight,
-//         drawerWidthWhileExpanded,
-//         drawerWidthWhileClosed,
-//         drawerWidthInSmallScreen,
-//     } = props;
-//     const toggleDrawer = () => {
-//         // setOpen(!open);
-//         dispatch({
-//             type: SKELETON_ACTION_TYPES.SET_OPEN,
-//             payload: {
-//                 open: !state.open,
-//             }
-//         })
-//     };
-//
-//     const [windowWidth, windowHeight] = useDeviceSize();
-//
-//     const container =
-//         windowFunction !== undefined
-//             ? () => windowFunction().document.body
-//             : undefined;
-//
-//     // useEffect(() => {
-//     //
-//     //     if (windowWidth < theme.breakpoints.values.sm) {
-//     //         dispatch({
-//     //             type: SKELETON_ACTION_TYPES.SET_DRAWER_WIDTH,
-//     //             payload: {
-//     //                 drawerWidth: 0,
-//     //             }
-//     //         })
-//     //     } else {
-//     //         if (state.open) {
-//     //             dispatch({
-//     //                 type: SKELETON_ACTION_TYPES.SET_DRAWER_WIDTH,
-//     //                 payload: {
-//     //                     drawerWidth: drawerWidthWhileExpanded,
-//     //                 }
-//     //             })
-//     //         } else {
-//     //             // setDrawerWidthState(drawerWidthWhileClosed)
-//     //             dispatch({
-//     //                 type: SKELETON_ACTION_TYPES.SET_DRAWER_WIDTH,
-//     //                 payload: {
-//     //                     drawerWidth: drawerWidthWhileClosed,
-//     //                 }
-//     //             })
-//     //         }
-//     //     }
-//     //
-//     // }, []);
-//
-//
-//     const drawerComponent =
-//         // 600 is sm in mui
-//         (windowWidth > theme.breakpoints.values.sm) ? (
-//             <LargeScreenDrawer
-//                 drawerWidth={drawerWidthWhileExpanded}
-//                 drawerWidthWhileClosed={drawerWidthWhileClosed}
-//                 variant="permanent"
-//                 open={state.open}
-//             >
-//                 <Toolbar
-//                     sx={{
-//                         display: "flex",
-//                         height: navBarHeight,
-//                         alignItems: "center",
-//                         justifycontent: "flex-end",
-//                         px: [1],
-//                         // TODO: todo
-//                     }}
-//                 >
-//                     <IconButton onClick={toggleDrawer}>
-//                         {state.open ? <ResponsiveIcon icon={ChevronLeftIcon}/> : <></>}
-//                     </IconButton>
-//                 </Toolbar>
-//                 <Divider/>
-//                 <List component="nav">
-//                     {drawerMainItemsParts.map((item) => {
-//                         return (
-//                             <Link
-//                                 key={item.title}
-//                                 legacyBehavior
-//                                 href={item.to}
-//                             >
-//                                 <a>
-//                                     <ListItemButton
-//                                         key={item.title}
-//                                         data={item}
-//                                         onClick={(e) => {
-//                                             dispatch({
-//                                                 type: SKELETON_ACTION_TYPES.SET_NAVBAR_TITLE,
-//                                                 payload: {
-//                                                     navBarTitle: item.title,
-//                                                 }
-//                                             })
-//                                         }}
-//                                     >
-//                                         <ListItemIcon><ResponsiveIcon icon={item.icon}/></ListItemIcon>
-//                                         <ListItemText primary={item.title}/>
-//                                     </ListItemButton>
-//                                 </a>
-//                             </Link>
-//                         );
-//                     })}
-//
-//                     <Divider sx={{my: 1}}/>
-//
-//                     {drawerSecondaryItemsParts.map((item) => {
-//                         return (
-//                             <Link
-//                                 key={item.title}
-//                                 legacyBehavior
-//                                 href={item.to}
-//                             >
-//                                 <a>
-//                                     <ListItemButton key={item.title}>
-//                                         <ListItemIcon><ResponsiveIcon icon={item.icon}/></ListItemIcon>
-//                                         <ListItemText primary={item.title}/>
-//                                     </ListItemButton>
-//                                 </a>
-//                             </Link>
-//                         );
-//                     })}
-//                 </List>
-//             </LargeScreenDrawer>
-//
-//         ) : (
-//             <Drawer
-//                 container={container}
-//                 variant="temporary"
-//                 open={state.open}
-//                 onClose={toggleDrawer}
-//                 ModalProps={{
-//                     keepMounted: true,
-//                 }}
-//                 sx={{
-//                     display: {xs: "block", sm: "none"},
-//                     "& .MuiDrawer-paper": {
-//                         boxSizing: "border-box",
-//                         width: drawerWidthWhileExpanded,
-//                     },
-//                 }}
-//             >
-//                 <Toolbar
-//                     sx={{
-//                         display: "flex",
-//                         minHeight: navBarHeight,
-//                         alignItems: "center",
-//                         justifycontent: "flex-end",
-//                     }}
-//                 />
-//                 <Divider/>
-//                 <List component="nav">
-//                     {drawerMainItemsParts.map((item) => {
-//                         return (
-//                             <ListItem key={item.title} disablePadding>
-//
-//                                 <Link legacyBehavior href={item.to}>
-//                                     <a>
-//                                         <ListItemButton
-//                                             data={item}
-//                                             onClick={(e) => {
-//                                                 dispatch({
-//                                                     type: SKELETON_ACTION_TYPES.SET_NAVBAR_TITLE,
-//                                                     payload: {
-//                                                         navBarTitle: item.title,
-//                                                     }
-//                                                 })
-//                                             }}
-//                                         >
-//                                             <ListItemIcon><ResponsiveIcon icon={item.icon}/></ListItemIcon>
-//                                             <ListItemText primary={item.title}/>
-//                                         </ListItemButton>
-//                                     </a>
-//                                 </Link>
-//                             </ListItem>
-//
-//                         );
-//                     })}
-//
-//                     <Divider sx={{my: 1}}/>
-//
-//                     <ListSubheader component="div" inset>
-//                         Links
-//                     </ListSubheader>
-//
-//                     {drawerSecondaryItemsParts.map((item) => {
-//                         return (
-//                             <ListItemButton key={item.title}>
-//                                 <ListItemIcon><ResponsiveIcon icon={item.icon}/></ListItemIcon>
-//                                 <ListItemText primary={item.title}/>
-//                             </ListItemButton>
-//                         );
-//                     })}
-//                 </List>
-//
-//                 <Divider/>
-//             </Drawer>
-//         );
-//
-//
-//     return (
-//         <Box sx={{display: "flex"}}>
-//             <LargeScreenAppBar
-//                 style={{
-//                     background: theme.palette.primary.main,
-//                 }}
-//
-//                 open={state.open}
-//                 drawerWidth={drawerWidthWhileExpanded}
-//             >
-//                 <Toolbar
-//                     sx={{
-//                         height: navBarHeight
-//                     }}
-//                 >
-//                     <IconButton
-//                         edge="start"
-//                         aria-label="open drawer"
-//                         onClick={toggleDrawer}
-//                         sx={{
-//                             marginRight: "0.5rem",
-//                             ...(state.open && {display: "none"}),
-//                         }}
-//                     >
-//                         {<ResponsiveIcon icon={MenuIcon}/>}
-//                     </IconButton>
-//                     <Typography
-//                         component="h1"
-//                         variant="h4"
-//                         color={"text.primary"}
-//                         noWrap
-//                         sx={{flexGrow: 1}}
-//                     >
-//                         {state.navBarTitle}
-//                     </Typography>
-//                     <Typography
-//                         component="h1"
-//                         variant="subtitle1"
-//                         color={"text.primary"}
-//                         noWrap
-//                     >
-//                         {useBreakpoint()}
-//                     </Typography>
-//
-//
-//                     <IconButton
-//                         onClick={toggleTheme}
-//                         color="inherit"
-//                     >
-//                         {selectedTheme === "dark" ? (
-//                             <ResponsiveIcon icon={Brightness4Icon} sx={{color: theme.palette.text.primary}}/>
-//                         ) : (
-//                             <ResponsiveIcon icon={Brightness7Icon} sx={{color: theme.palette.text.primary}}/>
-//                         )}
-//                     </IconButton>
-//                 </Toolbar>
-//             </LargeScreenAppBar>
-//
-//             {drawerComponent}
-//
-//             <Box
-//                 component="main"
-//                 sx={{
-//                     flexGrow: 1,
-//                     width: 1,
-//                     height: windowHeight,
-//                     overflow: "auto",
-//                 }}
-//             >
-//                 <Toolbar
-//                     sx={{
-//                         // pr: "32px",
-//                         width: 1,
-//                         height: navBarHeight
-//                     }}
-//                 />
-//                 {children}
-//             </Box>
-//         </Box>
-//     );
-// }
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+import {grey} from "@mui/material/colors";
+import useBreakpoint from "./use_breakpoint";
+
 
 const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
 
 function ScrollTop(props) {
     const {children, window} = props;
@@ -371,23 +88,23 @@ function ScrollTop(props) {
     );
 }
 
-function ElevationScroll(props) {
-    const {children, window, theme} = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 100,
-        target: window ? window() : undefined,
-    });
-
-    return React.cloneElement(children, {
-        style: {
-            backgroundColor: trigger ? theme.palette.primary.main : `rgba(255, 255, 255, 0)`,
-        }
-    });
-}
+// functi`on ElevationScroll(props) {
+//     const {children, window, theme} = props;
+//     // Note that you normally won't need to set the window ref as useScrollTrigger
+//     // will default to window.
+//     // This is only being set here because the demo is in an iframe.
+//     const trigger = useScrollTrigger({
+//         disableHysteresis: true,
+//         threshold: 50,
+//         target: window ? window() : undefined,
+//     });
+//
+//     return React.cloneElement(children, {
+//         style: {
+//             backgroundColor: trigger ? theme.palette.primary.main : `rgba(255, 255, 255, 0)`,
+//         }
+//     });
+// }
 
 function getCurrentTabTitle(router) {
     const pathname = router.pathname;
@@ -419,13 +136,44 @@ function getCurrentTabTitle(router) {
     }
 }
 
-function NavBarDrawerComponent(props) {
+function dateDiff(d1, d2) {
+    const diff = d1 - d2;
+    const parts = {
+        diff: diff,
+        ms: Math.floor(diff % 1000),
+        s: Math.floor(diff / 1000 % 60),
+        m: Math.floor(diff / 60000 % 60),
+        h: Math.floor(diff / 3600000 % 24),
+        d: Math.floor(diff / 86400000)
+    };
 
-    console.log("mamad")
+    return `${parts.h}:${parts.m}:${parts.s}`
+}
+
+function NavBarDrawerComponent(props) {
 
     const {state, dispatch} = useContext(SkeletonContext);
     const theme = useTheme();
+
+    // auth
     const router = useRouter();
+    const isActive = function (pathname) {
+        return router.pathname === pathname;
+    };
+
+    const {data: session, status} = useSession();
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+
+    // main logic
 
     const currentTabTitle = getCurrentTabTitle(router);
 
@@ -491,81 +239,254 @@ function NavBarDrawerComponent(props) {
 
     const container = window !== undefined ? () => window().document.body : undefined;
 
+    //////////////////// Elevation Effect /////////////////////
+
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 50,
+        target: window ? window() : undefined,
+    });
+
+    const currentBreakpoint = useBreakpoint();
+    const isMobileSizeScreen = ["xs", "sm"].includes(currentBreakpoint);
+
+    ////////////////////////// Login Register / User Avatar ////////////////////////
+    let element = null;
+    if (status === 'loading') {
+        element = (
+            <>
+                <Typography>Validating session ...</Typography>
+            </>
+        );
+    }
+    if (!session) {
+        element = (
+            <>
+                {/*"/api/auth/signin"*/}
+                <ButtonGroup>
+
+                    <Button
+                        component={Link}
+                        href={"/auth/sign_up"}
+                        variant={trigger ? "contained" : "outlined"}
+                        color={"success"}
+                        size={isMobileSizeScreen ? "small" : "medium"}
+                        endIcon={<AppRegistrationIcon fontSize={"small"}/>}
+                        sx={{
+                            '&:hover': {
+                                color: trigger ? theme.palette.background.default : theme.palette.success.main
+                            }
+                        }}
+                    >
+                        Register
+                    </Button>
+
+                    <Button
+                        component={Link}
+                        // href={"/api/auth/signin"}
+                        href={"/auth/sign_in"}
+                        variant={"outlined"}
+                        size={isMobileSizeScreen ? "small" : "medium"}
+                        // onClick={() => signIn()}
+                        endIcon={<LoginIcon fontSize={"small"}/>}
+                        sx={{
+                            color: trigger ? theme.palette.background.default : theme.palette.primary.main,
+                            '&:hover': {
+                                color: trigger ? theme.palette.background.default : theme.palette.primary.main
+                            }
+                        }}
+                    >
+                        Login
+                    </Button>
+
+                </ButtonGroup>
+
+            </>
+
+        );
+    }
+    if (session) {
+        element = (
+            <>
+                <Box marginRight={1}>
+                    <Tooltip title="Open settings">
+                        <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                            <Avatar alt={session.user.name} src={session.user.image}/>
+                        </IconButton>
+                    </Tooltip>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorElUser}
+                        anchorOrigin={{
+                            vertical: 'center',
+                            horizontal: 'center',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={Boolean(anchorElUser)}
+                        onClose={handleCloseUserMenu}
+                    >
+                        <MenuItem>
+                            <ListItemIcon>
+                                <Person2Icon fontSize="small"/>
+                            </ListItemIcon>
+                            <ListItemText>
+                                {session.user.name}
+                            </ListItemText>
+                        </MenuItem>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <EmailIcon fontSize="small"/>
+                            </ListItemIcon>
+                            <ListItemText>
+                                {session.user.email}
+                            </ListItemText>
+                        </MenuItem>
+                        <Divider/>
+                        <MenuItem>
+                            <ListItemIcon>
+                                <ChatBubbleIcon fontSize="small"/>
+                            </ListItemIcon>
+                            <ListItemText>
+                                Comments
+                            </ListItemText>
+                        </MenuItem>
+                        <Divider/>
+                        <MenuItem>
+                            <ListItemText>
+                                {session.user.id}
+                            </ListItemText>
+                        </MenuItem>
+                        <MenuItem onClick={() => signOut()}>
+                            <ListItemIcon>
+                                <Logout fontSize="small"/>
+                            </ListItemIcon>
+                            <ListItemText style={{textDecoration: 'none'}}>
+                                Logout
+                            </ListItemText>
+                        </MenuItem>
+
+                    </Menu>
+                </Box>
+                {/*<Typography>*/}
+                {/*    {session.user.name} ({session.user.email}) {session.user.image}*/}
+                {/*</Typography>*/}
+                {/*<Link href={pathname} key={pathname}>*/}
+                {/*    <Button*/}
+                {/*        sx={{*/}
+                {/*            "&:hover": {*/}
+                {/*                backgroundColor: "grey",*/}
+                {/*            }*/}
+                {/*        }}*/}
+                {/*        style={{*/}
+                {/*            borderBottomWidth: 3,*/}
+                {/*            borderBottomColor: isActive(pathname) ? theme.palette.text.primary : `rgba(255, 255, 255, 0)`,*/}
+                {/*            borderStyle: "solid",*/}
+                {/*            borderRadius: 0,*/}
+                {/*            color: isActive(pathname) ? theme.palette.text.primary : alpha(theme.palette.text.primary, 0.7),*/}
+                {/*        }}*/}
+                {/*        onClick={(e) => {*/}
+                {/*        }}*/}
+                {/*    >*/}
+                {/*        <Typography*/}
+                {/*            color={theme.palette.text.primary}*/}
+                {/*        >*/}
+                {/*            Drafts*/}
+                {/*        </Typography>*/}
+                {/*    </Button>*/}
+                {/*</Link>*/}
+            </>
+        );
+    }
+    ////////////////////////////////////////////////////////////////////////////////
 
     return (
         <React.Fragment>
-            <ElevationScroll theme={theme} {...props}>
-                <AppBar elevation={0} component="nav">
-                    <Toolbar sx={{height: props.navBarHeight}}>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            edge="start"
-                            onClick={handleDrawerToggle}
-                            sx={{display: {md: 'none'}}}
-                        >
-                            {<ResponsiveIcon style={{color: theme.palette.text.primary}} icon={MenuIcon}/>}
-                        </IconButton>
-                        <Typography
-                            color={theme.palette.text.primary}
-                            sx={{mr: 1, display: {md: 'none'}}}
-                        >
-                            {currentTabTitle}
-                        </Typography>
+            <AppBar enableColorOnDark sx={{backgroundColor: trigger ? theme.palette.primary : `rgba(255, 255, 255, 0)`}}
+                    elevation={0}
+                    component="nav">
+                <Toolbar sx={{height: props.navBarHeight}}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{display: {md: 'none'}}}
+                    >
+                        {<ResponsiveIcon style={{color: theme.palette.text.primary}} icon={MenuIcon}/>}
+                    </IconButton>
+                    <Typography
+                        color={theme.palette.text.primary}
+                        sx={{mr: 1, display: {md: 'none'}}}
+                    >
+                        {currentTabTitle}
+                    </Typography>
 
-                        <Icon
-                            sx={{
-                                mr: 2.5,
-                                display: {sm: 'none', xs: 'none', md: 'block'},
-                            }}
-                        >
-                            <img style={{
-                                display: 'flex',
-                                height: 'inherit',
-                                width: 'inherit'
-                            }} src="/favicon.svg"/>
-                        </Icon>
+                    <Icon
+                        sx={{
+                            mr: 2.5,
+                            display: {sm: 'none', xs: 'none', md: 'block'},
+                        }}
+                    >
+                        <img style={{
+                            display: 'flex',
+                            height: 'inherit',
+                            width: 'inherit'
+                        }} src="/favicon.svg"/>
+                    </Icon>
 
-                        <Box sx={{display: {sm: 'none', xs: 'none', md: 'block'}}}>
-                            {drawerMainItemsParts.map((item) => {
+                    <Box sx={{display: {sm: 'none', xs: 'none', md: 'block'}}}>
+                        {drawerMainItemsParts.map((item) => {
 
-                                let isActiveTab = currentTabTitle === item.title;
+                            let isActiveTab = currentTabTitle === item.title;
 
-                                return (
-                                    <Link href={item.to} key={item.title}>
-                                        <Button
-                                            sx={{
-                                                "&:hover": {
-                                                    backgroundColor: "grey",
+                            return (
+                                <Link href={item.to} key={item.title}>
+                                    <Button
+                                        sx={{
+                                            "&:hover": {
+                                                backgroundColor: trigger ? theme.palette.primary.dark : grey.A400,
+                                            }
+                                        }}
+                                        style={{
+                                            borderBottomWidth: 3,
+                                            borderBottomColor: isActiveTab ? theme.palette.text.primary : `rgba(255, 255, 255, 0)`,
+                                            borderStyle: "solid",
+                                            borderRadius: 0,
+                                            color: isActiveTab ? theme.palette.text.primary : alpha(theme.palette.text.primary, 0.7),
+                                        }}
+                                        onClick={(e) => {
+                                            dispatch({
+                                                type: SKELETON_ACTION_TYPES.SET_NAVBAR_TITLE,
+                                                payload: {
+                                                    navBarTitle: item.title,
                                                 }
-                                            }}
-                                            style={{
-                                                borderBottomWidth: 3,
-                                                borderBottomColor: isActiveTab ? theme.palette.text.primary : `rgba(255, 255, 255, 0)`,
-                                                borderStyle: "solid",
-                                                borderRadius: 0,
-                                                color: isActiveTab ? theme.palette.text.primary : alpha(theme.palette.text.primary, 0.7),
-                                            }}
-                                            onClick={(e) => {
-                                                dispatch({
-                                                    type: SKELETON_ACTION_TYPES.SET_NAVBAR_TITLE,
-                                                    payload: {
-                                                        navBarTitle: item.title,
-                                                    }
-                                                })
-                                            }}
+                                            })
+                                        }}
+                                    >
+                                        <Typography
+                                            color={theme.palette.text.primary}
                                         >
-                                            <Typography
-                                                color={theme.palette.text.primary}
-                                            >
-                                                {item.title}
-                                            </Typography>
-                                        </Button>
-                                    </Link>
-                                );
-                            })}
+                                            {item.title}
+                                        </Typography>
+                                    </Button>
+                                </Link>
+                            );
+                        })}
+                    </Box>
 
-                        </Box>
+                    <Box sx={{flexGrow: 1}}>
+                    </Box>
+
+                    {element}
+
+                    <Tooltip title="Change theme">
                         <IconButton
                             onClick={props.toggleTheme}
                             sx={{
@@ -579,9 +500,9 @@ function NavBarDrawerComponent(props) {
                                 <ResponsiveIcon icon={Brightness7Icon} sx={{color: theme.palette.text.primary}}/>
                             )}
                         </IconButton>
-                    </Toolbar>
-                </AppBar>
-            </ElevationScroll>
+                    </Tooltip>
+                </Toolbar>
+            </AppBar>
             <Box component="nav">
                 <Drawer
                     container={container}

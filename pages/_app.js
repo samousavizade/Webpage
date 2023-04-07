@@ -1,17 +1,24 @@
-import '@/styles/globals.css'
-import NavigationBarComponent from "@/components/navigation_bar";
+import '../styles/globals.css'
+import NavigationBarComponent from "../components/navigation_bar";
 import {MDXProvider} from '@mdx-js/react'
 import React, {createContext, useEffect, useReducer, useState} from "react";
 import {createTheme, CssBaseline, responsiveFontSizes, ThemeProvider} from "@mui/material";
 import Head from "next/head";
-import {LazyPlot} from "@/components/article_page/plotly_figure";
+import {LazyPlot} from "../components/article_page/plotly_figure";
 import "@code-hike/mdx/dist/index.css"
-import useBreakpoint, {responsiveIconSize} from "@/components/use_breakpoint";
+import useBreakpoint, {responsiveIconSize} from "../components/use_breakpoint";
 
 import Image from "next/image"
 import lightThemeBackground from "../public/static/bg_light.png"
 import darkThemeBackground from "../public/static/bg_dark.png"
-import {AppBarTitleEnum} from "@/components/app_bar_title_enum";
+import {AppBarTitleEnum} from "../components/app_bar_title_enum";
+
+import {SessionProvider, useSession} from 'next-auth/react';
+import Protected from "../pages/protected";
+
+
+import {ChakraProvider} from "@chakra-ui/provider";
+import theme from "../theme";
 
 
 export const SKELETON_ACTION_TYPES = {
@@ -51,9 +58,7 @@ export const SkeletonContext = createContext();
 
 export default function App({Component, pageProps}) {
 
-    const drawerWidthWhileExpanded = "225px";
     const drawerWidthWhileClosed = `calc(2*${responsiveIconSize(useBreakpoint())} + 0.4rem)`;
-    const drawerWidthInSmallScreen = "0px";
 
     let lightTheme = createTheme({
         palette: {
@@ -180,33 +185,52 @@ export default function App({Component, pageProps}) {
                     <Image
                         src={themeBackground.src}
                         alt={"background"}
-                        quality={85}
+                        quality={88}
                         fill
                     />
                 </div>
                 <SkeletonProvider>
+                    <SessionProvider session={pageProps.session}>
+                        <NavigationBarComponent
+                            selectedTheme={activeThemeName}
+                            toggleTheme={toggleTheme}
 
-                    <NavigationBarComponent
-                        selectedTheme={activeThemeName}
-                        toggleTheme={toggleTheme}
+                            navBarHeight={navBarHeight}
+                        >
 
-                        navBarHeight={navBarHeight}
-                    >
+                            <MDXProvider components={components}>
+                                <ChakraProvider theme={theme}>
+                                    {Component.auth ? (
+                                        <Auth>
+                                            <Component {...pageProps} />
+                                        </Auth>
+                                    ) : (
+                                        <Component {...pageProps} />
+                                    )}
+                                </ChakraProvider>
+                            </MDXProvider>
 
-                        <MDXProvider components={components}>
-                            <Component {...pageProps} />
-                        </MDXProvider>
 
-
-                        {/*<footer>*/}
-                        {/*    <Box minHeight={100} bgcolor={"red"}>*/}
-                        {/*        Salam*/}
-                        {/*    </Box>*/}
-                        {/*</footer>*/}
-                    </NavigationBarComponent>
+                            {/*<footer>*/}
+                            {/*    <Box minHeight={100} bgcolor={"red"}>*/}
+                            {/*        Salam*/}
+                            {/*    </Box>*/}
+                            {/*</footer>*/}
+                        </NavigationBarComponent>
+                    </SessionProvider>
                 </SkeletonProvider>
-
             </ThemeProvider>
         </>
     )
+}
+
+function Auth({children}) {
+    // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"
+    const {status} = useSession({required: true})
+
+    if (status === "loading") {
+        return <Protected/>
+    }
+
+    return children
 }

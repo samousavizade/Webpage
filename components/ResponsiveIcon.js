@@ -1,5 +1,5 @@
 import React from "react";
-import useBreakpoint, {responsiveIconSize} from "@/components/use_breakpoint";
+import useBreakpoint, {responsiveIconSize} from "./use_breakpoint";
 
 const ResponsiveIcon = ({icon, sx, ...props}) => {
     const currentBreakpoint = useBreakpoint();

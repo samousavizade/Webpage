@@ -9,6 +9,7 @@ import {
     Grid,
     IconButton,
     Paper,
+    Tooltip,
     Typography,
     useMediaQuery,
     useTheme,
@@ -20,6 +21,7 @@ import Tag from "@mui/icons-material/Tag";
 import dynamic from 'next/dynamic'
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite"
+import {useSession} from "next-auth/react";
 // import Ensemble from "./mdx_sources/Ensemble/ensemble_learning.mdx"
 // import FinancialBars from "./mdx_sources/FinancialBars/financial_bars.mdx"
 // import SampleWeights from "./mdx_sources/SampleWeights/sample_weights.mdx"
@@ -40,6 +42,25 @@ const SampleWeights = dynamic(() => import("./mdx_sources/SampleWeights/sample_w
 const StructuralBreaks = dynamic(() => import("./mdx_sources/StructuralBreaks/structural_breaks.mdx"),);
 const Labeling = dynamic(() => import("./mdx_sources/Labeling/labeling.mdx"),);
 
+// export async function getStaticProps() {
+//     let myPrinciples = await fetchPrinciples()
+//
+//     const positions = ["left", "middle", "right"];
+//
+//     myPrinciples = myPrinciples.map((content, index) => {
+//         return {
+//             contentPosition: positions[index % 3],
+//             materials: content,
+//         }
+//     })
+//
+//     return {
+//         props: {
+//             myPrinciples: myPrinciples,
+//         }
+//     }
+//
+// }
 
 const BlogArticleComponent = (
     {
@@ -51,8 +72,17 @@ const BlogArticleComponent = (
         setDoesCurrentUserLike
     }) => {
 
+    const {data: session, status, update: updateSession} = useSession()
+    const someoneIsSignedIn = session?.user !== undefined;
+    const user = session?.user
+
+    console.log("Current Session: ", session)
+    console.log("Current User: ", user)
+
+
     const elevationValue = 3;
     const borderRadius = 20;
+
 
     const theme = useTheme();
     const greaterThanLarge = useMediaQuery(theme.breakpoints.up("lg"));
@@ -129,6 +159,7 @@ const BlogArticleComponent = (
 
     }
 
+    console.log("doesCurrentUserLike", doesCurrentUserLike)
 
     return (
         <>
@@ -150,7 +181,7 @@ const BlogArticleComponent = (
                 padding={1}
                 bgcolor={theme.palette.background.paper}
             >
-                <Grid item xs={12} sm={12} md={6} lg={6} padding={1}>
+                <Grid key={"avatar_part"} item xs={12} sm={12} md={6} lg={6} padding={1}>
                     <Paper
                         variant="outlined"
                         style={{
@@ -164,7 +195,6 @@ const BlogArticleComponent = (
                             style={{
                                 borderRadius: borderRadius,
                             }}
-                            key={"avatar"}
                             variant="square"
                             sx={{minHeight: 1, minWidth: 1}}
                         >
@@ -176,7 +206,7 @@ const BlogArticleComponent = (
                         </Avatar>
                     </Paper>
                 </Grid>
-                <Grid item xs={12} sm={12} md={6} lg={6} padding={1}>
+                <Grid key={"article_details_part"} item xs={12} sm={12} md={6} lg={6} padding={1}>
                     <Box
                         sx={{
                             height: (xSmallToSmall || smallToMid) ? "100%" : headerHeight,
@@ -200,30 +230,67 @@ const BlogArticleComponent = (
                                 }}
                                 label={intendedArticle.tag}
                             />
-                            <Badge color="primary" badgeContent={likesCount}>
-                                <IconButton
-                                    aria-label="like"
-                                    onClick={(e) => {
-                                        if (doesCurrentUserLike) {
-                                            fetch(`http://localhost:3030/api/updateArticleLikesCountById?id=${intendedArticle.id}&increment=${-1}`)
-                                            setLikesCount(likesCount - 1);
+                            <Tooltip
+                                title={someoneIsSignedIn ? "Save this article in your library by like" : "Please sign in to like the article."}>
 
-                                        } else {
-                                            fetch(`http://localhost:3030/api/updateArticleLikesCountById?id=${intendedArticle.id}&increment=${+1}`)
-                                            setLikesCount(likesCount + 1);
+                                <Badge color="primary" badgeContent={likesCount}>
+                                    <IconButton
+                                        disabled={!someoneIsSignedIn}
+                                        aria-label="like"
+                                        onClick={async (e) => {
+                                            if (doesCurrentUserLike) {
+                                                setDoesCurrentUserLike(false)
+                                                setLikesCount(likesCount - 1);
 
-                                        }
+                                                await fetch(`/api/updateArticleLikesCountById?id=${intendedArticle.id}&increment=${-1}`)
+                                                await fetch(
+                                                    `/api/updateUserLikedArticlesBasedOnLikeState/`,
+                                                    {
+                                                        method: "POST",
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            accept: "application/json",
+                                                        },
+                                                        body: JSON.stringify({
+                                                            user: user,
+                                                            article: intendedArticle,
+                                                            pushOrPop: "pop"
+                                                        }),
+                                                    }
+                                                )
 
-                                        setDoesCurrentUserLike(!doesCurrentUserLike)
-                                    }}
-                                >
-                                    {doesCurrentUserLike ? (
-                                        <FavoriteIcon color={"error"}/>
-                                    ) : (
-                                        <FavoriteBorderIcon color={"error"}/>
-                                    )}
-                                </IconButton>
-                            </Badge>
+                                            } else {
+                                                setDoesCurrentUserLike(true)
+                                                setLikesCount(likesCount + 1);
+
+                                                await fetch(`/api/updateArticleLikesCountById?id=${intendedArticle.id}&increment=${+1}`)
+                                                await fetch(
+                                                    `/api/updateUserLikedArticlesBasedOnLikeState/`,
+                                                    {
+                                                        method: "POST",
+                                                        headers: {
+                                                            'Content-Type': 'application/json',
+                                                            accept: "application/json",
+                                                        },
+                                                        body: JSON.stringify({
+                                                            user: user,
+                                                            article: intendedArticle,
+                                                            pushOrPop: "push"
+                                                        }),
+                                                    }
+                                                )
+                                            }
+
+                                        }}
+                                    >
+                                        {doesCurrentUserLike ? (
+                                            <FavoriteIcon color={"error"}/>
+                                        ) : (
+                                            <FavoriteBorderIcon color={"error"}/>
+                                        )}
+                                    </IconButton>
+                                </Badge>
+                            </Tooltip>
 
                         </div>
 
@@ -302,7 +369,7 @@ const BlogArticleComponent = (
                 </Grid>
 
                 {nFeaturedArticles > 0 &&
-                    <Grid key={"featured_articles"} padding={1} item xs={12} sm={12} md={12} lg={12}>
+                    <Grid key={"featured_articles_header"} padding={1} item xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             textAlign={"center"}
                             color={theme.palette.text.primary}
@@ -321,7 +388,6 @@ const BlogArticleComponent = (
                 {nFeaturedArticles > 0 && featuredArticles.slice(0, nFeaturedArticles).map((article) => (
                     <Grid key={article.title} padding={1} item xs={12} sm={6} md={4} lg={3}>
                         <FeaturedArticleComponent
-                            key={article.title}
                             article={article}
                             elevationValue={elevationValue}
                             borderRadius={borderRadius}

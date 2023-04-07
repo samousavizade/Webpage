@@ -1,8 +1,9 @@
-import BlogArticleComponent from "@/components/article_page/blog_article_component";
+import BlogArticleComponent from "../../components/article_page/blog_article_component";
 import Head from "next/head";
 import React, {useEffect, useState} from "react";
 import useSWR from "swr";
-import {fetchArticles} from "@/lib/prisma";
+import {fetchArticles} from "../../lib/prisma";
+import {useSession} from "next-auth/react";
 
 export async function getStaticProps(staticProps) {
     const params = staticProps.params;
@@ -43,7 +44,6 @@ export async function getStaticPaths() {
 
     return {
         paths: articles.map((item) => {
-            console.log("item.id", item.id)
             return {params: {article_id: `${item.id}`}}
         }),
         fallback: false
@@ -51,23 +51,32 @@ export async function getStaticPaths() {
 }
 
 const ArticleComponent = ({intendedArticle, featuredArticles}) => {
-
+    const {data: session, status, update: updateSession} = useSession()
     const fetcher = (url) => fetch(url).then((res) => res.json());
     const {
+
         data,
         error
-    } = useSWR(`http://localhost:3030/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
+
+    } = useSWR(`/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
 
     const [likesCount, setLikesCount] = useState(intendedArticle.nLikes);
-    const [doesCurrentUserLike, setDoesCurrentUserLike] = useState(false);
+    const [doesCurrentUserLike, setDoesCurrentUserLike] = useState();
+
+    console.log("current user like? ", doesCurrentUserLike)
 
     useEffect(() => {
+        let doesCurrentUserLikeInitialState = false;
+        if (session) {
+            doesCurrentUserLikeInitialState = session.user.likedArticles.includes(intendedArticle.id)
+        }
+        console.log("Does current user like? ", doesCurrentUserLikeInitialState)
+
+        setDoesCurrentUserLike(doesCurrentUserLikeInitialState)
         if (data) {
             setLikesCount(data.nLikes);
-        } else {
-            setLikesCount(0);
         }
-    }, [data]);
+    }, [data, session]);
 
 
     return (

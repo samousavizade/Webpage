@@ -16,28 +16,88 @@ model Article {
   author   Author @relation(fields: [authorId], references: [id])
   authorId Int
 
-  imageLink     String   @map(name: "image_link")
+  imageLink     String   @map("image_link")
   title         String   @unique
-  subTitle      String   @map(name: "sub_title")
-  createdAt     DateTime @default(now()) @map(name: "created_at")
-  updatedAt     DateTime @updatedAt @map(name: "updated_at")
+  subTitle      String   @map("sub_title")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
   tag           String
   keywords      String[]
-  contentMDFile String   @map(name: "content_md_file")
+  contentMDFile String   @map("content_md_file")
   summary       String
-  nLikes        Int      @map(name: "n_likes")
+  nLikes        Int      @map("n_likes")
+  User          User?    @relation(fields: [userId], references: [id])
+  userId        String?
 
-  @@map(name: "articles")
+  @@map("articles")
 }
 
 model Author {
   id        Int    @id @default(autoincrement())
-  firstName String @map(name: "first_name")
-  lastName  String @map(name: "last_name")
+  firstName String @map("first_name")
+  lastName  String @map("last_name")
   bio       String
   cv        String
 
   articles Article[]
 
-  @@map(name: "authors")
+  @@map("authors")
+}
+
+model Account {
+  id                 String    @id @default(cuid())
+  userId             String    @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String    @map("provider_account_id")
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+  oauth_token_secret String?
+  oauth_token        String?
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime? @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String    @id @default(cuid())
+  sessionToken String    @unique @map("session_token")
+  expires      DateTime
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String    @map("user_id")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime? @updatedAt @map("updated_at")
+  role          String?
+  status        Boolean?
+  likedArticles Article[]
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }

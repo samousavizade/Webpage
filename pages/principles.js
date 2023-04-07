@@ -1,12 +1,12 @@
 import {useRouter} from "next/router";
 import * as React from "react";
-import {Box, Typography, Stack} from "@mui/material";
-import SlideShow from "@/components/slide_show/SlideShow";
-import {fetchPrinciples} from "@/lib/fetch_principles";
-import Loading from "@/pages/loading";
-import Head from "next/head";
 import {useContext} from "react";
-import {SkeletonContext} from "@/pages/_app";
+import {Box} from "@mui/material";
+import SlideShow from "../components/slide_show/SlideShow";
+import {fetchPrinciples} from "../lib/fetch_principles";
+import Loading from "../pages/loading";
+import Head from "next/head";
+import {SkeletonContext} from "../pages/_app";
 
 
 export async function getStaticProps() {
@@ -32,12 +32,24 @@ export async function getStaticProps() {
 
 const Principles = ({myPrinciples}) => {
 
+    // Use middleware instead
+    ////////////////////////////////////////////////////////////
+    // const { status } = useSession({})
+    //
+    // if (status === "loading") {
+    //     return <Loading/>
+    // }
+    //
+    // if (status === "unauthenticated") {
+    //     return <Protected/>
+    // }
+
     const {state, dispatch} = useContext(SkeletonContext);
 
     const router = useRouter();
 
     if (router.isFallback) {
-        return <Loading />
+        return <Loading/>
     }
 
     return (
