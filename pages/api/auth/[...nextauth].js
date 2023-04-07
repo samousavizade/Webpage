@@ -56,7 +56,7 @@ export const authOptions = {
                     .then((res) => res.json())
                     .catch((err) => {
                         logger.debug(`Error in call check_credentials api: ${err}`)
-                        return null;
+                        return {err:err};
                     });
 
 
@@ -65,7 +65,7 @@ export const authOptions = {
                 if (user) {
                     return user;
                 } else {
-                    return null;
+                    return {err: "mfmfmf"};
                 }
             }
         })
