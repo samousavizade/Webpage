@@ -55,7 +55,7 @@ export const authOptions = {
                     .then((res) => res.json())
                     .catch((err) => {
                         logger.debug(`Error in call check_credentials api: ${err}`)
-                        redirect("/blog")
+                        throw new Error(err)
                         return null;
                     });
 
