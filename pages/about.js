@@ -93,7 +93,7 @@ const About = () => {
                                 key={"avatar"}
                                 alt="S.Alireza Mousavizade"
                                 variant="rounded"
-                                src="/static/me.png"
+                                src="/static/me2.png"
                                 sx={{width: "100%", height: "100%"}}
                             />
 
