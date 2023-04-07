@@ -42,7 +42,7 @@ export default function FourOhFour(props) {
 
 
                 <Grid
-                    container={"true"}
+                    container
                     style={{
                         background: "./static/soc_wallpaper.jpg",
 

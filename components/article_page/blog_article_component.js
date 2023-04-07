@@ -176,7 +176,7 @@ const BlogArticleComponent = (
                 />
             </Head>
             <Grid
-                container={"true"}
+                container
                 sx={{}}
                 padding={1}
                 bgcolor={theme.palette.background.paper}

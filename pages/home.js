@@ -60,7 +60,7 @@ export default function Home(props) {
             >
 
                 <Grid
-                    container={"true"}
+                    container
 
                     style={{
                         // backgroundImage: `url(${SocrateImage.src})`,

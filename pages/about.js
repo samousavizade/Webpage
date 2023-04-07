@@ -70,7 +70,7 @@ const About = () => {
             </Head>
 
             <Grid
-                container={"true"}
+                container
                 spacing={2}>
                 <Grid
                     item

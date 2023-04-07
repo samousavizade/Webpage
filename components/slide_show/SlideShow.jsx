@@ -134,7 +134,7 @@ const DesktopBanner = ({principles, subject, contentPosition, key}) => {
 
     return (
         <Grid
-            container={"true"}
+            container
             spacing={0}>
             {items}
         </Grid>

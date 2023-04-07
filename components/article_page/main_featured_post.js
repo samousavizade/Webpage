@@ -23,7 +23,7 @@ function MainFeaturedPost({ article, elevationValue }) {
       }}
     >
       <Grid height={1}
-            container={"true"}
+            container
 
       >
         <Grid item bgcolor="green" xs={4} sm={4} md={4} lg={4}>

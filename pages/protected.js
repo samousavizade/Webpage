@@ -33,7 +33,7 @@ export default function Protected(props) {
                 padding={`calc(4*${state.padding})`}
             >
                 <Grid
-                    container={"true"}
+                    container
 
                     style={{
                         background: "./static/soc_wallpaper.jpg",

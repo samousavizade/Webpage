@@ -134,7 +134,7 @@ const ArticlesGridItemComponent = ({article}) => {
                         <Divider variant="middle" sx={{marginY: 1}}/>
 
                         <Box
-                            container={"true"}
+                            container
                             display={"flex"}>
                             <Button size={'large'} sx={{marginLeft: "auto"}}>
                                 <Link href={"/blog/" + article.id} legacyBehavior>
