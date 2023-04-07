@@ -291,8 +291,7 @@ const SignInComponent = () => {
                 logger.debug(`POSTing ${JSON.stringify(body, null, 2)}`);
                 let res = await signIn("credentials", {
                     ...body,
-                    redirect: false,
-                    // callbackUrl: "/home"
+                    callbackUrl: "/home"
                 });
 
                 logger.debug("returned result from signIn() : ", res)
@@ -309,7 +308,7 @@ const SignInComponent = () => {
                     setSubmitting(false)
 
                 } else {
-                    router.push("/home").then(r => r);
+
                 }
 
             } catch (error) {
