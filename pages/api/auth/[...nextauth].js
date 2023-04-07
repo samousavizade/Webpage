@@ -80,7 +80,7 @@ export const authOptions = {
 
     pages: {
         signIn: "/auth/sign_in",
-        signOut: "/auth/sign_out",
+        // signOut: "/auth/sign_out",
     },
 
     // session: {
