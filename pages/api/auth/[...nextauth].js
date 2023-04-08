@@ -77,7 +77,10 @@ export const authOptions = {
 
                 if (user && user.password === hashPassword(req.body.password)) {
                     logger.debug("Password correct");
+                    logger.debug("final returned user: ", user)
+
                     delete user.password
+                    return user;
                 } else {
                     if (!user) {
                         throw new Error("User not found.");
@@ -89,14 +92,6 @@ export const authOptions = {
                     throw new Error("Username (mail) or address is incorrect.");
                 }
 
-
-                logger.debug("final returned user: ", user)
-
-                if (user) {
-                    return user;
-                } else {
-                    return null;
-                }
             }
         })
         // ...add more providers here
