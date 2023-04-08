@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import NavigationBarComponent from "../components/navigation_bar";
 import {MDXProvider} from '@mdx-js/react'
 import React, {createContext, useEffect, useReducer, useState} from "react";
-import {createTheme, CssBaseline, responsiveFontSizes, ThemeProvider} from "@mui/material";
+import {Box, createTheme, CssBaseline, responsiveFontSizes, ThemeProvider, Typography} from "@mui/material";
 import Head from "next/head";
 import {LazyPlot} from "../components/article_page/plotly_figure";
 import "@code-hike/mdx/dist/index.css"
@@ -15,11 +15,10 @@ import {AppBarTitleEnum} from "../components/app_bar_title_enum";
 
 import {SessionProvider, useSession} from 'next-auth/react';
 import Protected from "../pages/protected";
+import createEmotionCache from "../utils/createEmotionCache";
+import {CacheProvider} from "@emotion/react";
 
-
-import {ChakraProvider} from "@chakra-ui/provider";
-import theme from "../theme";
-
+const clientSideEmotionCache = createEmotionCache();
 
 export const SKELETON_ACTION_TYPES = {
     SET_NAVBAR_HEIGHT: "SET_NAVBAR_HEIGHT",
@@ -98,12 +97,13 @@ let darkTheme = createTheme({
 darkTheme = responsiveFontSizes(darkTheme);
 
 
-
-
-export default function App({Component, pageProps}) {
+export default function App({
+                                Component,
+                                emotionCache = clientSideEmotionCache,
+                                pageProps
+                            }) {
 
     const drawerWidthWhileClosed = `calc(2*${responsiveIconSize(useBreakpoint())} + 0.4rem)`;
-
 
 
     const [activeTheme, setActiveTheme] = useState(lightTheme);
@@ -122,7 +122,7 @@ export default function App({Component, pageProps}) {
         // if (localStorage.getItem("mode")) {
         //     setActiveTheme(localStorage.getItem("mode") === "dark" ? darkTheme : lightTheme);
         // } else {
-            setActiveTheme(activeThemeName === "dark" ? darkTheme : lightTheme);
+        setActiveTheme(activeThemeName === "dark" ? darkTheme : lightTheme);
         // }
 
     }, [activeThemeName]);
@@ -171,69 +171,74 @@ export default function App({Component, pageProps}) {
 
 
     return (<>
-            <Head>
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-                      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-                      crossOrigin="anonymous"
-                />
-                <script
-                    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-                    crossOrigin="anonymous"
-                    defer
-                >
+            <CacheProvider value={emotionCache}>
 
-                </script>
-            </Head>
-
-            <ThemeProvider theme={activeTheme}>
-                <CssBaseline/>
-                <div
-                    style={{
-                        zIndex: -1,
-                        position: "fixed",
-                        width: "100vw",
-                        height: "100vh",
-                    }}
-                >
-                    <Image
-                        src={themeBackground.src}
-                        alt={"background"}
-                        quality={88}
-                        fill
+                <Head>
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+                          rel="stylesheet"
+                          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+                          crossOrigin="anonymous"
                     />
-                </div>
-                <SkeletonProvider>
-                    <SessionProvider session={pageProps.session}>
-                        <NavigationBarComponent
-                            selectedTheme={activeThemeName}
-                            toggleTheme={toggleTheme}
+                    <script
+                        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+                        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+                        crossOrigin="anonymous"
+                        defer
+                    >
 
-                            navBarHeight={navBarHeight}
-                        >
+                    </script>
+                </Head>
 
-                            <MDXProvider components={components}>
-                                <ChakraProvider theme={theme}>
-                                    {Component.auth ? (
-                                        <Auth>
-                                            <Component {...pageProps} />
-                                        </Auth>
-                                    ) : (
-                                        <Component {...pageProps} />
-                                    )}
-                                </ChakraProvider>
-                            </MDXProvider>
+                <ThemeProvider theme={activeTheme}>
+                    <CssBaseline/>
+                    <div
+                        style={{
+                            zIndex: -1,
+                            position: "fixed",
+                            width: "100vw",
+                            height: "100vh",
+                        }}
+                    >
+                        <Image
+                            src={themeBackground.src}
+                            alt={"background"}
+                            quality={88}
+                            fill
+                        />
+                    </div>
+                    <SkeletonProvider>
+                        <SessionProvider session={pageProps.session}>
+                            <NavigationBarComponent
+                                selectedTheme={activeThemeName}
+                                toggleTheme={toggleTheme}
+
+                                navBarHeight={navBarHeight}
+                            >
+
+                                <MDXProvider components={components}>
+                                    {/*{Component.auth ? (*/}
+                                    {/*    <Auth>*/}
+                                    <Component {...pageProps} />
+                                    {/*</Auth>*/}
+                                    {/*) : (*/}
+                                    {/*    <Component {...pageProps} />*/}
+                                    {/*)}*/}
+                                </MDXProvider>
 
 
-                            {/*<footer>*/}
-                            {/*    <Box minHeight={100} bgcolor={"red"}>*/}
-                            {/*        Salam*/}
-                            {/*    </Box>*/}
-                            {/*</footer>*/}
-                        </NavigationBarComponent>
-                    </SessionProvider>
-                </SkeletonProvider>
-            </ThemeProvider>
+                            </NavigationBarComponent>
+                        </SessionProvider>
+                    </SkeletonProvider>
+                </ThemeProvider>
+            </CacheProvider>
+
+            <footer>
+                <Box bgcolor={activeTheme.palette.primary.dark}>
+                    <Typography variant={"subtitle2"} padding={'0.5rem'}>
+                        Many thanks to <strong>Vercel</strong>
+                    </Typography>
+                </Box>
+            </footer>
         </>
     )
 }
