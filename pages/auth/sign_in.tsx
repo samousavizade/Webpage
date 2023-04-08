@@ -292,6 +292,7 @@ const SignInComponent = () => {
                 let res = await signIn("credentials", {
                     ...body,
                     redirect: false,
+                    // callbackUrl: "/home"
                 });
 
                 logger.debug("returned result from signIn() : ", res)
@@ -308,7 +309,7 @@ const SignInComponent = () => {
                     setSubmitting(false)
 
                 } else {
-
+                    router.push("/home").then(r => r);
                 }
 
             } catch (error) {
