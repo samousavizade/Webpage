@@ -35,6 +35,8 @@ export async function getStaticProps() {
 const Principles = ({myPrinciples}) => {
 
     const { status } = useSession()
+    const {state, dispatch} = useContext(SkeletonContext);
+    const router = useRouter();
 
     if (status === "loading") {
         return <Loading/>
@@ -44,9 +46,7 @@ const Principles = ({myPrinciples}) => {
         return <Protected/>
     }
 
-    const {state, dispatch} = useContext(SkeletonContext);
 
-    const router = useRouter();
 
     if (router.isFallback) {
         return <Loading/>
