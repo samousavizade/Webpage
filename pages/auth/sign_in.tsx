@@ -319,6 +319,11 @@ const SignInComponent = () => {
         },
     });
 
+    useEffect(() => {
+        router.prefetch('/home').then(r => r)
+    }, [router]);
+
+
     const borderRadius = 10;
 
     const [snackBarOpen, setSnackBarOpen] = useState(false);

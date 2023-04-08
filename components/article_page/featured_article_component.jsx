@@ -9,7 +9,6 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
     return (
         <Box
             sx={{
-                // height: 500,
                 display: "flex",
                 flexDirection: "column",
                 "&:hover": {
@@ -29,19 +28,6 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                         height: 250,
                     }}
                 >
-                    {/*<Avatar*/}
-                    {/*    style={{*/}
-                    {/*        borderTopLeftRadius: borderRadius,*/}
-                    {/*        borderTopRightRadius: borderRadius,*/}
-                    {/*    }}*/}
-                    {/*    key={"avatar"}*/}
-                    {/*    variant="square"*/}
-                    {/*    sx={{minHeight: 1, minWidth: 1}}*/}
-                    {/*    alt="Example Alt"*/}
-                    {/*    src={article.image_link}*/}
-                    {/*/>*/}
-
-
                     <Avatar
                         style={{
                             borderTopLeftRadius: borderRadius,
@@ -65,7 +51,7 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                     display={"flex"}
                     style={{
                         alignItems: "center",
-                        marginTop: 1
+                        marginTop: '0.5rem'
                     }}
                 >
                     <Chip
@@ -76,7 +62,7 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                 </Box>
 
                 <Typography
-                    marginTop={1}
+                    marginTop={'0.25rem'}
                     variant="h5"
                     color={theme.palette.text.primary}
                 >
@@ -96,7 +82,7 @@ function FeaturedArticleComponent({article, elevationValue, borderRadius}) {
                         <Chip
                             // padding={5}
                             sx={{
-                                margin: 0.25,
+                                margin: '0.2rem',
                             }}
                             variant="outlined"
                             key={item}

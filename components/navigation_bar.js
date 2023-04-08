@@ -274,8 +274,9 @@ function NavBarDrawerComponent(props) {
                         size={isMobileSizeScreen ? "small" : "medium"}
                         endIcon={<AppRegistrationIcon fontSize={"small"}/>}
                         sx={{
+                            color: trigger ? theme.palette.text.primary : theme.palette.success.main,
                             '&:hover': {
-                                color: trigger ? theme.palette.background.default : theme.palette.success.main
+                                color: trigger ? theme.palette.text.primary : theme.palette.success.main
                             }
                         }}
                     >
@@ -291,9 +292,9 @@ function NavBarDrawerComponent(props) {
                         // onClick={() => signIn()}
                         endIcon={<LoginIcon fontSize={"small"}/>}
                         sx={{
-                            color: trigger ? theme.palette.background.default : theme.palette.primary.main,
+                            color: trigger ? theme.palette.text.primary : theme.palette.primary.main,
                             '&:hover': {
-                                color: trigger ? theme.palette.background.default : theme.palette.primary.main
+                                color: trigger ? theme.palette.text.primary : theme.palette.primary.main
                             }
                         }}
                     >

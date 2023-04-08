@@ -72,7 +72,9 @@ export default function FourOhFour(props) {
                     >
                         <Typography
                             color={theme.palette.primary.main}
-                            textalign={"center"}
+                            sx={{
+                                textAlign: "center",
+                            }}
                             variant={"h1"} component={"h1"}
                         >
                             Oops!
@@ -80,7 +82,9 @@ export default function FourOhFour(props) {
 
                         <Typography
                             color={theme.palette.error.main}
-                            textalign={"center"}
+                            sx={{
+                                textAlign: "center",
+                            }}
                             variant={"h3"} component={"h1"}
                         >
                             404 not found
@@ -88,9 +92,11 @@ export default function FourOhFour(props) {
 
                         <Typography
                             color={theme.palette.text.primary}
-                            textalign={"justify"}
                             variant={"body1"} component={"h1"}
-                            sx={{flexGrow: 1}}
+                            sx={{
+                                flexGrow: 1,
+                                textAlign: "justify",
+                            }}
                             marginTop={1.5}
 
                         >

@@ -178,7 +178,7 @@ const BlogArticleComponent = (
             <Grid
                 container
                 sx={{}}
-                padding={1}
+                padding={'0.5rem'}
                 bgcolor={theme.palette.background.paper}
             >
                 <Grid key={"avatar_part"} item xs={12} sm={12} md={6} lg={6} padding={1}>
@@ -206,7 +206,7 @@ const BlogArticleComponent = (
                         </Avatar>
                     </Paper>
                 </Grid>
-                <Grid key={"article_details_part"} item xs={12} sm={12} md={6} lg={6} padding={1}>
+                <Grid key={"article_details_part"} item xs={12} sm={12} md={6} lg={6} padding={'0.5rem'}>
                     <Box
                         sx={{
                             height: (xSmallToSmall || smallToMid) ? "100%" : headerHeight,
@@ -317,7 +317,6 @@ const BlogArticleComponent = (
                         <Box marginY={1}>
                             {intendedArticle.keywords.map((item) => (
                                 <Chip
-                                    // padding={5}
                                     sx={{
                                         margin: 0.25,
                                     }}
@@ -335,7 +334,7 @@ const BlogArticleComponent = (
 
                         <CardHeader
                             style={{
-                                padding: 1,
+                                padding: '0.25rem',
                             }}
                             avatar={
                                 <Avatar
@@ -371,12 +370,13 @@ const BlogArticleComponent = (
                 </Grid>
 
                 {nFeaturedArticles > 0 &&
-                    <Grid key={"featured_articles_header"} padding={1} item xs={12} sm={12} md={12} lg={12}>
+                    <Grid key={"featured_articles_header"} padding={'0.5rem'} item xs={12} sm={12} md={12} lg={12}>
                         <Typography
-                            textalign={"center"}
                             color={theme.palette.text.primary}
                             style={{borderRadius: borderRadius}}
                             sx={{
+                                padding: '0.25rem',
+                                textAlign: "center",
                                 marginX: "auto",
                                 backgroundColor: theme.palette.secondary.main,
                             }}
@@ -388,7 +388,7 @@ const BlogArticleComponent = (
                 }
 
                 {nFeaturedArticles > 0 && featuredArticles.slice(0, nFeaturedArticles).map((article) => (
-                    <Grid key={article.title} padding={1} item xs={12} sm={6} md={4} lg={3}>
+                    <Grid key={article.title} padding={'0.5rem'} item xs={12} sm={6} md={4} lg={3}>
                         <FeaturedArticleComponent
                             article={article}
                             elevationValue={elevationValue}

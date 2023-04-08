@@ -38,7 +38,7 @@ const SubmitToBlogComponent = () => {
                             validateOnBlur={false}>
                 <Form style={{width: "100%"}} value={formik}>
                     <Typography
-                        textalign={"center"}
+                        sx={{textAlign: "center",}}
                         padding={1}
                         bgcolor="inherit"
                         component="h4"

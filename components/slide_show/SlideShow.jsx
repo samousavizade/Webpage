@@ -101,7 +101,7 @@ const DesktopBanner = ({principles, subject, contentPosition, key}) => {
             lg={3}
 
         >
-            <Typography variant={"h5"} textalign={"center"} padding={2.5}>
+            <Typography variant={"h5"} sx={{textAlign: "center",}} padding={2.5}>
                 {subject}
             </Typography>
         </Grid>

@@ -99,13 +99,13 @@ const About = () => {
                                 sx={{width: "100%", height: "100%"}}
                             />
 
-                            <Typography textalign={"center"} key={"full name"} variant="h4" component={"h2"}>
+                            <Typography sx={{textAlign: "center",}} key={"full name"} variant="h4" component={"h2"}>
                                 <b>
                                     S. Alireza Mousavizade
                                 </b>
                             </Typography>
 
-                            <Typography textalign={"center"} key={"university_name"} variant="h5" component={"h3"}>
+                            <Typography sx={{textAlign: "center",}} key={"university_name"} variant="h5" component={"h3"}>
                                 <span style={{color: theme.palette.primary.main}}><b> Sharif</b></span> University of
                                 Technology
                             </Typography>
@@ -345,7 +345,7 @@ const About = () => {
                 </Grid>
                 <Grid item key={"skills-header"} xs={12} sm={12} md={12} lg={12}>
                     <Typography
-                        textalign={"center"}
+                        sx={{textAlign: "center",}}
                         style={{borderRadius: 5}}
                         sx={{backgroundColor: "primary.main"}}
                         color={theme.palette.text.primary}
@@ -377,11 +377,11 @@ const About = () => {
                             >
                                 {item.icon}
 
-                                <Typography textalign={"center"} component={"h2"} variant="h4">
+                                <Typography sx={{textAlign: "center",}} component={"h2"} variant="h4">
                                     <b>{item.title}</b>
                                 </Typography>
 
-                                <Typography marginTop={2} textalign={"center"} variant={"p"}>
+                                <Typography marginTop={2} sx={{textAlign: "center",}} variant={"p"}>
                                     {item.description}
                                 </Typography>
                             </Stack>

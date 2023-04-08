@@ -23,23 +23,28 @@ export default function Protected(props) {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
+
             <Box
-                width={`calc( 100vw - ${state.drawerWidth} - 40vw)  `}
-                height={`calc( 100vh - ${state.navBarHeight} )`}
-                sx={{
-                    overflow: "auto",
-                    mx: "auto",
+                style={{
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+
+                    /* bring your own prefixes */
+                    transform: "translate(-50%, -50%)",
                 }}
-                padding={`calc(4*${state.padding})`}
+
+                sx={{
+                    width: {
+                        xs: "95%",
+                        sm: "65%",
+                        md: "55%",
+                        lg: "50%"
+                    },
+                }}
             >
                 <Grid
                     container
-
-                    style={{
-                        background: "./static/soc_wallpaper.jpg",
-
-                    }}
-                    className={styles.backgroundImage}
                     height={1}
                 >
                     <Grid
@@ -65,7 +70,9 @@ export default function Protected(props) {
                     >
                         <Typography
                             color={theme.palette.primary.main}
-                            textalign={"center"}
+                            sx={{
+                                textAlign: "center"
+                            }}
                             variant={"h1"} component={"h1"}
                         >
                             Oops!
@@ -73,7 +80,7 @@ export default function Protected(props) {
 
                         <Typography
                             color={theme.palette.error.main}
-                            textalign={"center"}
+                            sx={{textAlign: "center",}}
                             variant={"h3"} component={"h1"}
                         >
                             401 unauthorized

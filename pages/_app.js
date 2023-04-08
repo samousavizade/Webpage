@@ -55,65 +55,77 @@ const skeletonReducer = (state, action) => {
 
 export const SkeletonContext = createContext();
 
+let lightTheme = createTheme({
+    palette: {
+        mode: "light", primary: {
+            main: '#2196f3',
+        }, secondary: {
+            main: '#ffc400',
+        }, neutral: {
+            main: '#64748B', contrastText: '#fff',
+        }, text: {
+            primary: '#000000',
+            secondary: '#4e5052',
+            disabled: '#d0d0d0',
+
+        }
+    },
+});
+
+lightTheme = responsiveFontSizes(lightTheme);
+
+let darkTheme = createTheme({
+    palette: {
+        mode: "dark",
+        primary: {
+            main: '#2196f3',
+
+        }, secondary: {
+            main: '#ffc400',
+
+        }, neutral: {
+            main: '#64748B', contrastText: '#fff',
+        },
+        text: {
+            primary: '#ffffff',
+            secondary: '#939698',
+            disabled: '#565555',
+
+        }
+    },
+});
+
+darkTheme = responsiveFontSizes(darkTheme);
+
+
+
 
 export default function App({Component, pageProps}) {
 
     const drawerWidthWhileClosed = `calc(2*${responsiveIconSize(useBreakpoint())} + 0.4rem)`;
 
-    let lightTheme = createTheme({
-        palette: {
-            mode: "light", primary: {
-                main: '#2196f3',
-            }, secondary: {
-                main: '#ffc400',
-            }, neutral: {
-                main: '#64748B', contrastText: '#fff',
-            }, text: {
-                primary: '#000000',
-                secondary: '#4e5052',
-                disabled: '#d0d0d0',
 
-            }
-        },
-    });
-
-    lightTheme = responsiveFontSizes(lightTheme);
-
-    let darkTheme = createTheme({
-        palette: {
-            mode: "dark",
-            primary: {
-                main: '#2196f3',
-
-            }, secondary: {
-                main: '#ffc400',
-
-            }, neutral: {
-                main: '#64748B', contrastText: '#fff',
-            },
-            text: {
-                primary: '#ffffff',
-                secondary: '#939698',
-                disabled: '#565555',
-
-            }
-        },
-    });
-
-    darkTheme = responsiveFontSizes(darkTheme);
 
     const [activeTheme, setActiveTheme] = useState(lightTheme);
     const [activeThemeName, setActiveThemeName] = useState('light'); // either light or dark
 
     const toggleTheme = () => {
         const desiredThemeName = activeThemeName === 'light' ? 'dark' : 'light';
-
         setActiveThemeName(desiredThemeName);
+
+        // localStorage.setItem("mode", desiredThemeName)
+
     };
 
     useEffect(() => {
-        setActiveTheme(activeThemeName === "dark" ? darkTheme : lightTheme);
-    }, [activeThemeName,]);
+
+        // if (localStorage.getItem("mode")) {
+        //     setActiveTheme(localStorage.getItem("mode") === "dark" ? darkTheme : lightTheme);
+        // } else {
+            setActiveTheme(activeThemeName === "dark" ? darkTheme : lightTheme);
+        // }
+
+    }, [activeThemeName]);
 
 
     //.........................................................
@@ -131,6 +143,7 @@ export default function App({Component, pageProps}) {
             padding: padding,
             navBarTitle: AppBarTitleEnum.HOME
         }
+
 
         const [state, dispatch] = useReducer(skeletonReducer, initialState,);
 
@@ -169,6 +182,7 @@ export default function App({Component, pageProps}) {
                     crossOrigin="anonymous"
                     defer
                 >
+
                 </script>
             </Head>
 

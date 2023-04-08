@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {alpha, Box, Grid, Typography} from "@mui/material";
 import SubmitToBlogComponent from "../components/submit_comment";
 import {useTheme} from '@mui/material/styles';
@@ -7,6 +7,7 @@ import Head from "next/head";
 import SocrateImage from "../public/static/soc_wallpaper.jpg";
 import Image from "next/image";
 import {SkeletonContext} from "../pages/_app";
+import {useRouter} from "next/router";
 
 // import clientPromise from '../lib/mongodb'
 //
@@ -38,6 +39,20 @@ import {SkeletonContext} from "../pages/_app";
 export default function Home(props) {
     const {} = props;
     const isConnected = props.isConnected;
+
+    const router = useRouter();
+    useEffect(() => {
+        return () => {
+
+            router.prefetch('/auth/sign_up').then(r => r)
+            router.prefetch('/auth/sign_in').then(r => r)
+
+            router.prefetch('/blog').then(r => r)
+            router.prefetch('/about').then(r => r)
+
+        };
+    }, [router]);
+
 
     const theme = useTheme();
 
