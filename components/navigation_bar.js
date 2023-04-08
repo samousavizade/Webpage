@@ -158,9 +158,6 @@ function NavBarDrawerComponent(props) {
 
     // auth
     const router = useRouter();
-    const isActive = function (pathname) {
-        return router.pathname === pathname;
-    };
 
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -258,11 +255,14 @@ function NavBarDrawerComponent(props) {
     if (status === 'loading') {
         element = (
             <>
-                <Typography>Validating session ...</Typography>
+                <Typography
+                    color={theme.palette.text.primary}
+                >
+                    Validating session...
+                </Typography>
             </>
         );
-    }
-    if (!session) {
+    } else if (status === 'unauthenticated') {
         element = (
             <>
                 {/*"/api/auth/signin"*/}
@@ -307,8 +307,7 @@ function NavBarDrawerComponent(props) {
             </>
 
         );
-    }
-    if (session) {
+    } else if (status === 'authenticated') {
         element = (
             <>
                 <Box marginRight={1}>

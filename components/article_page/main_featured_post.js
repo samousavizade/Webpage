@@ -48,9 +48,6 @@ function MainFeaturedPost({ article, elevationValue }) {
           <Typography variant="h5" color="text.main" paragraph>
             {article.subTitle}
           </Typography>
-          {/* <Link variant="subtitle1" href="#">
-              {article.author}
-            </Link> */}
         </Grid>
       </Grid>
     </Paper>
