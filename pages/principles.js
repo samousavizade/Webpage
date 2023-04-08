@@ -7,6 +7,8 @@ import {fetchPrinciples} from "../lib/fetch_principles";
 import Loading from "../pages/loading";
 import Head from "next/head";
 import {SkeletonContext} from "../pages/_app";
+import {useSession} from "next-auth/react";
+import Protected from "../pages/protected";
 
 
 export async function getStaticProps() {
@@ -32,17 +34,15 @@ export async function getStaticProps() {
 
 const Principles = ({myPrinciples}) => {
 
-    // Use middleware instead
-    ////////////////////////////////////////////////////////////
-    // const { status } = useSession({})
-    //
-    // if (status === "loading") {
-    //     return <Loading/>
-    // }
-    //
-    // if (status === "unauthenticated") {
-    //     return <Protected/>
-    // }
+    const { status } = useSession()
+
+    if (status === "loading") {
+        return <Loading/>
+    }
+
+    if (status === "unauthenticated") {
+        return <Protected/>
+    }
 
     const {state, dispatch} = useContext(SkeletonContext);
 
