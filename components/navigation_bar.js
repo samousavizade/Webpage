@@ -192,22 +192,20 @@ function NavBarDrawerComponent(props) {
                     return (
                         <ListItem key={item.title} disablePadding>
                             <Link legacyBehavior href={item.to}>
-                                <a>
-                                    <ListItemButton
-                                        data={item}
-                                        onClick={(e) => {
-                                            dispatch({
-                                                type: SKELETON_ACTION_TYPES.SET_NAVBAR_TITLE,
-                                                payload: {
-                                                    navBarTitle: item.title,
-                                                }
-                                            })
-                                        }}
-                                    >
-                                        <ListItemIcon><ResponsiveIcon icon={item.icon}/></ListItemIcon>
-                                        <ListItemText primary={item.title}/>
-                                    </ListItemButton>
-                                </a>
+                                <ListItemButton
+                                    data={item}
+                                    onClick={(e) => {
+                                        dispatch({
+                                            type: SKELETON_ACTION_TYPES.SET_NAVBAR_TITLE,
+                                            payload: {
+                                                navBarTitle: item.title,
+                                            }
+                                        })
+                                    }}
+                                >
+                                    <ListItemIcon><ResponsiveIcon icon={item.icon}/></ListItemIcon>
+                                    <ListItemText primary={item.title}/>
+                                </ListItemButton>
                             </Link>
                         </ListItem>
 

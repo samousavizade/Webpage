@@ -100,10 +100,8 @@ export default function FourOhFour(props) {
 
 
                         <Link
-                            legacyBehavior
                             href={"/home"}
                         >
-                            <a>
                                 <ListItemButton
                                     key={"backtohome"}
                                 >
@@ -117,7 +115,6 @@ export default function FourOhFour(props) {
                                         </Typography>}
                                     />
                                 </ListItemButton>
-                            </a>
                         </Link>
                     </Grid>
                 </Grid>

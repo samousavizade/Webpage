@@ -1,11 +1,11 @@
 import {AnimatedHomeIcon} from "../components/AnimatedIcons";
 import * as React from 'react';
+import {useContext} from 'react';
 import {alpha, Box, Grid, ListItemButton, ListItemIcon, ListItemText, Typography} from "@mui/material";
 import styles from "../styles/FourOhFour.module.css"
 import {useTheme} from '@mui/material/styles';
 import Head from "next/head";
 import Link from "next/link";
-import {useContext} from "react";
 import {SkeletonContext} from "../pages/_app";
 
 export default function Protected(props) {
@@ -92,24 +92,21 @@ export default function Protected(props) {
 
 
                         <Link
-                            legacyBehavior
                             href={"/home"}
                         >
-                            <a>
-                                <ListItemButton
-                                    key={"backtohome"}
-                                >
-                                    <ListItemIcon><AnimatedHomeIcon/></ListItemIcon>
-                                    <ListItemText padding={10} primary={
-                                        <Typography
-                                            color={theme.palette.text.primary}
-                                            variant={"body1"}
-                                        >
-                                            Back To Home
-                                        </Typography>}
-                                    />
-                                </ListItemButton>
-                            </a>
+                            <ListItemButton
+                                key={"backtohome"}
+                            >
+                                <ListItemIcon><AnimatedHomeIcon/></ListItemIcon>
+                                <ListItemText padding={10} primary={
+                                    <Typography
+                                        color={theme.palette.text.primary}
+                                        variant={"body1"}
+                                    >
+                                        Back To Home
+                                    </Typography>}
+                                />
+                            </ListItemButton>
                         </Link>
                     </Grid>
                 </Grid>

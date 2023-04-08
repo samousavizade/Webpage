@@ -108,10 +108,8 @@ export default function Loading(props) {
                         </Box>
 
                         <Link
-                            legacyBehavior
                             href={"/home"}
                         >
-                            <a>
                                 <ListItemButton
                                     sx={{height: "12vh"}}
                                     key={"backtohome"}
@@ -126,7 +124,6 @@ export default function Loading(props) {
                                         </Typography>}
                                     />
                                 </ListItemButton>
-                            </a>
                         </Link>
                     </Grid>
                 </Grid>

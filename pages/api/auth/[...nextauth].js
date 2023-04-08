@@ -6,8 +6,6 @@ import {PrismaAdapter} from "@next-auth/prisma-adapter";
 import prisma from "../../../lib/prisma";
 import {logger} from "../../../lib/logger";
 import sha256 from "crypto-js/sha256";
-import {redirect} from "next/navigation";
-import {omit} from "lodash";
 
 
 const hashPassword = (password) => {

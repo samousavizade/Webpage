@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import useSWR from "swr";
 import {fetchArticles} from "../../lib/prisma";
 import {useSession} from "next-auth/react";
+import {useRouter} from "next/router";
 
 export async function getStaticProps(staticProps) {
     const params = staticProps.params;
@@ -17,8 +18,10 @@ export async function getStaticProps(staticProps) {
 
     if (article === undefined) {
         console.log("article is undefined ... ", params.article_id)
+        const router = useRouter();
         return {
             notFound: true, //redirects to 404 page
+
         };
     }
 
