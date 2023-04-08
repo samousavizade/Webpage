@@ -357,11 +357,6 @@ function NavBarDrawerComponent(props) {
                             </ListItemText>
                         </MenuItem>
                         <Divider/>
-                        <MenuItem>
-                            <ListItemText>
-                                {session.user.id}
-                            </ListItemText>
-                        </MenuItem>
                         <MenuItem onClick={() => signOut()}>
                             <ListItemIcon>
                                 <Logout fontSize="small"/>
