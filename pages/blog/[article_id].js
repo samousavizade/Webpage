@@ -18,10 +18,8 @@ export async function getStaticProps(staticProps) {
 
     if (article === undefined) {
         console.log("article is undefined ... ", params.article_id)
-        const router = useRouter();
         return {
             notFound: true, //redirects to 404 page
-
         };
     }
 
@@ -57,10 +55,8 @@ const ArticleComponent = ({intendedArticle, featuredArticles}) => {
     const {data: session, status, update: updateSession} = useSession()
     const fetcher = (url) => fetch(url).then((res) => res.json());
     const {
-
         data,
         error
-
     } = useSWR(`/api/getArticleLikesCountById?id=${intendedArticle.id}`, fetcher);
 
     const [likesCount, setLikesCount] = useState(intendedArticle.nLikes);

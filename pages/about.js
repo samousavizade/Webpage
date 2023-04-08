@@ -345,9 +345,11 @@ const About = () => {
                 </Grid>
                 <Grid item key={"skills-header"} xs={12} sm={12} md={12} lg={12}>
                     <Typography
-                        sx={{textAlign: "center",}}
                         style={{borderRadius: 5}}
-                        sx={{backgroundColor: "primary.main"}}
+                        sx={{
+                            backgroundColor: "primary.main",
+                            textAlign: "center",
+                        }}
                         color={theme.palette.text.primary}
                         variant="h3"
                     >
