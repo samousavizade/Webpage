@@ -52,6 +52,5 @@ async function handlePOST(res, req) {
         }
 
         res.status(400).end("Username (mail) or address is incorrect.");
-
     }
 }

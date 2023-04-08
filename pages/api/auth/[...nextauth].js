@@ -7,6 +7,7 @@ import prisma from "../../../lib/prisma";
 import {logger} from "../../../lib/logger";
 import sha256 from "crypto-js/sha256";
 import {redirect} from "next/navigation";
+import {omit} from "lodash";
 
 
 const hashPassword = (password) => {
@@ -42,22 +43,51 @@ export const authOptions = {
             authorize: async (credentials, req) => {
                 logger.debug("credentials: ", JSON.stringify(credentials))
 
-                const user = await fetch(
-                    `${process.env.NEXTAUTH_URL}/api/user/check_credentials`,
-                    {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json',
-                            accept: "application/json",
-                        },
-                        body: JSON.stringify(credentials),
-                    })
-                    .then((res) => res.json())
-                    .catch((err) => {
-                        logger.debug(`Error in call check_credentials api: ${err}`)
-                        throw new Error(err)
-                        return null;
-                    });
+                // const user = await fetch(
+                //     `${process.env.NEXTAUTH_URL}/api/user/check_credentials`,
+                //     {
+                //         method: "POST",
+                //         headers: {
+                //             'Content-Type': 'application/json',
+                //             accept: "application/json",
+                //         },
+                //         body: JSON.stringify(credentials),
+                //     })
+                //     .then((res) => res.json())
+                //     .catch((err) => {
+                //         logger.debug(`Error in call check_credentials api: ${err}`)
+                //         throw new Error(err)
+                //         return null;
+                //     });
+
+                let user = await prisma.user.findUnique({
+                    where: {
+                        email: req.body.username
+                    },
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        password: true,
+                    },
+                });
+
+                logger.debug("user: ", user);
+
+                if (user && user.password === hashPassword(req.body.password)) {
+                    logger.debug("Password correct");
+                    delete user.password
+                } else {
+                    if (!user) {
+                        throw new Error("User not found.");
+
+                    } else if (user.password !== hashPassword(req.body.password)) {
+                        throw new Error("Password is incorrect.")
+                    }
+
+                    throw new Error("Username (mail) or address is incorrect.");
+                }
 
 
                 logger.debug("final returned user: ", user)
