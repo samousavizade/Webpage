@@ -426,7 +426,8 @@ const BlogArticleComponent = (
                                 textAlign: "justify",
                             }}
                         >
-                            <MDXComponent/>
+                            {/*TODO: Arain said remove markdowns from site*/}
+                            {/*<MDXComponent/>*/}
                         </div>
 
                     </Grid>
