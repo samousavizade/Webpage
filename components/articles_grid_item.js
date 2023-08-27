@@ -14,9 +14,12 @@ import {
     Paper,
     Typography,
     useTheme,
+    IconButton
 } from "@mui/material";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import GitHubIcon from "@mui/icons-material/GitHub";
+
 
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -136,6 +139,11 @@ const ArticlesGridItemComponent = ({article}) => {
                         <Box
                             container
                             display={"flex"}>
+
+                            <IconButton href={"www.github.com/risklabai"}>
+                                <GitHubIcon/>
+                            </IconButton>
+
                             <Button size={'large'} sx={{marginLeft: "auto"}}>
                                 <Link href={"/blog/" + article.id} legacyBehavior>
                                     Continue
