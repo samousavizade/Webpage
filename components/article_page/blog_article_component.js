@@ -427,8 +427,8 @@ const BlogArticleComponent = (
                             }}
                         >
                             {/*TODO: Arain said remove markdowns from site*/}
-
-                            {/*<MDXComponent/>*/}
+                            {/**/}
+                            <MDXComponent/>
                         </div>
 
                     </Grid>
