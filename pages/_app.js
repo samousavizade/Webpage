@@ -231,14 +231,6 @@ export default function App({
                     </SkeletonProvider>
                 </ThemeProvider>
             </CacheProvider>
-
-            <footer>
-                <Box bgcolor={activeTheme.palette.primary.dark}>
-                    <Typography variant={"subtitle2"} padding={'0.5rem'}>
-                        Many thanks to <strong>Vercel</strong>
-                    </Typography>
-                </Box>
-            </footer>
         </>
     )
 }
