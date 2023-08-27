@@ -30,7 +30,7 @@ import Image from "next/image";
 import ResponsiveIcon from "../components/ResponsiveIcon";
 import * as React from "react";
 
-const ArticlesGridItemComponent = ({article}) => {
+const ArticlesGridItemComponent = ({props, article}) => {
 
     const summaryMarkdown = article.summary;
     if (!article.author) {
@@ -40,6 +40,8 @@ const ArticlesGridItemComponent = ({article}) => {
 
     const theme = useTheme();
     const borderRadius = "0.75rem";
+
+    const history = props.history
 
     return (
         <Card
@@ -140,7 +142,7 @@ const ArticlesGridItemComponent = ({article}) => {
                             container
                             display={"flex"}>
 
-                            <IconButton href={"www.github.com/risklabai"}>
+                            <IconButton onClick={() => history.push("www.github.com/risklabai")}>
                                 <GitHubIcon/>
                             </IconButton>
 
