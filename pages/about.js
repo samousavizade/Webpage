@@ -158,7 +158,7 @@ const About = () => {
                                 <Typography variant="p">
                                     Hi, My name is Alireza and I'm a <Chip label={"Computer Science"} /> and <Chip label={"Economics"}/> student at Sharif University of Technology since 2018. I'm
                                     interested in <Chip label={"Natural Language Processing"} color={"primary"}/>, <Chip label={"Computer Vision"} color={"success"}/>,
-                                    <Chip label={"Financial ML"} color={"info"}/> and <Chip label={"Macroeconomics"} color={"error"}/>.
+                                    <Chip label={"Financial ML"} color={"warning"}/> and <Chip label={"Macroeconomics"} color={"error"}/>.
                                     My highlighted experiences, courses, projects and papers are explained in the webpage.
                                 </Typography>
                             </AccordionDetails>
@@ -233,7 +233,7 @@ const About = () => {
                                 id="experience"
                             >
                                 <ConstructionIcon/>
-                                <Typography marginLeft={1}>Experience</Typography>
+                                <Typography marginLeft={1}>Experiences</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <List
