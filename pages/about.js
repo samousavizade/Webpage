@@ -4,7 +4,7 @@ import {
     AccordionDetails,
     AccordionSummary,
     Avatar,
-    ButtonGroup,
+    ButtonGroup, Chip,
     Grid,
     List,
     ListItem,
@@ -155,12 +155,11 @@ const About = () => {
                                 <Typography marginLeft={1}>Bio</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                <Typography variant={"p"}>
-                                    Hi, My name is Alireza afnd I'm a Computer Science and Economics
-                                    student at Sharif University of Technology since 2018. I'm
-                                    interested in Natural Language Processing, Computer Vision,
-                                    Financial ML and Macroeconomics. My highlighted courses and it's
-                                    projects are described in the webpage.
+                                <Typography variant="p">
+                                    Hi, My name is Alireza and I'm a <Chip label={"Computer Science"} /> and <Chip label={"Economics"}/> student at Sharif University of Technology since 2018. I'm
+                                    interested in <Chip label={"Natural Language Processing"} color={"primary"}/>, <Chip label={"Computer Vision"} color={"success"}/>,
+                                    <Chip label={"Financial ML"} color={"info"}/> and <Chip label={"Macroeconomics"} color={"error"}/>.
+                                    My highlighted experiences, courses, projects and papers are explained in the webpage.
                                 </Typography>
                             </AccordionDetails>
                         </Accordion>
