@@ -1,23 +1,25 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, {Head, Html, Main, NextScript} from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../utils/createEmotionCache';
+import {Analytics} from '@vercel/analytics/react';
 
 export default function MyDocument(props) {
-    const { emotionStyleTags } = props;
+    const {emotionStyleTags} = props;
 
     return (
         <Html lang="en">
             <Head>
                 {/* PWA primary color */}
-                <link rel="shortcut icon" href="/favicon.ico" />
-                <meta name="emotion-insertion-point" content="" />
+                <link rel="shortcut icon" href="/favicon.ico"/>
+                <meta name="emotion-insertion-point" content=""/>
                 {emotionStyleTags}
             </Head>
             <body>
-            <Main />
-            <NextScript />
+            <Main/>
+            <NextScript/>
+            <Analytics/>
             </body>
         </Html>
     );
@@ -53,7 +55,7 @@ MyDocument.getInitialProps = async (ctx) => {
     // You can consider sharing the same Emotion cache between all the SSR requests to speed up performance.
     // However, be aware that it can have global side effects.
     const cache = createEmotionCache();
-    const { extractCriticalToChunks } = createEmotionServer(cache);
+    const {extractCriticalToChunks} = createEmotionServer(cache);
 
     ctx.renderPage = () =>
         originalRenderPage({
@@ -72,7 +74,7 @@ MyDocument.getInitialProps = async (ctx) => {
             data-emotion={`${style.key} ${style.ids.join(' ')}`}
             key={style.key}
             // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{ __html: style.css }}
+            dangerouslySetInnerHTML={{__html: style.css}}
         />
     ));
 
