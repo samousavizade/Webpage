@@ -1,4 +1,4 @@
-import {React, useContext} from "react";
+import {React} from "react";
 import {
     Accordion,
     AccordionDetails,
@@ -7,6 +7,8 @@ import {
     ButtonGroup,
     Grid,
     List,
+    ListItem,
+    ListItemAvatar,
     ListItemButton,
     ListItemIcon,
     ListItemText,
@@ -15,6 +17,7 @@ import {
     Typography,
     useTheme,
 } from "@mui/material";
+import ArticleIcon from '@mui/icons-material/Article';
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LiveIconComponent from "../components/live_icon_component";
 import SchoolIcon from "@mui/icons-material/School";
@@ -27,7 +30,8 @@ import {drawerSecondaryItemsParts} from "../components/drawer_items";
 import ConstructionIcon from '@mui/icons-material/Construction';
 import useBreakpoint, {responsiveIconSize} from "../components/use_breakpoint";
 import Head from "next/head";
-import {SkeletonContext} from "../pages/_app";
+import {CandlestickChart} from "@mui/icons-material";
+import OilBarrelIcon from '@mui/icons-material/OilBarrel';
 
 const elevationValue = 3;
 
@@ -95,7 +99,7 @@ const About = () => {
                                 key={"avatar"}
                                 alt="S.Alireza Mousavizade"
                                 variant="rounded"
-                                src="/static/me2.png"
+                                src="/static/me3.jpg"
                                 sx={{width: "100%", height: "100%"}}
                             />
 
@@ -105,7 +109,8 @@ const About = () => {
                                 </b>
                             </Typography>
 
-                            <Typography sx={{textAlign: "center",}} key={"university_name"} variant="h5" component={"h3"}>
+                            <Typography sx={{textAlign: "center",}} key={"university_name"} variant="h5"
+                                        component={"h3"}>
                                 <span style={{color: theme.palette.primary.main}}><b> Sharif</b></span> University of
                                 Technology
                             </Typography>
@@ -341,6 +346,78 @@ const About = () => {
                                 </dl>
                             </AccordionDetails>
                         </Accordion>
+                        <Accordion defaultExpanded={false}>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon/>}
+                                aria-controls="papers"
+                                id="papers"
+                            >
+                                <ArticleIcon/>
+                                <Typography marginLeft={1}>Papers</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <List
+                                    sx={{width: "100%"}}
+                                    component="nav"
+                                    aria-labelledby="nested-list-subheader"
+                                >
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <CandlestickChart color={"primary"} fontSize={"large"}/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary="Stability-Weighted Ensemble Feature Importance"
+                                            secondary={
+                                                <>
+                                                    <Typography
+                                                        sx={{display: "inline"}}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+                                                        2022
+                                                    </Typography>
+                                                    {" — RiskLabAI"}
+                                                    <br/>
+                                                    {"Robust and Stable Feature Importance Framework"}
+                                                </>
+                                            }
+                                        />
+                                    </ListItem>
+
+
+                                    <ListItem>
+                                        <ListItemAvatar>
+                                            <Avatar>
+                                                <OilBarrelIcon color={"primary"} fontSize={"large"}/>
+                                            </Avatar>
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary="Active Causal Discovery in Cryptocurrency Markets: the Impact of Energy Prices"
+                                            secondary={
+                                                <>
+                                                    <Typography
+                                                        sx={{display: "inline"}}
+                                                        component="span"
+                                                        variant="body2"
+                                                        color="text.primary"
+                                                    >
+                                                        2023
+                                                    </Typography>
+                                                    {" — RiskLabAI"}
+                                                    <br/>
+                                                    {"Impact of energy market on cryptocurrency market"}
+                                                </>
+                                            }
+                                        />
+                                    </ListItem>
+
+
+                                </List>
+                            </AccordionDetails>
+                        </Accordion>
                     </Paper>
                 </Grid>
                 <Grid item key={"skills-header"} xs={12} sm={12} md={12} lg={12}>
@@ -371,7 +448,7 @@ const About = () => {
                         <Paper elevation={elevationValue} sx={{height: "100%", overflow: "auto"}}>
                             <Stack
                                 style={{
-                                    display:"flex",
+                                    display: "flex",
                                     alignItems: "center",
                                     justifyContent: "center",
                                 }}

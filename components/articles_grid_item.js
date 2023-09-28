@@ -41,7 +41,10 @@ const ArticlesGridItemComponent = ({props, article}) => {
     const theme = useTheme();
     const borderRadius = "0.75rem";
 
-    const history = props.history
+    console.log("mmmmmmmmmmmmm")
+    console.log(props)
+    console.log("mmmmmmmmmmmmm")
+
 
     return (
         <Card
@@ -142,7 +145,7 @@ const ArticlesGridItemComponent = ({props, article}) => {
                             container
                             display={"flex"}>
 
-                            <IconButton onClick={() => history.push("www.github.com/risklabai")}>
+                            <IconButton>
                                 <GitHubIcon/>
                             </IconButton>
 
